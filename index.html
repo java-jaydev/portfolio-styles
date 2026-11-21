@@ -34,6 +34,7 @@
   .common p { max-width:40em; font-size:15px; }
   a.plain { display:inline; padding:0; text-decoration:underline; }
   a.plain:hover, a.plain:focus-visible { padding:0; background:none; }
+  .meta { font-size:14px; margin-top:6px; max-width:46em; }
   footer { padding:28px clamp(20px,6vw,80px) 56px; font-size:14px; }
   @media (max-width:720px){ a { grid-template-columns:72px 1fr; } .what { grid-column:1 / -1; } }
   @media (prefers-reduced-motion:reduce){ a { transition:none; } }
@@ -49,7 +50,7 @@
     <span class="sw"><i style="background:#1437C8"></i><i style="background:#fff;border:1px solid #16161a"></i><i style="background:#FFD400"></i></span>
     <span class="who"><b>한도윤</b><span>컴퓨터공학과 4학년, 백엔드</span></span>
     <span class="what"><b>시스템 회로도</b><span>마우스가 요청을 보내고, 패킷이 서버 구조도를 따라 흐릅니다.</span></span></a>
-    <details><summary>이 시안에 쓴 프롬프트 보기</summary><div class="prompt">인물(가상): 한도윤, 남, 전주대학교 컴퓨터공학과 4학년, 백엔드 개발자 지망. 소개, 프로젝트 3~4개(전주 시내버스 도착 알림 API, 캡스톤 LLM 챗봇 서버, 동아리 출석 시스템 등. 숫자 포함), 기술, 경험과 수상 연혁, 연락처를 그럴듯하게 채운다.
+    <details><summary>이 시안에 쓴 프롬프트 보기</summary><p class="meta">모델: Claude Fable 5.2 (Claude Code에서 실행). 프롬프트 한 번으로 만들었습니다. <a class="plain" href="https://github.com/java-jaydev/portfolio-styles/blob/main/prompts/01-han-doyun.md">보낸 그대로의 영어 원문 보기</a></p><div class="prompt">인물(가상): 한도윤, 남, 전주대학교 컴퓨터공학과 4학년, 백엔드 개발자 지망. 소개, 프로젝트 3~4개(전주 시내버스 도착 알림 API, 캡스톤 LLM 챗봇 서버, 동아리 출석 시스템 등. 숫자 포함), 기술, 경험과 수상 연혁, 연락처를 그럴듯하게 채운다.
 
 디자인 방향: "시스템 회로도". 진한 코발트 블루(#1437C8 계열) 바탕에 흰 선, 신호용 노랑 하나.
 대표 장면: 첫 화면이 살아 있는 서버 구조도다(클라이언트, 게이트웨이, 큐, 워커, DB). 작은 요청 패킷이 선을 따라 움직이고, 마우스가 요청을 보내는 쪽이 된다. 패킷이 커서에서 생겨 가장 가까운 노드로 들어가고, 맞은 노드는 깜빡인다.
@@ -58,7 +59,7 @@
     <span class="sw"><i style="background:#2B1B4D"></i><i style="background:#FF5A5F"></i><i style="background:#7DE2D1"></i><i style="background:#FFE66D"></i></span>
     <span class="who"><b>서지훈</b><span>게임콘텐츠학과 3학년, 게임 프로그래머</span></span>
     <span class="what"><b>픽셀 아케이드</b><span>픽셀 캐릭터가 마우스를 따라 걸으며 코인을 모읍니다.</span></span></a>
-    <details><summary>이 시안에 쓴 프롬프트 보기</summary><div class="prompt">인물(가상): 서지훈, 남, 전주대학교 게임콘텐츠학과 3학년, 게임 프로그래머 지망. 소개, 게임 프로젝트 3~4개(전주 한옥마을 배경 2D 퍼즐 플랫포머, 48시간 게임잼 작품, 모바일 리듬 게임 프로토타입 등. 다운로드 수나 플레이 시간 같은 숫자 포함), 기술(Unity, C#, 셰이더), 연혁과 수상, 연락처를 채운다.
+    <details><summary>이 시안에 쓴 프롬프트 보기</summary><p class="meta">모델: Claude Fable 5.2 (Claude Code에서 실행). 프롬프트 한 번으로 만들었습니다. <a class="plain" href="https://github.com/java-jaydev/portfolio-styles/blob/main/prompts/02-seo-jihun.md">보낸 그대로의 영어 원문 보기</a></p><div class="prompt">인물(가상): 서지훈, 남, 전주대학교 게임콘텐츠학과 3학년, 게임 프로그래머 지망. 소개, 게임 프로젝트 3~4개(전주 한옥마을 배경 2D 퍼즐 플랫포머, 48시간 게임잼 작품, 모바일 리듬 게임 프로토타입 등. 다운로드 수나 플레이 시간 같은 숫자 포함), 기술(Unity, C#, 셰이더), 연혁과 수상, 연락처를 채운다.
 
 디자인 방향: "픽셀 아케이드". 네 가지 색만 쓴다: 진한 남보라 #2B1B4D, 코랄 #FF5A5F, 민트 #7DE2D1, 크림옐로 #FFE66D. 제목은 한글 픽셀 글꼴, 본문은 읽기 쉬운 고딕.
 대표 장면: 첫 화면이 작은 게임 장면이다. 픽셀 캐릭터가 타일 맵 위에서 마우스 쪽으로 걸어가고, 코인을 모으면 메뉴가 열린다. 작은 HUD 포함.
@@ -67,7 +68,7 @@
     <span class="sw"><i style="background:#000"></i><i style="background:#E8A33D"></i><i style="background:#2F6F73"></i></span>
     <span class="who"><b>강민재</b><span>영화방송학과 4학년, 촬영과 연출</span></span>
     <span class="what"><b>랙 포커스 시네마</b><span>마우스가 닿는 곳에만 초점이 맞고 나머지는 흐려집니다.</span></span></a>
-    <details><summary>이 시안에 쓴 프롬프트 보기</summary><div class="prompt">인물(가상): 강민재, 남, 전주대학교 영화방송학과 4학년, 촬영감독과 연출 지망. 소개, 작품 3~4편(단편영화, 다큐, 뮤직비디오. 제목, 러닝타임, 역할, 가상의 상영 이력), 장비와 기술, 연혁, 연락처를 채운다. 실제 영화제 수상을 사칭하지 말고 "교내 영화제", "지역 단편 상영회"처럼 일반화한다.
+    <details><summary>이 시안에 쓴 프롬프트 보기</summary><p class="meta">모델: Claude Fable 5.2 (Claude Code에서 실행). 프롬프트 한 번으로 만들었습니다. <a class="plain" href="https://github.com/java-jaydev/portfolio-styles/blob/main/prompts/03-kang-minjae.md">보낸 그대로의 영어 원문 보기</a></p><div class="prompt">인물(가상): 강민재, 남, 전주대학교 영화방송학과 4학년, 촬영감독과 연출 지망. 소개, 작품 3~4편(단편영화, 다큐, 뮤직비디오. 제목, 러닝타임, 역할, 가상의 상영 이력), 장비와 기술, 연혁, 연락처를 채운다. 실제 영화제 수상을 사칭하지 말고 "교내 영화제", "지역 단편 상영회"처럼 일반화한다.
 
 디자인 방향: "랙 포커스 시네마". 여기서는 진짜 검정이 맞다(상영관). 텅스텐 조명 호박색 #E8A33D, 차분한 필름 청록, 흰색. 첫 화면은 2.39:1 영화 비율.
 대표 장면: 마우스가 초점을 잡는 사람이다. 제목, 장면 스틸, 자막이 서로 다른 깊이에 있고, 커서 근처만 선명해지고 나머지는 부드럽게 흐려진다. 살짝 시차 효과가 있고, 얇은 뷰파인더 표시가 커서를 따라다니며 렌즈 정보(35mm, T2.0, 초점 거리)를 보여 준다.
@@ -76,7 +77,7 @@
     <span class="sw"><i style="background:#000"></i><i style="background:#FF2E88"></i><i style="background:#FFE94A"></i></span>
     <span class="who"><b>윤서아</b><span>시각디자인학과 4학년, 브랜드와 타이포</span></span>
     <span class="what"><b>키네틱 타이포</b><span>이름 글자가 마우스를 따라 눌리고 부풀어 오릅니다.</span></span></a>
-    <details><summary>이 시안에 쓴 프롬프트 보기</summary><div class="prompt">인물(가상): 윤서아, 여, 전주대학교 시각디자인학과 4학년, 브랜드와 타이포그래피 디자이너 지망. 소개, 프로젝트 3~4개(전주 남부시장 청년몰 가게 리브랜딩, 한글 레터링 포스터 연작, 졸업전시 아이덴티티, 독립출판 잡지. 기간, 역할, 결과 숫자 포함), 도구, 전시와 수상 연혁, 연락처를 채운다.
+    <details><summary>이 시안에 쓴 프롬프트 보기</summary><p class="meta">모델: Claude Fable 5.2 (Claude Code에서 실행). 프롬프트 한 번으로 만들었습니다. <a class="plain" href="https://github.com/java-jaydev/portfolio-styles/blob/main/prompts/04-yoon-seoa.md">보낸 그대로의 영어 원문 보기</a></p><div class="prompt">인물(가상): 윤서아, 여, 전주대학교 시각디자인학과 4학년, 브랜드와 타이포그래피 디자이너 지망. 소개, 프로젝트 3~4개(전주 남부시장 청년몰 가게 리브랜딩, 한글 레터링 포스터 연작, 졸업전시 아이덴티티, 독립출판 잡지. 기간, 역할, 결과 숫자 포함), 도구, 전시와 수상 연혁, 연락처를 채운다.
 
 디자인 방향: "키네틱 타이포". 순백 종이, 진짜 검정, 핫 마젠타 #FF2E88, 레몬 #FFE94A. 색은 평평한 면으로만 쓰고 그라데이션은 쓰지 않는다.
 대표 장면: 첫 화면에 이름을 아주 크게 놓고, 글자 하나하나가 마우스에 반응한다. 영문 이름은 굵기와 너비가 변하는 가변 글꼴로, 한글 이름은 글자별 변형으로 처리한다. 글자가 마우스를 따라 파도처럼 눌리고 부풀고, 처음 열 때 이름이 한 번 조립된다.
@@ -85,7 +86,7 @@
     <span class="sw"><i style="background:#1F3A5F"></i><i style="background:#E3A72F"></i><i style="background:#B4233A"></i><i style="background:#F7F8F5;border:1px solid #16161a"></i></span>
     <span class="who"><b>임하린</b><span>한식조리학과 3학년, 푸드 스타일리스트</span></span>
     <span class="what"><b>조각보 상차림</b><span>조각보가 펼쳐지며 상이 차려지고, 천이 마우스에 반응합니다.</span></span></a>
-    <details><summary>이 시안에 쓴 프롬프트 보기</summary><div class="prompt">인물(가상): 임하린, 여, 전주대학교 한식조리학과 3학년, 푸드 스타일리스트와 한식 메뉴 개발 지망. 소개, 작업 3~4개(계절 반상 차림 연작, 전주비빔밥을 재해석한 하루 팝업 식당, 전통주 페어링 코스, 학과 요리 대회 출품작. 인원, 접시 수, 준비 기간 포함), 할 줄 아는 것, 연혁과 자격증, 연락처를 채운다.
+    <details><summary>이 시안에 쓴 프롬프트 보기</summary><p class="meta">모델: Claude Fable 5.2 (Claude Code에서 실행). 프롬프트 한 번으로 만들었습니다. <a class="plain" href="https://github.com/java-jaydev/portfolio-styles/blob/main/prompts/05-lim-harin.md">보낸 그대로의 영어 원문 보기</a></p><div class="prompt">인물(가상): 임하린, 여, 전주대학교 한식조리학과 3학년, 푸드 스타일리스트와 한식 메뉴 개발 지망. 소개, 작업 3~4개(계절 반상 차림 연작, 전주비빔밥을 재해석한 하루 팝업 식당, 전통주 페어링 코스, 학과 요리 대회 출품작. 인원, 접시 수, 준비 기간 포함), 할 줄 아는 것, 연혁과 자격증, 연락처를 채운다.
 
 디자인 방향: "조각보 상차림". 따뜻한 크림색에 테라코타 조합은 쓰지 않는다. 색은 백자 흰색 #F7F8F5, 쪽빛 #1F3A5F(주된 먹색), 치자 노랑 #E3A72F, 오미자 빨강 #B4233A, 쑥색 조금.
 대표 장면: 첫 화면이 조각보다. 평평한 색 조각과 보이는 바느질 선으로 이루어지고, 조각 안에 위에서 내려다본 그릇, 반찬, 수저를 단순한 선 그림으로 넣는다. 천이 마우스에 반응한다. 커서 근처 조각이 살짝 들리고 기울며 바느질 선이 늘어난다. 처음 열 때 보자기가 펼쳐지며 상이 차려진다.
@@ -94,7 +95,7 @@
     <span class="sw"><i style="background:#2A1E3F"></i><i style="background:#FF7A1A"></i><i style="background:#5BC0EB"></i><i style="background:#EDEFF2"></i></span>
     <span class="who"><b>최유나</b><span>인공지능학과 4학년, 데이터와 ML</span></span>
     <span class="what"><b>임베딩 공간</b><span>수천 개의 점이 마우스 주변으로 모이고, 프로젝트마다 모양을 바꿉니다.</span></span></a>
-    <details><summary>이 시안에 쓴 프롬프트 보기</summary><div class="prompt">인물(가상): 최유나, 여, 전주대학교 인공지능학과 4학년, 데이터 사이언티스트와 ML 엔지니어 지망. 소개, 프로젝트 3~4개(전주 한옥마을 유동인구 예측, 강의평 감성 분석, 캡스톤 RAG 학사 안내 챗봇, 데이터 대회 참가. 데이터 크기, 정확도, 순위를 과장 없이), 기술(Python, PyTorch, SQL), 연혁과 수상, 연락처를 채운다.
+    <details><summary>이 시안에 쓴 프롬프트 보기</summary><p class="meta">모델: Claude Fable 5.2 (Claude Code에서 실행). 프롬프트 한 번으로 만들었습니다. <a class="plain" href="https://github.com/java-jaydev/portfolio-styles/blob/main/prompts/06-choi-yuna.md">보낸 그대로의 영어 원문 보기</a></p><div class="prompt">인물(가상): 최유나, 여, 전주대학교 인공지능학과 4학년, 데이터 사이언티스트와 ML 엔지니어 지망. 소개, 프로젝트 3~4개(전주 한옥마을 유동인구 예측, 강의평 감성 분석, 캡스톤 RAG 학사 안내 챗봇, 데이터 대회 참가. 데이터 크기, 정확도, 순위를 과장 없이), 기술(Python, PyTorch, SQL), 연혁과 수상, 연락처를 채운다.
 
 디자인 방향: "임베딩 공간". 밝은 바탕. 회백 #EDEFF2, 가지색 #2A1E3F, 오렌지 #FF7A1A, 하늘 #5BC0EB를 평평하게 쓴다.
 대표 장면: 첫 화면 전체에 작은 점 수천 개가 천천히 떠다닌다. 마우스가 검색 질문 역할을 한다. 가까운 점들이 끌려오며 "가장 가까운 이웃"으로 밝아지고, 커서와 가는 선으로 이어지며, 작은 수치(k, 거리)가 표시된다. 프로젝트에 마우스를 올리면 점들이 그 프로젝트에 맞는 모양(지도, 막대그래프, 말풍선, 시상대)으로 모였다가 풀린다.
@@ -102,7 +103,7 @@
 </ul>
 <section class="common">
   <h2>여섯 개에 똑같이 넣은 프롬프트</h2>
-  <p>아래 공통 규칙에 시안별 프롬프트를 붙여 여섯 개를 동시에 만들게 했습니다. 실제로는 영어로 보냈고, 여기에는 같은 내용을 우리말로 옮겼습니다. 디자인 스킬(frontend-design)도 함께 읽혔습니다.</p>
+  <p>아래 공통 규칙에 시안별 프롬프트를 붙여 여섯 개를 동시에 만들게 했습니다. 이 모음의 규칙은 하나입니다. <b>사용한 원샷 프롬프트와 모델을 반드시 함께 공개합니다.</b> 여섯 개 모두 Claude Fable 5.2 모델로, 프롬프트를 한 번만 보내 만들었습니다. 실제로는 영어로 보냈고 여기에는 우리말로 옮겼습니다. 보낸 그대로의 원문은 시안마다 링크해 두었습니다. 디자인 스킬(frontend-design)도 함께 읽혔습니다.</p>
   <details open><summary>공통 프롬프트 보기</summary><div class="prompt">파일 하나만 만든다. 다른 파일은 건드리지 않는다.
 
 - HTML 파일 하나에 CSS와 JS를 모두 넣는다. 외부 라이브러리와 외부 이미지는 쓰지 않는다(그림은 CSS, SVG, 캔버스로 그린다).
