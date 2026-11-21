@@ -1,0 +1,518 @@
+<!doctype html>
+<!--
+  portfolio-styles: https://github.com/java-jaydev/portfolio-styles
+  MIT License, Copyright (c) 2026 java-jaydev
+  가져가서 쓸 때는 이 표시를 지우지 말고, 화면에도 출처를 남겨 주세요.
+-->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>송채원, 곡 쓰고 노래하는 사람</title>
+<meta name="description" content="전주대학교 음악학과 3학년 송채원의 작업 모음. 자작곡, 편곡, 공연, 영화 음악.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --wine:#4A0E2B;
+  --wine-deep:#380A20;
+  --apricot:#FFB38A;
+  --ivory:#FFF6E9;
+  --ivory-soft:#E9D3CB;
+  --gut:clamp(20px,6vw,88px);
+  --serif:"Gowun Batang","Nanum Myeongjo","AppleMyungjo",serif;
+  --sans:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--wine);color:var(--ivory);font-family:var(--sans);font-size:17px;line-height:1.75;word-break:keep-all;overflow-x:hidden}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--apricot);outline-offset:4px}
+button{font:inherit;color:inherit;cursor:pointer}
+
+/* 첫 화면 */
+.hero{position:relative;min-height:min(100vh,920px);min-height:min(100svh,920px);display:flex;flex-direction:column;overflow:hidden;touch-action:pan-y}
+#strings{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.top{position:relative;display:flex;align-items:center;justify-content:space-between;gap:16px 28px;flex-wrap:wrap;padding:22px var(--gut) 0}
+.top ul{display:flex;flex-wrap:wrap;gap:6px 26px;list-style:none}
+.top a{text-decoration:none;font-size:15px;padding:6px 0;border-bottom:1px solid transparent}
+.top a:hover{border-bottom-color:var(--apricot)}
+.sound{background:var(--apricot);color:var(--wine-deep);border:0;padding:9px 18px 9px 14px;font-size:15px;font-weight:700;display:inline-flex;align-items:center;gap:10px}
+.sound i{width:12px;height:12px;border-radius:50%;border:2px solid var(--wine-deep);display:block}
+.sound[aria-pressed="true"]{background:var(--ivory)}
+.sound[aria-pressed="true"] i{background:var(--wine-deep)}
+.intro{position:relative;padding:clamp(20px,5vh,56px) var(--gut) 0;max-width:1200px}
+h1{font-family:var(--serif);font-weight:700;font-size:clamp(68px,13.5vw,176px);line-height:1;letter-spacing:-.02em}
+.lead{font-family:var(--serif);font-size:clamp(20px,2.5vw,30px);line-height:1.5;margin-top:18px;max-width:24em}
+.who{margin-top:10px;color:var(--ivory-soft);font-size:16px}
+.band{position:relative;flex:1;min-height:270px;margin-top:20px}
+.pick{position:absolute;left:var(--gut);width:36px;height:36px;margin-top:-18px;border-radius:50%;border:1.5px solid var(--apricot);background:var(--wine);font-size:14px;font-weight:500;line-height:1;display:grid;place-items:center}
+.pick:hover,.pick.hit{background:var(--apricot);color:var(--wine-deep)}
+.under{position:relative;display:flex;justify-content:space-between;align-items:flex-end;gap:12px 32px;flex-wrap:wrap;padding:10px var(--gut) 26px;font-size:15px;color:var(--ivory-soft)}
+.under p{max-width:34em}
+.under strong{color:var(--ivory);font-weight:500}
+.last{font-family:var(--serif);font-size:18px;color:var(--apricot);min-width:9em;text-align:right;font-variant-numeric:tabular-nums}
+
+/* 본문 */
+main section{display:grid;grid-template-columns:minmax(150px,230px) 1fr;gap:20px clamp(24px,5vw,72px);padding:clamp(52px,9vw,112px) var(--gut);border-top:1px solid var(--apricot)}
+h2{font-family:var(--serif);font-weight:700;font-size:clamp(28px,3.4vw,42px);line-height:1.2}
+.side{font-size:15px;color:var(--ivory-soft);margin-top:10px;max-width:15em}
+.body{max-width:860px;min-width:0}
+.body>p{max-width:36em}
+.body>p+p{margin-top:1em}
+.about-first{font-family:var(--serif);font-size:clamp(20px,2.1vw,25px);line-height:1.65}
+
+.facts{margin-top:34px;display:grid;grid-template-columns:repeat(3,auto);justify-content:start;gap:8px clamp(28px,5vw,64px)}
+.facts dt{font-size:14px;color:var(--ivory-soft);grid-row:2}
+.facts dd{font-family:var(--serif);font-size:clamp(28px,3.4vw,42px);line-height:1.2;color:var(--apricot);font-variant-numeric:tabular-nums}
+
+.tracks{list-style:none;counter-reset:tr}
+.tracks li{counter-increment:tr;display:grid;grid-template-columns:2.2em minmax(0,1fr) clamp(120px,22vw,220px) 4.4em;gap:6px 20px;align-items:start;padding:24px 0;border-bottom:1px solid rgba(255,246,233,.28);outline-offset:6px}
+.tracks li:first-child{border-top:1px solid rgba(255,246,233,.28)}
+.tracks li::before{content:counter(tr);font-family:var(--serif);font-size:22px;color:var(--apricot);line-height:1.5;font-variant-numeric:tabular-nums}
+.tracks h3{font-family:var(--serif);font-size:clamp(21px,2.3vw,27px);font-weight:700;line-height:1.4}
+.tracks .role{font-size:15px;color:var(--apricot);margin-top:2px}
+.tracks .desc{font-size:16px;margin-top:10px;max-width:34em}
+.wave{display:block;width:100%;height:46px;margin-top:6px}
+.wave rect{fill:var(--ivory);opacity:.34}
+.wave rect.on{fill:var(--apricot);opacity:1}
+.dur{font-family:var(--serif);font-size:20px;text-align:right;line-height:1.7;font-variant-numeric:tabular-nums}
+.dur small{display:block;font-family:var(--sans);font-size:12px;color:var(--ivory-soft);line-height:1.3}
+
+.kit{list-style:none;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(24px,4vw,56px)}
+.kit li{padding:16px 0;border-bottom:1px solid rgba(255,246,233,.28);display:grid;grid-template-columns:7.5em 1fr;gap:4px 14px;align-items:baseline}
+.kit b{font-family:var(--serif);font-size:20px;font-weight:700}
+.kit span{font-size:15.5px;color:var(--ivory-soft)}
+
+.years{list-style:none}
+.years li{display:grid;grid-template-columns:5em 1fr;gap:6px 20px;padding:15px 0;border-bottom:1px solid rgba(255,246,233,.28)}
+.years time{font-family:var(--serif);font-size:20px;color:var(--apricot);font-variant-numeric:tabular-nums}
+.years p{font-size:16.5px;max-width:34em}
+
+.mail{font-family:var(--serif);font-size:clamp(24px,4.2vw,50px);line-height:1.3;text-decoration-color:var(--apricot);text-underline-offset:.18em;overflow-wrap:anywhere}
+.mail:hover{color:var(--apricot)}
+.contact-note{margin-top:18px}
+.copy{margin-top:22px;background:none;border:1.5px solid var(--apricot);padding:9px 18px;font-size:15px}
+.copy:hover{background:var(--apricot);color:var(--wine-deep)}
+footer{padding:26px var(--gut) 44px;border-top:1px solid var(--apricot);font-size:14px;color:var(--ivory-soft)}
+
+@media (max-width:760px){
+  body{font-size:16px}
+  main section{grid-template-columns:1fr}
+  .side{max-width:none}
+  .top ul{order:3;width:100%;gap:4px 20px}
+  .pick{width:30px;height:30px;margin-top:-15px;font-size:13px}
+  .last{text-align:left}
+  .facts{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px 14px}
+  .tracks li{grid-template-columns:1.8em minmax(0,1fr);gap:4px 12px}
+  .tracks .dur{grid-column:2;grid-row:2;text-align:left;font-size:18px}
+  .tracks .dur small{display:inline;margin-left:8px;font-size:13px}
+  .tracks .wave-cell{grid-column:2;grid-row:3}
+  .kit{grid-template-columns:1fr}
+  .kit li{grid-template-columns:6.5em 1fr}
+  .years li{grid-template-columns:4em 1fr}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<header class="hero" id="hero">
+  <canvas id="strings" aria-hidden="true"></canvas>
+
+  <nav class="top" aria-label="페이지 안 이동">
+    <ul>
+      <li><a href="#about">소개</a></li>
+      <li><a href="#works">작업</a></li>
+      <li><a href="#kit">악기와 도구</a></li>
+      <li><a href="#years">걸어온 길</a></li>
+      <li><a href="#contact">연락</a></li>
+    </ul>
+    <button class="sound" id="sound" type="button" aria-pressed="false"><i aria-hidden="true"></i><span>소리 켜기</span></button>
+  </nav>
+
+  <div class="intro">
+    <h1>송채원</h1>
+    <p class="lead">가사가 먼저 오는 날도, 코드가 먼저 오는 날도 결국 한 곡으로 끝냅니다.</p>
+    <p class="who">전주대학교 음악학과 3학년. 곡을 쓰고, 편곡하고, 직접 부릅니다.</p>
+  </div>
+
+  <div class="band" id="band" role="group" aria-label="튕길 수 있는 현 여섯 줄">
+    <button class="pick" type="button" data-i="0" aria-label="1번 현, 높은 도">도</button>
+    <button class="pick" type="button" data-i="1" aria-label="2번 현, 라">라</button>
+    <button class="pick" type="button" data-i="2" aria-label="3번 현, 솔">솔</button>
+    <button class="pick" type="button" data-i="3" aria-label="4번 현, 미">미</button>
+    <button class="pick" type="button" data-i="4" aria-label="5번 현, 레">레</button>
+    <button class="pick" type="button" data-i="5" aria-label="6번 현, 낮은 도">도</button>
+  </div>
+
+  <div class="under">
+    <p><strong>줄 위로 마우스를 지나가 보세요.</strong> 손가락으로 눌러도, 숫자 키 1부터 6을 눌러도 튕겨집니다. <span id="soundNote">소리는 꺼져 있어요. 위의 소리 켜기를 누르면 음이 들립니다.</span></p>
+    <p class="last" id="last" aria-live="off">아직 튕긴 줄이 없어요</p>
+  </div>
+</header>
+
+<main>
+  <section id="about">
+    <div>
+      <h2>소개</h2>
+    </div>
+    <div class="body">
+      <p class="about-first">초등학교 2학년 때 피아노 학원에서 악보를 틀리게 치다가, 틀린 쪽이 더 마음에 들어서 그대로 외워 버린 게 첫 작곡이었습니다.</p>
+      <p>지금은 통기타 한 대와 노트북으로 곡을 씁니다. 멜로디를 흥얼거려 휴대폰에 녹음해 두고, 일주일 뒤에도 기억나는 것만 곡으로 만듭니다. 그렇게 걸러서 지금까지 완성한 곡이 23곡이고, 그중 4곡을 올해 EP로 묶었습니다.</p>
+      <p>혼자 부르는 노래만큼 남의 무대를 위한 편곡도 좋아합니다. 7인조 밴드 악보를 처음 써 본 뒤로는 악기마다 숨 쉴 자리를 남겨 두는 일이 제일 재미있습니다.</p>
+      <dl class="facts">
+        <dd>23곡</dd><dt>완성한 자작곡</dt>
+        <dd>18회</dd><dt>카페 정기 공연</dt>
+        <dd>7곡</dd><dt>뮤지컬 편곡</dt>
+      </dl>
+    </div>
+  </section>
+
+  <section id="works">
+    <div>
+      <h2>작업</h2>
+      <p class="side">줄에 마우스를 올리거나 탭 키로 옮겨 가면 파형이 처음부터 다시 흐릅니다. 파형은 곡의 흐름을 그린 그림이고 실제 음원은 아닙니다.</p>
+    </div>
+    <div class="body">
+      <ol class="tracks">
+        <li tabindex="0" data-seed="7">
+          <div>
+            <h3>EP 《창문을 반쯤 열고》</h3>
+            <p class="role">작사, 작곡, 편곡, 노래, 녹음</p>
+            <p class="desc">자취방에서 마이크 한 대로 녹음한 자작곡 4곡입니다. 창문을 닫으면 답답하고 열면 버스 소리가 들어와서, 결국 반쯤 열고 새벽 2시 이후에만 녹음했습니다. 기타와 목소리를 중심으로 두고 피아노는 2곡에만 넣었습니다. 준비에 5개월이 걸렸고 2026년 3월에 공개했습니다.</p>
+          </div>
+          <div class="wave-cell"><svg class="wave" viewBox="0 0 192 46" preserveAspectRatio="none" aria-hidden="true"></svg></div>
+          <p class="dur">14:32<small>4곡 합계</small></p>
+        </li>
+        <li tabindex="0" data-seed="19">
+          <div>
+            <h3>학과 뮤지컬 〈기린봉 아래〉</h3>
+            <p class="role">편곡, 건반 연주</p>
+            <p class="desc">선배가 쓴 넘버 11곡 중 7곡을 7인조 밴드 편성으로 다시 썼습니다. 배우 음역에 맞춰 3곡은 조를 옮겼고, 대사가 겹치는 구간은 악기를 2대까지 줄였습니다. 교내 소극장에서 3회 공연했고 사흘 동안 약 420명이 봤습니다.</p>
+          </div>
+          <div class="wave-cell"><svg class="wave" viewBox="0 0 192 46" preserveAspectRatio="none" aria-hidden="true"></svg></div>
+          <p class="dur">31:10<small>편곡한 7곡</small></p>
+        </li>
+        <li tabindex="0" data-seed="31">
+          <div>
+            <h3>카페 공연 「목요일의 두 곡」</h3>
+            <p class="role">기획, 노래, 기타</p>
+            <p class="desc">학교 앞 카페에서 격주 목요일 저녁마다 자작곡 두 곡과 신청곡 몇 곡을 부릅니다. 2025년 4월에 시작해 지금까지 18회를 했고, 한 번에 평균 25명쯤 앉습니다. 매회 새 곡을 하나씩 처음 불러 보고, 반응이 없으면 그 자리에서 버립니다.</p>
+          </div>
+          <div class="wave-cell"><svg class="wave" viewBox="0 0 192 46" preserveAspectRatio="none" aria-hidden="true"></svg></div>
+          <p class="dur">40:00<small>1회 공연</small></p>
+        </li>
+        <li tabindex="0" data-seed="43">
+          <div>
+            <h3>단편영화 〈늦은 버스〉 음악</h3>
+            <p class="role">작곡, 피아노 연주</p>
+            <p class="desc">영화방송학과 친구의 졸업 단편에 음악을 붙였습니다. 러닝타임 19분 중 음악이 들어가는 구간은 6군데, 합쳐서 8분 40초입니다. 감독이 "음악이 먼저 울지 않았으면 좋겠다"고 해서 피아노 한 대로만 썼습니다. 교내 영화제에서 상영했습니다.</p>
+          </div>
+          <div class="wave-cell"><svg class="wave" viewBox="0 0 192 46" preserveAspectRatio="none" aria-hidden="true"></svg></div>
+          <p class="dur">08:40<small>음악 6구간</small></p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="kit">
+    <div>
+      <h2>악기와 도구</h2>
+      <p class="side">비싼 장비는 없습니다. 손에 익은 것만 적었습니다.</p>
+    </div>
+    <div class="body">
+      <ul class="kit">
+        <li><b>피아노</b><span>15년째. 코드 반주와 악보 초견이 편합니다.</span></li>
+        <li><b>통기타</b><span>6년째. 핑거스타일보다 스트럼 반주를 주로 합니다.</span></li>
+        <li><b>목소리</b><span>메조소프라노. 편한 음역은 낮은 솔부터 높은 도까지.</span></li>
+        <li><b>Logic Pro</b><span>녹음, 편집, 간단한 믹싱까지 혼자 합니다.</span></li>
+        <li><b>MuseScore</b><span>밴드 총보와 파트보 7개를 여기서 뽑았습니다.</span></li>
+        <li><b>녹음 장비</b><span>2채널 오디오 인터페이스 1대, 콘덴서 마이크 1대.</span></li>
+        <li><b>화성학</b><span>전공 수업 4학기. 재즈 화성은 독학 중입니다.</span></li>
+        <li><b>가사</b><span>메모 앱에 문장 310개. 곡이 된 건 그중 일부입니다.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="years">
+    <div>
+      <h2>걸어온 길</h2>
+    </div>
+    <div class="body">
+      <ol class="years">
+        <li><time datetime="2023">2023</time><p>전주대학교 음악학과 입학. 첫 학기 과제로 낸 16마디가 처음으로 남에게 들려준 곡이었습니다.</p></li>
+        <li><time datetime="2024">2024</time><p>교내 창작곡 발표회에서 자작곡 2곡을 불렀습니다. 관객 80명 앞에서 가사를 한 줄 잊었고, 그 뒤로 가사를 손으로 써서 외웁니다.</p></li>
+        <li><time datetime="2025">2025</time><p>카페 공연 「목요일의 두 곡」을 시작했습니다. 가을에는 학과 뮤지컬 〈기린봉 아래〉 편곡을 맡았습니다.</p></li>
+        <li><time datetime="2026">2026</time><p>EP 《창문을 반쯤 열고》를 공개했고, 단편영화 〈늦은 버스〉의 음악을 썼습니다. 지금은 두 번째 EP에 넣을 5곡을 고르는 중입니다.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div>
+      <h2>연락</h2>
+    </div>
+    <div class="body">
+      <a class="mail" href="mailto:chaewon.song@example.com">chaewon.song@example.com</a>
+      <p class="contact-note">공연, 편곡, 영상 음악 문의는 메일로 주세요. 보통 이틀 안에 답장합니다. 데모 음원은 메일로 요청하시면 보내 드립니다.</p>
+      <button class="copy" id="copy" type="button">메일 주소 복사</button>
+    </div>
+  </section>
+</main>
+
+<footer>데모용으로 만든 가상의 인물입니다.</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var hero = document.getElementById('hero');
+  var band = document.getElementById('band');
+  var cv = document.getElementById('strings');
+  var ctx = cv.getContext('2d');
+  var picks = Array.prototype.slice.call(document.querySelectorAll('.pick'));
+  var lastEl = document.getElementById('last');
+  var N = 6;
+  var NAMES = ['높은 도','라','솔','미','레','낮은 도'];
+  var FREQ = [523.25,440.00,392.00,329.63,293.66,261.63];
+  var IVORY = [255,246,233], APRICOT = [255,179,138];
+  var W = 0, H = 0, dpr = 1;
+  var strings = [];
+  for (var i = 0; i < N; i++) strings.push({y:0, amp:0, x0:.5, t0:-1e9, norm:1, last:0});
+  var start = performance.now();
+  var lastInput = start, lastIdle = start, prev = null, visible = true, raf = 0, lastNow = 0;
+
+  function resize(){
+    var r = hero.getBoundingClientRect();
+    W = r.width; H = r.height;
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    var top = band.offsetTop, bh = band.offsetHeight;
+    for (var i = 0; i < N; i++){
+      var y = bh * (i + .5) / N;
+      strings[i].y = top + y;
+      picks[i].style.top = y + 'px';
+    }
+    draw(lastNow || performance.now());
+  }
+
+  function pluck(i, x, strength, opts){
+    opts = opts || {};
+    var now = performance.now();
+    var s = strings[i];
+    if (now - s.last < 70) return;
+    s.last = now;
+    s.x0 = Math.max(.1, Math.min(.9, x / W));
+    var norm = 0;
+    for (var n = 1; n <= 5; n++) norm += Math.pow(Math.sin(n * Math.PI * s.x0), 2) / (n * n);
+    s.norm = norm || 1;
+    var maxAmp = Math.min(30, band.offsetHeight / N * .46);
+    s.amp = maxAmp * Math.max(.3, Math.min(1, strength));
+    s.t0 = now;
+    if (!opts.quiet){
+      lastEl.textContent = '방금 튕긴 줄은 ' + NAMES[i];
+      picks[i].classList.add('hit');
+      setTimeout(function(){ picks[i].classList.remove('hit'); }, 260);
+      if (soundOn) note(i, strength);
+    }
+    if (reduce){ draw(now); setTimeout(function(){ draw(performance.now()); }, 650); }
+  }
+
+  function draw(now){
+    ctx.clearRect(0,0,W,H);
+    for (var i = 0; i < N; i++){
+      var s = strings[i];
+      var p = reduce ? 1 : Math.max(0, Math.min(1, (now - start - 150 - i * 170) / 750));
+      if (p <= 0) continue;
+      p = 1 - Math.pow(1 - p, 3);
+      var t = (now - s.t0) / 1000;
+      var env = s.amp * Math.exp(-2.1 * t);
+      var glow = Math.max(0, 1 - t / 1.1);
+      if (reduce){ env = 0; glow = t < .6 ? 1 : 0; }
+      var c = [0,1,2].map(function(k){ return Math.round(IVORY[k] + (APRICOT[k] - IVORY[k]) * glow); });
+      ctx.strokeStyle = 'rgba(' + c[0] + ',' + c[1] + ',' + c[2] + ',' + (.5 + .5 * glow) + ')';
+      ctx.lineWidth = 1 + i * .32 + glow * .8;
+      ctx.beginPath();
+      var end = W * p;
+      if (env < .15){
+        ctx.moveTo(0, s.y); ctx.lineTo(end, s.y);
+      } else {
+        var f0 = 5.2 + (N - i) * .35;
+        for (var x = 0; x <= end; x += 6){
+          var u = x / W, d = 0;
+          for (var n = 1; n <= 5; n++){
+            d += Math.sin(n * Math.PI * s.x0) / (n * n) * Math.sin(n * Math.PI * u) * Math.cos(2 * Math.PI * f0 * n * t);
+          }
+          var y = s.y + env * d / s.norm;
+          if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+        }
+      }
+      ctx.stroke();
+    }
+  }
+
+  function loop(now){
+    raf = 0; lastNow = now;
+    if (!visible) return;
+    if (now - lastInput > 4000 && now - lastIdle > 1700 && now - start > 2600){
+      lastIdle = now;
+      pluck(Math.floor(Math.random() * N), W * (.2 + Math.random() * .6), .55, {quiet:true});
+    }
+    draw(now);
+    raf = requestAnimationFrame(loop);
+  }
+  function kick(){ if (!reduce && !raf) raf = requestAnimationFrame(loop); }
+
+  /* 포인터 */
+  function local(e){ var r = hero.getBoundingClientRect(); return {x:e.clientX - r.left, y:e.clientY - r.top, t:performance.now()}; }
+  hero.addEventListener('pointermove', function(e){
+    var cur = local(e);
+    lastInput = cur.t;
+    if (prev){
+      var dt = Math.max(8, cur.t - prev.t);
+      var speed = Math.abs(cur.y - prev.y) / dt;
+      for (var i = 0; i < N; i++){
+        var sy = strings[i].y;
+        if ((prev.y - sy) * (cur.y - sy) < 0) pluck(i, cur.x, .35 + speed * .9);
+      }
+    }
+    prev = cur;
+  });
+  hero.addEventListener('pointerleave', function(){ prev = null; });
+  hero.addEventListener('pointercancel', function(){ prev = null; });
+  hero.addEventListener('pointerdown', function(e){
+    if (e.target.closest('button, a')) return;
+    var cur = local(e); lastInput = cur.t; prev = cur;
+    var best = -1, bd = 30;
+    for (var i = 0; i < N; i++){ var d = Math.abs(strings[i].y - cur.y); if (d < bd){ bd = d; best = i; } }
+    if (best >= 0) pluck(best, cur.x, .8);
+  });
+  hero.addEventListener('pointerup', function(e){ if (e.pointerType !== 'mouse') prev = null; });
+
+  picks.forEach(function(b){
+    b.addEventListener('click', function(){
+      lastInput = performance.now();
+      pluck(+b.dataset.i, W * (.3 + Math.random() * .4), .85);
+    });
+  });
+  window.addEventListener('keydown', function(e){
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    var tag = (e.target.tagName || '').toLowerCase();
+    if (tag === 'input' || tag === 'textarea') return;
+    var k = parseInt(e.key, 10);
+    if (k >= 1 && k <= N){
+      lastInput = performance.now();
+      pluck(k - 1, W * (.3 + Math.random() * .4), .85);
+    }
+  });
+
+  /* 소리 */
+  var soundBtn = document.getElementById('sound');
+  var soundNote = document.getElementById('soundNote');
+  var soundOn = false, ac = null, master = null;
+  function note(i, strength){
+    if (!ac) return;
+    var t = ac.currentTime, f = FREQ[i];
+    var g = ac.createGain(), lp = ac.createBiquadFilter();
+    lp.type = 'lowpass';
+    lp.frequency.setValueAtTime(2600, t);
+    lp.frequency.exponentialRampToValueAtTime(500, t + 1.3);
+    g.gain.setValueAtTime(.0001, t);
+    g.gain.exponentialRampToValueAtTime(.2 * Math.max(.35, Math.min(1, strength)), t + .008);
+    g.gain.exponentialRampToValueAtTime(.0001, t + 1.7);
+    var o1 = ac.createOscillator(), o2 = ac.createOscillator(), g2 = ac.createGain();
+    o1.type = 'triangle'; o1.frequency.value = f;
+    o2.type = 'sine'; o2.frequency.value = f * 2; g2.gain.value = .28;
+    o1.connect(lp); o2.connect(g2); g2.connect(lp); lp.connect(g); g.connect(master);
+    o1.start(t); o2.start(t); o1.stop(t + 1.8); o2.stop(t + 1.8);
+  }
+  soundBtn.addEventListener('click', function(){
+    soundOn = !soundOn;
+    if (soundOn){
+      try{
+        if (!ac){
+          var AC = window.AudioContext || window.webkitAudioContext;
+          ac = new AC();
+          master = ac.createGain(); master.gain.value = .9; master.connect(ac.destination);
+        }
+        ac.resume();
+      }catch(err){ soundOn = false; soundNote.textContent = '이 브라우저에서는 소리를 낼 수 없어요. 줄의 움직임은 그대로 볼 수 있습니다.'; }
+    }
+    soundBtn.setAttribute('aria-pressed', soundOn ? 'true' : 'false');
+    soundBtn.querySelector('span').textContent = soundOn ? '소리 끄기' : '소리 켜기';
+    if (soundOn){
+      soundNote.textContent = '소리가 켜졌어요. 줄을 튕기면 음이 들립니다.';
+      lastInput = performance.now();
+      pluck(2, W * .35, .8);
+    } else if (ac){
+      soundNote.textContent = '소리는 꺼져 있어요. 위의 소리 켜기를 누르면 음이 들립니다.';
+    }
+  });
+
+  /* 화면 밖에서는 멈춤 */
+  if ('IntersectionObserver' in window){
+    new IntersectionObserver(function(en){
+      visible = en[0].isIntersecting;
+      if (visible) kick();
+    }).observe(hero);
+  }
+  document.addEventListener('visibilitychange', function(){ if (!document.hidden) kick(); });
+  window.addEventListener('resize', resize);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(resize);
+  resize();
+  if (reduce) draw(performance.now()); else kick();
+
+  /* 트랙 파형 */
+  var NS = 'http://www.w3.org/2000/svg';
+  document.querySelectorAll('.tracks li').forEach(function(li){
+    var svg = li.querySelector('.wave');
+    var seed = +li.dataset.seed, bars = [], COUNT = 48;
+    function rnd(){ seed = (seed * 9301 + 49297) % 233280; return seed / 233280; }
+    var a = 2 + rnd() * 3, b = rnd() * 6;
+    for (var i = 0; i < COUNT; i++){
+      var u = i / (COUNT - 1);
+      var shape = .35 + .65 * Math.abs(Math.sin(u * Math.PI * a + b)) * Math.sin(u * Math.PI);
+      var h = Math.max(3, (shape * .7 + rnd() * .3) * 44);
+      var r = document.createElementNS(NS, 'rect');
+      r.setAttribute('x', i * 4); r.setAttribute('width', 2.4);
+      r.setAttribute('y', (46 - h) / 2); r.setAttribute('height', h);
+      svg.appendChild(r); bars.push(r);
+    }
+    var anim = 0;
+    function play(){
+      cancelAnimationFrame(anim);
+      if (reduce){ bars.forEach(function(r){ r.classList.add('on'); }); return; }
+      bars.forEach(function(r){ r.classList.remove('on'); });
+      var t0 = performance.now();
+      (function step(now){
+        var k = Math.floor((now - t0) / 1500 * COUNT);
+        for (var i = 0; i < COUNT && i <= k; i++) bars[i].classList.add('on');
+        if (k < COUNT) anim = requestAnimationFrame(step);
+      })(t0);
+    }
+    function stop(){
+      if (li.matches(':hover') || li === document.activeElement) return;
+      cancelAnimationFrame(anim);
+      bars.forEach(function(r){ r.classList.remove('on'); });
+    }
+    li.addEventListener('pointerenter', play);
+    li.addEventListener('focus', play);
+    li.addEventListener('pointerleave', stop);
+    li.addEventListener('blur', stop);
+  });
+
+  /* 메일 복사 */
+  var copyBtn = document.getElementById('copy');
+  copyBtn.addEventListener('click', function(){
+    var addr = 'chaewon.song@example.com';
+    function done(ok){ copyBtn.textContent = ok ? '메일 주소를 복사했어요' : '복사하지 못했어요. 주소를 직접 선택해 주세요'; }
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(addr).then(function(){ done(true); }, function(){ done(false); });
+    } else { done(false); }
+  });
+})();
+</script>
+</body>
+</html>

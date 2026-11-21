@@ -1,5 +1,6 @@
 # 한도윤 시안에 쓴 프롬프트
 
+- 만든 사람: [java-jaydev](https://github.com/java-jaydev)
 - 모델: Claude Fable 5.2 (`claude-fable-5-2`)
 - 도구: Claude Code. 디자인 스킬 `frontend-design` 을 읽힌 상태에서 실행했습니다.
 - 방식: 아래 프롬프트를 한 번 보냈습니다. 추가 지시는 하지 않았고, 에이전트가 스스로 화면을 캡처해 보고 고친 뒤 끝냈습니다.
