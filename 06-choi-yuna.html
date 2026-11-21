@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>최유나 | 데이터 사이언스 포트폴리오</title>
+<meta name="description" content="전주대학교 인공지능학과 4학년 최유나의 데이터 사이언스 포트폴리오">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#EDEFF2;
+  --ink:#2A1E3F;
+  --orange:#FF7A1A;
+  --sky:#5BC0EB;
+  --ink-soft:rgba(42,30,63,.68);
+  --rule:rgba(42,30,63,.18);
+  --pad:clamp(20px,6.5vw,104px);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--ground);color:var(--ink);
+  font-family:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  font-size:17px;line-height:1.75;font-weight:400;
+  font-variant-numeric:tabular-nums;
+  -webkit-font-smoothing:antialiased;word-break:keep-all;
+}
+#space{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.page{position:relative;z-index:1}
+a{color:inherit;text-decoration-thickness:1px;text-underline-offset:.22em}
+a:hover{text-decoration-color:var(--orange);text-decoration-thickness:3px}
+:focus-visible{outline:3px solid var(--orange);outline-offset:4px}
+.hl{background:var(--ground);padding:.1em .34em;margin-left:-.34em;
+  -webkit-box-decoration-break:clone;box-decoration-break:clone}
+
+/* 상단 */
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;
+  padding:22px var(--pad) 0;font-size:15px}
+.top strong{font-weight:500}
+.top nav{display:flex;gap:clamp(14px,2.4vw,30px);flex-wrap:wrap}
+.top a{background:var(--ground);padding:2px 6px;margin:-2px -6px;text-decoration:none}
+.top a:hover{text-decoration:underline;text-decoration-color:var(--orange);text-decoration-thickness:3px}
+
+/* 히어로 */
+.hero{min-height:calc(100vh - 60px);min-height:calc(100svh - 60px);
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:8vh var(--pad) 9vh}
+.hero h1{margin:0;font-weight:700;font-size:clamp(64px,13vw,184px);line-height:1.02;letter-spacing:-.03em}
+.hero h1 .hl{padding:0 .1em;margin-left:-.1em}
+.hero .lead{margin:22px 0 0;font-size:clamp(21px,2.5vw,32px);line-height:1.5;font-weight:500;max-width:21em}
+.hero .who{margin:16px 0 0;max-width:34em;color:var(--ink)}
+.hero .hint{margin:34px 0 0;font-size:14px;color:var(--ink-soft);max-width:36em}
+.hero .hint i{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--orange);margin-right:8px;vertical-align:1px}
+
+/* 공통 섹션 */
+section{padding:clamp(64px,11vh,128px) var(--pad) 0}
+h2{margin:0 0 26px;font-size:clamp(26px,2.8vw,36px);font-weight:700;letter-spacing:-.02em;line-height:1.3}
+.prose{max-width:36em}
+.prose p{margin:0 0 1.1em}
+
+/* 프로젝트 */
+.work{display:grid;grid-template-columns:minmax(0,1.62fr) minmax(0,1fr);gap:clamp(24px,4vw,64px);align-items:start}
+.rows{border-top:2px solid var(--ink)}
+.row{display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:28px;align-items:start;
+  padding:30px 0 30px 18px;margin-left:-18px;border-bottom:1px solid var(--rule);
+  border-left:4px solid transparent;cursor:default;transition:border-color .2s}
+.row:hover,.row:focus-visible,.row.on{border-left-color:var(--orange)}
+.row:focus-visible{outline-offset:2px}
+.row h3{margin:0;font-size:22px;font-weight:700;line-height:1.4;letter-spacing:-.01em}
+.row .when{margin:4px 0 12px;font-size:14px;color:var(--ink-soft)}
+.row p.desc{margin:0 0 16px;font-size:16px;max-width:30em}
+.nums{display:flex;flex-wrap:wrap;gap:8px 30px;margin:0}
+.nums div{min-width:0}
+.nums dt{font-size:13px;color:var(--ink-soft)}
+.nums dd{margin:0;font-size:21px;font-weight:500;line-height:1.3}
+.nums dd small{font-size:13px;font-weight:400;color:var(--ink-soft);margin-left:3px}
+.plot{margin:0}
+.plot svg{display:block;width:100%;height:auto;overflow:visible}
+.plot text{font-family:inherit;font-size:10px;fill:var(--ink);fill-opacity:.72;font-variant-numeric:tabular-nums}
+.plot .grid{stroke:var(--ink);stroke-opacity:.12}
+.plot .axis{stroke:var(--ink);stroke-width:1.2}
+.plot figcaption{font-size:12px;line-height:1.5;color:var(--ink-soft);margin-top:6px}
+.key{display:inline-block;width:14px;height:0;border-top:3px solid var(--ink);vertical-align:middle;margin:0 4px 0 0}
+.key.o{border-color:var(--orange)}.key.s{border-color:var(--sky)}.key.d{border-top-style:dashed;border-top-width:2px}
+
+.proj{position:sticky;top:14vh;height:72vh;display:flex;flex-direction:column}
+.proj .frame{flex:1;position:relative;border-left:1.2px solid var(--ink);border-bottom:1.2px solid var(--ink)}
+.proj .frame span{position:absolute;font-size:12px;color:var(--ink-soft)}
+.proj .frame .ax-y{left:8px;top:0}
+.proj .frame .ax-x{right:0;bottom:6px}
+.proj .cap{margin:12px 0 0;font-size:14px;min-height:3.2em;color:var(--ink)}
+
+/* 기술 */
+.skills{width:100%;max-width:880px;border-collapse:collapse;border-top:2px solid var(--ink)}
+.skills th,.skills td{text-align:left;vertical-align:top;padding:14px 18px 14px 0;border-bottom:1px solid var(--rule)}
+.skills thead th{font-size:13px;font-weight:400;color:var(--ink-soft);padding-top:10px;padding-bottom:10px}
+.skills tbody th{font-weight:500;width:34%}
+.skills td:last-child{white-space:nowrap;padding-right:0;text-align:right;width:6em}
+.skills thead th:last-child{text-align:right;padding-right:0}
+
+/* 걸어온 길 */
+.path{list-style:none;margin:0;padding:0;max-width:760px;border-left:1.2px solid var(--ink)}
+.path li{position:relative;display:grid;grid-template-columns:6.4em minmax(0,1fr);gap:14px;padding:0 0 22px 24px}
+.path li::before{content:"";position:absolute;left:-5px;top:.62em;width:9px;height:9px;border-radius:50%;background:var(--ink)}
+.path li.now::before{background:var(--orange);width:13px;height:13px;left:-7px;top:.5em}
+.path time{font-weight:500}
+.path li:last-child{padding-bottom:0}
+
+/* 연락 */
+.contact{padding-bottom:clamp(64px,10vh,120px)}
+.contact .mail{display:flex;flex-wrap:wrap;align-items:center;gap:14px 22px;margin:22px 0 10px}
+.contact .mail a{font-size:clamp(22px,3.4vw,44px);font-weight:700;letter-spacing:-.02em;line-height:1.25;overflow-wrap:anywhere;background:var(--ground)}
+button.copy{font:inherit;font-size:15px;color:var(--ground);background:var(--ink);border:0;border-radius:2px;padding:9px 16px;cursor:pointer}
+button.copy:hover{background:#3c2d58}
+button.copy.done{background:var(--orange);color:var(--ink)}
+.contact .etc{margin:0;color:var(--ink)}
+footer{padding:22px var(--pad) 30px;border-top:1px solid var(--rule);font-size:13px;color:var(--ink-soft)}
+.skip{position:absolute;left:-999px}
+.skip:focus{left:12px;top:12px;background:var(--ink);color:var(--ground);padding:8px 12px;z-index:5}
+
+@media (max-width:980px){
+  .work{grid-template-columns:minmax(0,1fr)}
+  .proj{display:none}
+}
+@media (max-width:640px){
+  body{font-size:16px}
+  .row{grid-template-columns:minmax(0,1fr);gap:18px;padding-right:0}
+  .plot{max-width:300px}
+  .skills thead{display:none}
+  .skills tr{display:block;padding:12px 0;border-bottom:1px solid var(--rule)}
+  .skills tbody th,.skills td{display:block;border:0;padding:0;width:auto}
+  .skills td:last-child{text-align:left;color:var(--ink-soft);font-size:14px}
+  .path li{grid-template-columns:minmax(0,1fr);gap:0}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .row,button.copy{transition:none}
+}
+</style>
+</head>
+<body>
+<canvas id="space" aria-hidden="true"></canvas>
+<a class="skip" href="#work">본문으로 건너뛰기</a>
+
+<div class="page">
+<header class="top">
+  <strong class="hl">최유나 포트폴리오</strong>
+  <nav aria-label="페이지 안 이동">
+    <a href="#work">프로젝트</a>
+    <a href="#skills">기술</a>
+    <a href="#path">걸어온 길</a>
+    <a href="#contact">연락</a>
+  </nav>
+</header>
+
+<main>
+<div class="hero">
+  <h1><span class="hl">최유나</span></h1>
+  <p class="lead"><span class="hl">비슷한 것끼리 찾아내고, 그 결과를 숫자로 확인하는 일을 합니다.</span></p>
+  <p class="who"><span class="hl">전주대학교 인공지능학과 4학년입니다. 모델을 만들기 전에 평가 기준부터 정하는 편이고, 데이터 분석과 ML 엔지니어 자리를 찾고 있습니다.</span></p>
+  <p class="hint"><span class="hl"><i></i><span id="hint">화면의 점들은 가상의 임베딩입니다. 포인터를 움직이면 가장 가까운 12개를 찾아 줍니다.</span></span></p>
+</div>
+
+<section id="about">
+  <h2><span class="hl">소개</span></h2>
+  <div class="prose">
+    <p><span class="hl">1학년 통계 과제로 전주시 공공데이터를 처음 열어 봤습니다. 엑셀로 그린 그래프 하나가 "한옥마을은 토요일 오후 3시에 가장 붐빈다"는 걸 보여 줬고, 그때부터 데이터로 답할 수 있는 질문을 찾아다녔습니다.</span></p>
+    <p><span class="hl">요즘은 검색과 추천처럼 비슷한 것을 찾는 문제에 관심이 많습니다. 정확도 숫자 하나로 끝내지 않고, 모델이 틀린 사례를 50개씩 직접 읽어 본 뒤에 다음 실험을 정합니다.</span></p>
+  </div>
+</section>
+
+<section id="work">
+  <h2><span class="hl">프로젝트</span></h2>
+  <div class="work">
+    <div class="rows">
+
+      <article class="row" tabindex="0" data-shape="map">
+        <div>
+          <h3><span class="hl">전주 한옥마을 유동인구 예측</span></h3>
+          <p class="when"><span class="hl">2025년 9월부터 12월, 개인 프로젝트</span></p>
+          <p class="desc"><span class="hl">공공데이터의 시간대별 유동인구 2년 치에 날씨와 축제 일정을 붙여, 다음 날 시간대별 방문자 수를 예측했습니다. 축제 주간에 오차가 커져서 축제 전날과 당일을 따로 표시하는 변수를 넣었습니다.</span></p>
+          <dl class="nums">
+            <div><dt>데이터</dt><dd>17,520<small>행</small></dd></div>
+            <div><dt>평균 오차율(MAPE)</dt><dd>11.8<small>%</small></dd></div>
+            <div><dt>기준선</dt><dd>19.4<small>%</small></dd></div>
+          </dl>
+        </div>
+        <figure class="plot" id="p-map"></figure>
+      </article>
+
+      <article class="row" tabindex="0" data-shape="bars">
+        <div>
+          <h3><span class="hl">강의평 감성 분석</span></h3>
+          <p class="when"><span class="hl">2025년 3월부터 6월, 동아리 3인 팀</span></p>
+          <p class="desc"><span class="hl">동아리 설문으로 동의를 받아 모은 강의평 4,200문장을 긍정, 중립, 부정으로 직접 라벨링하고 한국어 사전학습 모델을 미세조정했습니다. 저는 라벨 기준서 작성과 학습을 맡았습니다. 중립이 가장 어려웠습니다.</span></p>
+          <dl class="nums">
+            <div><dt>데이터</dt><dd>4,200<small>문장</small></dd></div>
+            <div><dt>macro F1</dt><dd>0.87</dd></div>
+            <div><dt>라벨 일치도</dt><dd>0.74<small>kappa</small></dd></div>
+          </dl>
+        </div>
+        <figure class="plot" id="p-bars"></figure>
+      </article>
+
+      <article class="row" tabindex="0" data-shape="bubble">
+        <div>
+          <h3><span class="hl">학사 안내 챗봇 (캡스톤)</span></h3>
+          <p class="when"><span class="hl">2026년 3월부터 11월, 4인 팀에서 검색과 평가 담당</span></p>
+          <p class="desc"><span class="hl">학사 규정과 공지 PDF 312개를 검색해 근거 문서와 함께 답하는 챗봇입니다. 평가 질문 120개를 먼저 만들고, 정답 근거가 검색 상위 5개 안에 드는 비율을 기준으로 삼았습니다. 재순위 모델을 넣어 0.71에서 0.88로 올렸습니다.</span></p>
+          <dl class="nums">
+            <div><dt>문서 조각</dt><dd>4,812<small>개</small></dd></div>
+            <div><dt>상위 5개 적중률</dt><dd>0.88</dd></div>
+            <div><dt>평가 질문</dt><dd>120<small>개</small></dd></div>
+          </dl>
+        </div>
+        <figure class="plot" id="p-bubble"></figure>
+      </article>
+
+      <article class="row" tabindex="0" data-shape="rank">
+        <div>
+          <h3><span class="hl">전력 사용량 예측 대회</span></h3>
+          <p class="when"><span class="hl">2025년 11월부터 12월, 2인 팀</span></p>
+          <p class="desc"><span class="hl">건물 60곳의 시간별 전력 사용량을 예측하는 온라인 대회에 나갔습니다. 23번 제출했고, 건물 유형별로 모델을 나눈 것이 가장 큰 개선이었습니다. 상위권 풀이를 읽고 검증 방식이 허술했다는 걸 배웠습니다.</span></p>
+          <dl class="nums">
+            <div><dt>순위</dt><dd>41<small>위 / 512팀</small></dd></div>
+            <div><dt>상위</dt><dd>8<small>%</small></dd></div>
+            <div><dt>제출</dt><dd>23<small>회</small></dd></div>
+          </dl>
+        </div>
+        <figure class="plot" id="p-rank"></figure>
+      </article>
+
+    </div>
+
+    <aside class="proj" id="proj" aria-hidden="true">
+      <div class="frame" id="frame"><span class="ax-y">차원 2</span><span class="ax-x">차원 1</span></div>
+      <p class="cap" id="cap">프로젝트에 포인터를 올리면 점들이 그 프로젝트의 모양으로 다시 모입니다.</p>
+    </aside>
+  </div>
+</section>
+
+<section id="skills">
+  <h2><span class="hl">기술</span></h2>
+  <table class="skills">
+    <thead><tr><th scope="col">도구</th><th scope="col">어디에 썼나</th><th scope="col">쓴 기간</th></tr></thead>
+    <tbody>
+      <tr><th scope="row"><span class="hl">Python, pandas, scikit-learn</span></th><td><span class="hl">모든 프로젝트의 전처리와 기준선 모델</span></td><td>3년</td></tr>
+      <tr><th scope="row"><span class="hl">PyTorch, Hugging Face</span></th><td><span class="hl">강의평 분류 모델 미세조정, 챗봇 재순위 모델</span></td><td>1년 6개월</td></tr>
+      <tr><th scope="row"><span class="hl">SQL (PostgreSQL)</span></th><td><span class="hl">인턴 때 주간 지표 쿼리 14개 작성</span></td><td>1년</td></tr>
+      <tr><th scope="row"><span class="hl">LightGBM</span></th><td><span class="hl">유동인구 예측, 전력 사용량 대회</span></td><td>1년</td></tr>
+      <tr><th scope="row"><span class="hl">FastAPI, Docker</span></th><td><span class="hl">챗봇 검색 API를 학과 서버에 배포</span></td><td>6개월</td></tr>
+      <tr><th scope="row"><span class="hl">Git, GitHub</span></th><td><span class="hl">팀 프로젝트 코드 리뷰와 실험 기록</span></td><td>2년</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="path">
+  <h2><span class="hl">걸어온 길</span></h2>
+  <ol class="path">
+    <li><time datetime="2023-03">2023년 3월</time><span class="hl">전주대학교 인공지능학과 입학</span></li>
+    <li><time datetime="2024-03">2024년 3월</time><span class="hl">교내 데이터 분석 동아리 가입, 2025년에 회장을 맡아 주간 스터디 운영</span></li>
+    <li><time datetime="2025-07">2025년 7월</time><span class="hl">전주 지역 스타트업 데이터팀 인턴 8주</span></li>
+    <li><time datetime="2025-11">2025년 11월</time><span class="hl">교내 데이터 분석 경진대회 장려상 (한옥마을 유동인구 예측)</span></li>
+    <li><time datetime="2025-12">2025년 12월</time><span class="hl">전력 사용량 예측 대회 512팀 중 41위</span></li>
+    <li><time datetime="2026-06">2026년 6월</time><span class="hl">SQL 개발자(SQLD) 자격 취득</span></li>
+    <li class="now"><time datetime="2026-11">2026년 11월</time><span class="hl">캡스톤 디자인 최종 발표, 학사 안내 챗봇</span></li>
+  </ol>
+</section>
+
+<section id="contact" class="contact">
+  <h2><span class="hl">연락</span></h2>
+  <p class="prose"><span class="hl">2027년 2월 졸업 예정입니다. 데이터 분석이나 ML 엔지니어 인턴, 신입 자리라면 메일 주세요. 보통 하루 안에 답장합니다.</span></p>
+  <div class="mail">
+    <a href="mailto:yuna.choi@example.com">yuna.choi@example.com</a>
+    <button class="copy" id="copy" type="button">메일 주소 복사</button>
+  </div>
+  <p class="etc"><span class="hl">코드는 <a href="https://example.com/yuna-choi-demo">github.example.com/yuna-choi-demo</a> 에 올려 둡니다.</span></p>
+</section>
+</main>
+
+<footer>데모용으로 만든 가상의 인물입니다.</footer>
+</div>
+
+<script>
+(function(){
+  var INK='#2A1E3F', OR='#FF7A1A', SKY='#5BC0EB', GROUND='#EDEFF2';
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var coarse = matchMedia('(hover: none)').matches;
+
+  /* ---------- 작은 그래프 ---------- */
+  function frame(w,h,L,R,T,B,o,X,Y){
+    var s='';
+    o.yticks.forEach(function(v){
+      s+='<line class="grid" x1="'+L+'" x2="'+(w-R)+'" y1="'+Y(v)+'" y2="'+Y(v)+'"/>'+
+         '<text x="'+(L-5)+'" y="'+(Y(v)+3.5)+'" text-anchor="end">'+v+'</text>';
+    });
+    s+='<line class="axis" x1="'+L+'" x2="'+L+'" y1="'+T+'" y2="'+(h-B)+'"/>'+
+       '<line class="axis" x1="'+L+'" x2="'+(w-R)+'" y1="'+(h-B)+'" y2="'+(h-B)+'"/>'+
+       '<text x="'+((L+w-R)/2)+'" y="'+(h-2)+'" text-anchor="middle">'+o.xlab+'</text>';
+    return s;
+  }
+  function put(id,w,h,inner,o){
+    document.getElementById(id).innerHTML =
+      '<svg viewBox="0 0 '+w+' '+h+'" role="img" aria-label="'+o.aria+'">'+inner+'</svg>'+
+      '<figcaption>'+o.cap+'</figcaption>';
+  }
+  function lineChart(id,o){
+    var w=240,h=136,L=32,R=8,T=8,B=30,n=o.series[0].d.length;
+    var X=function(i){return +(L+(w-L-R)*i/(n-1)).toFixed(1)};
+    var Y=function(v){return +(T+(h-T-B)*(1-(v-o.ymin)/(o.ymax-o.ymin))).toFixed(1)};
+    var s=frame(w,h,L,R,T,B,o,X,Y);
+    o.xticks.forEach(function(t){s+='<text x="'+X(t[0])+'" y="'+(h-B+12)+'" text-anchor="middle">'+t[1]+'</text>'});
+    o.series.forEach(function(se){
+      var d='';
+      se.d.forEach(function(v,i){
+        if(i===0) d+='M'+X(i)+' '+Y(v);
+        else d+= o.step ? 'H'+X(i)+'V'+Y(v) : 'L'+X(i)+' '+Y(v);
+      });
+      s+='<path d="'+d+'" fill="none" stroke="'+se.c+'" stroke-width="'+(se.w||2)+'"'+(se.dash?' stroke-dasharray="4 3"':'')+' stroke-linejoin="round"/>';
+    });
+    if(o.mark){ s+='<circle cx="'+X(o.mark[0])+'" cy="'+Y(o.mark[1])+'" r="4" fill="'+OR+'"/>'; }
+    put(id,w,h,s,o);
+  }
+  function barChart(id,o){
+    var w=240,h=136,L=32,R=8,T=8,B=30,g=o.groups.length,k=o.groups[0].v.length;
+    var Y=function(v){return +(T+(h-T-B)*(1-(v-o.ymin)/(o.ymax-o.ymin))).toFixed(1)};
+    var s=frame(w,h,L,R,T,B,o,null,Y);
+    var slot=(w-L-R)/g, bw=Math.min(26,(slot-14)/k);
+    o.groups.forEach(function(gr,i){
+      var x0=L+slot*i+(slot-bw*k-(k-1)*3)/2;
+      gr.v.forEach(function(v,j){
+        var x=x0+j*(bw+3);
+        s+='<rect x="'+x.toFixed(1)+'" y="'+Y(v)+'" width="'+bw.toFixed(1)+'" height="'+(h-B-Y(v)).toFixed(1)+'" fill="'+o.colors[j]+'"/>'+
+           '<text x="'+(x+bw/2).toFixed(1)+'" y="'+(Y(v)-3)+'" text-anchor="middle">'+v.toFixed(2)+'</text>';
+      });
+      s+='<text x="'+(L+slot*(i+.5)).toFixed(1)+'" y="'+(h-B+12)+'" text-anchor="middle">'+gr.l+'</text>';
+    });
+    put(id,w,h,s,o);
+  }
+  lineChart('p-map',{
+    series:[{d:[3.1,2.9,3.0,3.4,4.2,6.8,6.1,3.0,2.8,3.2,3.5,4.6,7.4,6.3],c:INK,w:2},
+            {d:[3.3,3.0,3.1,3.2,4.5,6.2,5.8,3.2,3.0,3.1,3.6,4.3,6.6,6.0],c:OR,w:2,dash:true}],
+    ymin:2,ymax:8,yticks:[2,4,6,8],xticks:[[0,'1일'],[5,'토'],[12,'토']],xlab:'검증 구간 14일',
+    aria:'검증 구간 14일 동안 실제 방문자와 예측 방문자를 비교한 선 그래프',
+    cap:'<span class="key"></span>실제 <span class="key o d"></span>예측. 세로축은 하루 최대 시간당 방문자(천 명)'
+  });
+  barChart('p-bars',{
+    groups:[{l:'긍정',v:[0.91]},{l:'중립',v:[0.79]},{l:'부정',v:[0.90]}],colors:[INK],
+    ymin:0.5,ymax:1,yticks:[0.5,0.75,1],xlab:'분류',
+    aria:'분류별 F1 점수 막대 그래프. 긍정 0.91, 중립 0.79, 부정 0.90',
+    cap:'분류별 F1. 테스트 문장 630개 기준'
+  });
+  barChart('p-bubble',{
+    groups:[{l:'1개',v:[0.42,0.61]},{l:'3개',v:[0.63,0.82]},{l:'5개',v:[0.71,0.88]}],colors:[SKY,INK],
+    ymin:0,ymax:1,yticks:[0,0.5,1],xlab:'검색 상위 몇 개까지 보는가',
+    aria:'재순위 모델 적용 전후의 검색 적중률 막대 그래프',
+    cap:'<span class="key s"></span>재순위 전 <span class="key"></span>재순위 후. 평가 질문 120개'
+  });
+  lineChart('p-rank',{
+    series:[{d:[412,412,398,398,391,391,391,377,377,377,369,369,362,362,362,358,358,351,351,351,347,347,344],c:INK,w:2}],
+    step:true,mark:[22,344],
+    ymin:340,ymax:420,yticks:[340,380,420],xticks:[[0,'1'],[11,'12'],[22,'23']],xlab:'제출 횟수',
+    aria:'제출 23회 동안 가장 좋은 점수가 내려가는 계단형 그래프',
+    cap:'그때까지의 최고 점수(오차, 낮을수록 좋음). 주황 점이 최종 41위 기록'
+  });
+
+  /* ---------- 임베딩 공간 ---------- */
+  var cv=document.getElementById('space'), ctx=cv.getContext('2d');
+  var W=0,H=0,dpr=1,N=0,P=[],shapes={};
+  var seed=20261122;
+  function rnd(){seed|=0;seed=seed+0x6D2B79F5|0;var t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}
+  function gauss(){var u=1-rnd(),v=rnd();return Math.sqrt(-2*Math.log(u))*Math.cos(6.2832*v)}
+
+  function build(n){
+    N=n;P=[];shapes={};seed=20261122;
+    var C=[];
+    for(var c=0;c<10;c++) C.push({x:.1+rnd()*.84,y:.1+rnd()*.8,sx:.035+rnd()*.06,sy:.035+rnd()*.06,sky:rnd()<.3});
+    for(var i=0;i<N;i++){
+      var hx,hy,sky=false;
+      if(rnd()<.16){hx=rnd();hy=rnd();}
+      else{var k=C[(rnd()*C.length)|0];hx=k.x+gauss()*k.sx;hy=k.y+gauss()*k.sy;sky=k.sky&&rnd()<.6;}
+      P.push({hx:hx,hy:hy,x:hx*W,y:hy*H,ph:rnd()*6.28,sp:.25+rnd()*.5,k:.045+rnd()*.07,
+              s:rnd()<.12?2.4:1.5,sky:sky,d:0});
+    }
+  }
+
+  /* 프로젝트별 모양: 좌표는 -1..1 */
+  function makeShape(name){
+    var sx=new Float32Array(N),sy=new Float32Array(N),ac=new Uint8Array(N),i,x,y;
+    seed=77+name.length*13;
+    if(name==='map'){
+      var Rf=function(a){return .78*(1+.17*Math.sin(3*a+.6)+.09*Math.cos(5*a)+.05*Math.sin(7*a+1))};
+      var hot=[[-.22,-.12,.13],[.28,.2,.1],[.05,-.42,.08]];
+      for(i=0;i<N;i++){
+        var a=rnd()*6.2832,u=rnd();
+        if(i<N*.3){var r=Rf(a)+gauss()*.008;x=Math.cos(a)*r;y=Math.sin(a)*r*.86;}
+        else if(i<N*.72){var hh=hot[i%3];x=hh[0]+gauss()*hh[2];y=hh[1]+gauss()*hh[2];if(i%3===0)ac[i]=1;}
+        else{var r2=Rf(a)*Math.sqrt(u)*.96;x=Math.cos(a)*r2;y=Math.sin(a)*r2*.86;}
+        sx[i]=x;sy[i]=y;
+      }
+    }else if(name==='bars'){
+      var hs=[.91,.79,.90],bw=.4,gap=.16,x0=-(3*bw+2*gap)/2;
+      for(i=0;i<N;i++){
+        if(i<N*.08){sx[i]=-.86+rnd()*1.72;sy[i]=.8+gauss()*.006;continue;}
+        var b=i%3,hgt=(hs[b]-.5)*3.1;
+        sx[i]=x0+b*(bw+gap)+rnd()*bw;sy[i]=.8-rnd()*hgt;
+        if(b===1)ac[i]=1;
+      }
+    }else if(name==='bubble'){
+      var hw=.86,hh2=.52,cy=-.16,rr=.2;
+      for(i=0;i<N;i++){
+        if(i<N*.34){
+          var per=rnd()*(4*hw+4*hh2);
+          if(per<2*hw){x=-hw+per;y=cy-hh2;}
+          else if(per<2*hw+2*hh2){x=hw;y=cy-hh2+(per-2*hw);}
+          else if(per<4*hw+2*hh2){x=hw-(per-2*hw-2*hh2);y=cy+hh2;}
+          else{x=-hw;y=cy+hh2-(per-4*hw-2*hh2);}
+          var ax=Math.abs(x)-(hw-rr),ay=Math.abs(y-cy)-(hh2-rr);
+          if(ax>0&&ay>0){var l=Math.sqrt(ax*ax+ay*ay)||1;x=(x<0?-1:1)*(hw-rr+ax/l*rr);y=cy+(y<cy?-1:1)*(hh2-rr+ay/l*rr);}
+          if(y>cy+hh2-.01&&x>-.56&&x<-.24){i%2?(x=-.56+rnd()*.02):(x=-.24);y=cy+hh2;}
+          sx[i]=x+gauss()*.005;sy[i]=y+gauss()*.005;
+        }else if(i<N*.44){
+          var tt=rnd(),side=i%2;
+          if(side){sx[i]=-.56-.06*tt;sy[i]=cy+hh2+.38*tt;}
+          else{sx[i]=-.24-.38*tt;sy[i]=cy+hh2+.38*tt;}
+        }else{
+          var ln=i%4,len=[1.3,1.18,1.3,.7][ln];
+          sx[i]=-.66+rnd()*len;sy[i]=cy-.3+ln*.2+gauss()*.02;
+          if(ln===3)ac[i]=1;
+        }
+      }
+    }else{ /* rank: 리더보드 곡선 */
+      for(i=0;i<N;i++){
+        if(i<N*.07){sx[i]=-.9+rnd()*1.8;sy[i]=.8+gauss()*.006;continue;}
+        if(i<N*.12){sx[i]=-.9+gauss()*.006;sy[i]=-.8+rnd()*1.6;continue;}
+        var t=rnd();
+        if(i<N*.24){t=41/512+gauss()*.012;ac[i]=1;}
+        var score=.75*Math.exp(-t*4.5)+.12*(1-t)+.05;
+        sx[i]=-.86+t*1.72;sy[i]=.74-score*1.75+gauss()*(ac[i]?.045:.03);
+      }
+    }
+    return {sx:sx,sy:sy,ac:ac};
+  }
+
+  var captions={
+    map:'한옥마을 권역 모양입니다. 주황 점은 방문자가 가장 몰리는 구역입니다.',
+    bars:'분류별 F1 막대입니다. 주황 막대가 가장 어려웠던 중립입니다.',
+    bubble:'챗봇의 말풍선입니다. 주황 줄은 답 아래에 붙는 근거 문서 표시입니다.',
+    rank:'512팀의 리더보드 곡선입니다. 주황 점들이 41위 근처입니다.'
+  };
+  var capEl=document.getElementById('cap'),capDefault=capEl.textContent;
+  var frameEl=document.getElementById('frame'),projEl=document.getElementById('proj');
+  var active=null,alpha=0.9;
+
+  function setShape(name){
+    active=name;
+    if(name&&!shapes[name])shapes[name]=makeShape(name);
+    capEl.textContent=name?captions[name]:capDefault;
+    document.querySelectorAll('.row').forEach(function(r){r.classList.toggle('on',r.dataset.shape===name)});
+  }
+
+  function resize(){
+    dpr=Math.min(window.devicePixelRatio||1,2);
+    W=window.innerWidth;H=window.innerHeight;
+    cv.width=W*dpr;cv.height=H*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+    var want=W<700?900:2600;
+    if(want!==N){build(want);var a=active;if(a){setShape(a);}}
+    var hint=document.getElementById('hint');
+    hint.textContent='화면의 점 '+N.toLocaleString('ko-KR')+'개는 가상의 임베딩입니다. '+
+      (coarse?'화면을 누른 채 움직이면':'포인터를 움직이면')+' 가장 가까운 12개를 찾아 줍니다.';
+  }
+
+  var mx=-9999,my=-9999,pOn=false,offT=0;
+  window.addEventListener('pointermove',function(e){if(e.pointerType==='touch')return;mx=e.clientX;my=e.clientY;pOn=true;},{passive:true});
+  document.addEventListener('mouseleave',function(){pOn=false;});
+  function touch(e){var t=e.touches[0];if(!t)return;mx=t.clientX;my=t.clientY;pOn=true;clearTimeout(offT);}
+  window.addEventListener('touchstart',touch,{passive:true});
+  window.addEventListener('touchmove',touch,{passive:true});
+  window.addEventListener('touchend',function(){offT=setTimeout(function(){pOn=false;},1400);},{passive:true});
+
+  var rows=document.querySelectorAll('.row');
+  rows.forEach(function(r){
+    r.addEventListener('focus',function(){setShape(r.dataset.shape);});
+    r.addEventListener('blur',function(){setShape(null);});
+    if(!coarse){
+      r.addEventListener('mouseenter',function(){setShape(r.dataset.shape);});
+      r.addEventListener('mouseleave',function(){if(document.activeElement!==r)setShape(null);});
+    }
+  });
+  if(coarse&&'IntersectionObserver' in window){
+    var vis=new Set();
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){e.isIntersecting?vis.add(e.target):vis.delete(e.target);});
+      var first=null;rows.forEach(function(r){if(!first&&vis.has(r))first=r;});
+      setShape(first?first.dataset.shape:null);
+    },{rootMargin:'-42% 0px -42% 0px'});
+    rows.forEach(function(r){io.observe(r);});
+  }
+
+  var K=12,near=[],t0=performance.now();
+  function tick(now){
+    var t=(now-t0)/1000;
+    var wide=projEl.offsetParent!==null;
+    var sh=active?shapes[active]:null,cx=W/2,cy=H/2,sc=Math.min(W,H)*.36;
+    if(sh&&wide){var b=frameEl.getBoundingClientRect();cx=b.left+b.width/2;cy=b.top+b.height/2;sc=Math.min(b.width,b.height)*.46;}
+    var heroVis=Math.max(0,1-window.scrollY/(H*.75));
+    var aT=sh?(wide?.92:.3):(.2+.7*heroVis);
+    alpha+=(aT-alpha)*(reduce?1:.08);
+
+    var R=Math.min(170,W*.3),R2=R*R,amp=reduce?0:9,i,p,tx,ty,dx,dy,d2,f;
+    near.length=0;
+    for(i=0;i<N;i++){
+      p=P[i];
+      if(sh){tx=cx+sh.sx[i]*sc;ty=cy+sh.sy[i]*sc;}
+      else{tx=p.hx*W+Math.cos(t*p.sp+p.ph)*amp;ty=p.hy*H+Math.sin(t*p.sp*.8+p.ph)*amp;}
+      if(pOn){
+        dx=mx-tx;dy=my-ty;d2=dx*dx+dy*dy;
+        if(d2<R2&&!reduce){f=1-Math.sqrt(d2)/R;f=f*f*.38;tx+=dx*f;ty+=dy*f;}
+      }
+      if(reduce){p.x=tx;p.y=ty;}else{p.x+=(tx-p.x)*p.k;p.y+=(ty-p.y)*p.k;}
+      if(pOn){dx=mx-p.x;dy=my-p.y;p.d=dx*dx+dy*dy;if(p.d<R2*1.4)near.push(p);}
+    }
+
+    ctx.clearRect(0,0,W,H);
+    ctx.globalAlpha=alpha;
+    ctx.fillStyle=INK;
+    for(i=0;i<N;i++){p=P[i];if(p.sky||(sh&&sh.ac[i]))continue;ctx.fillRect(p.x,p.y,p.s,p.s);}
+    ctx.fillStyle=SKY;
+    for(i=0;i<N;i++){p=P[i];if(!p.sky||(sh&&sh.ac[i]))continue;ctx.fillRect(p.x-.5,p.y-.5,p.s+1.2,p.s+1.2);}
+    if(sh){ctx.fillStyle=OR;for(i=0;i<N;i++){if(sh.ac[i]){p=P[i];ctx.fillRect(p.x-.4,p.y-.4,p.s+1,p.s+1);}}}
+
+    if(pOn&&near.length){
+      near.sort(function(a,b){return a.d-b.d;});
+      var n=Math.min(K,near.length),sum=0,la=Math.max(.5,alpha);
+      ctx.globalAlpha=la;ctx.strokeStyle=OR;ctx.lineWidth=1;ctx.beginPath();
+      for(i=0;i<n;i++){p=near[i];ctx.moveTo(mx,my);ctx.lineTo(p.x,p.y);sum+=Math.sqrt(p.d);}
+      ctx.stroke();
+      ctx.fillStyle=OR;
+      for(i=0;i<n;i++){p=near[i];ctx.beginPath();ctx.arc(p.x,p.y,3.2,0,6.2832);ctx.fill();}
+      ctx.globalAlpha=1;
+      ctx.strokeStyle=INK;ctx.lineWidth=1.4;ctx.beginPath();ctx.arc(mx,my,6,0,6.2832);ctx.stroke();
+      var label='k '+n+'   평균 거리 '+(sum/n/Math.min(W,H)).toFixed(3);
+      ctx.font='500 12px "IBM Plex Sans KR","Apple SD Gothic Neo",sans-serif';
+      var tw=ctx.measureText(label).width+16,lx=mx+16,ly=my+18;
+      if(lx+tw>W-8)lx=mx-16-tw;if(ly+24>H-8)ly=my-40;
+      ctx.fillStyle=INK;ctx.fillRect(lx,ly,tw,24);
+      ctx.fillStyle=GROUND;ctx.textBaseline='middle';ctx.fillText(label,lx+8,ly+12.5);
+    }
+    ctx.globalAlpha=1;
+    requestAnimationFrame(tick);
+  }
+
+  var rz;window.addEventListener('resize',function(){clearTimeout(rz);rz=setTimeout(resize,120);});
+  resize();
+  requestAnimationFrame(tick);
+
+  /* ---------- 메일 주소 복사 ---------- */
+  var btn=document.getElementById('copy');
+  btn.addEventListener('click',function(){
+    var done=function(ok){
+      btn.textContent=ok?'메일 주소를 복사했습니다':'복사하지 못했습니다. 주소를 직접 선택해 주세요';
+      btn.classList.toggle('done',ok);
+      setTimeout(function(){btn.textContent='메일 주소 복사';btn.classList.remove('done');},2200);
+    };
+    if(navigator.clipboard&&navigator.clipboard.writeText){
+      navigator.clipboard.writeText('yuna.choi@example.com').then(function(){done(true);},function(){done(false);});
+    }else done(false);
+  });
+})();
+</script>
+</body>
+</html>

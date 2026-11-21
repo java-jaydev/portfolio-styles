@@ -1,0 +1,490 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>윤서아 | 글자로 첫인상을 만드는 디자이너</title>
+<meta name="description" content="전주대학교 시각디자인학과 4학년 윤서아의 브랜드, 타이포그래피 작업 모음">
+<script>document.documentElement.classList.add('js')</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anybody:wdth,wght@50..150,100..900&family=Gothic+A1:wght@300;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#fff;
+  --ink:#000;
+  --hot:#FF2E88;
+  --lemon:#FFE94A;
+  --pad:clamp(16px,3.2vw,48px);
+  --han:"Gothic A1","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --lat:"Anybody","Gothic A1","Apple SD Gothic Neo",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:var(--han);font-weight:500;
+  font-size:clamp(1rem,.95rem + .25vw,1.125rem);line-height:1.7;
+  overflow-x:clip;word-break:keep-all;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:inherit}
+:focus-visible{outline:4px solid var(--hot);outline-offset:3px}
+.on-hot :focus-visible,.on-ink :focus-visible{outline-color:var(--lemon)}
+::selection{background:var(--hot);color:var(--ink)}
+
+/* ---------- hero ---------- */
+.hero{
+  position:relative;min-height:100svh;
+  display:flex;flex-direction:column;
+  padding:var(--pad);overflow:clip;
+}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap;position:relative;z-index:2}
+.top p{font-weight:700}
+.top nav{display:flex;gap:clamp(.8rem,2vw,1.8rem);flex-wrap:wrap}
+.top nav a{
+  text-decoration:none;font-weight:700;
+  background:linear-gradient(var(--lemon),var(--lemon)) no-repeat 0 100%/100% 0;
+  transition:background-size .18s;padding:0 .15em;
+}
+.top nav a:hover,.top nav a:focus-visible{background-size:100% 100%}
+
+.slab{
+  position:absolute;right:0;top:14%;
+  width:36%;height:52%;background:var(--hot);z-index:0;
+}
+.name{position:relative;z-index:1;margin:auto 0 0}
+.han-row{
+  display:flex;justify-content:space-between;
+  font-family:var(--han);font-weight:900;
+  font-size:clamp(5rem,30vw,27rem);line-height:.92;
+  letter-spacing:0;white-space:nowrap;
+  user-select:none;-webkit-user-select:none;
+}
+.cell{display:block;flex:none}
+.cell .g{display:block;width:max-content;transform-origin:0 55%;will-change:transform}
+.lat{
+  display:block;margin-top:.12em;
+  font-family:var(--lat);
+  font-size:clamp(2.1rem,9.4vw,9.5rem);line-height:.95;
+  white-space:nowrap;
+  font-variation-settings:"wdth" 60,"wght" 200;
+  user-select:none;-webkit-user-select:none;
+}
+.lat b{display:inline-block;font-weight:inherit;will-change:font-variation-settings}
+.lat .sp{width:.28em}
+
+.js .cell,.js .lat b{opacity:0}
+.js.ready .cell,.js.ready .lat b{
+  animation:arrive .95s cubic-bezier(.16,1,.3,1) both;
+  animation-delay:calc(var(--i) * 70ms);
+}
+@keyframes arrive{
+  from{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--r)) scale(.6)}
+  to{opacity:1;transform:none}
+}
+
+.hero-foot{
+  position:relative;z-index:1;
+  display:grid;grid-template-columns:repeat(12,1fr);gap:var(--pad);
+  margin-top:clamp(1.2rem,3vw,2.4rem);align-items:end;
+}
+.hero-foot .who{grid-column:1 / span 5;font-weight:700;font-size:1.05em;line-height:1.5}
+.hero-foot .note{
+  grid-column:8 / span 5;background:var(--lemon);
+  padding:1.1em 1.3em;line-height:1.6;
+}
+.hero-foot .note strong{font-weight:900}
+
+/* ---------- shared section bits ---------- */
+section{position:relative}
+.wrap{padding:clamp(4rem,10vw,9rem) var(--pad)}
+.grid{display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--pad)}
+h2{font-size:1em;font-weight:900}
+h2 span{background:var(--ink);color:var(--paper);padding:.2em .6em}
+.on-ink h2 span{background:var(--paper);color:var(--ink)}
+.on-hot h2 span,.on-lemon h2 span{background:var(--ink);color:var(--paper)}
+
+/* ---------- about ---------- */
+.about h2{grid-column:1 / span 2}
+.about .say{
+  grid-column:1 / -1;
+  font-weight:900;font-size:clamp(2.4rem,8.6vw,9rem);line-height:1.02;letter-spacing:-.045em;
+  margin:.5em 0 .6em;margin-right:calc(var(--pad) * -1.5);
+}
+.about .say i{font-style:normal;font-weight:300}
+.about .body{grid-column:6 / span 6;max-width:38em}
+.about .body p + p{margin-top:1em}
+.about .side{grid-column:1 / span 4;font-weight:700;line-height:1.9}
+.about .side dt{font-weight:300}
+.about .side dd{margin-bottom:.6em}
+
+/* ---------- work specimens ---------- */
+.work-head{padding:0 var(--pad) 1.5rem}
+.spec{padding:clamp(3rem,7vw,6.5rem) var(--pad);overflow:clip}
+.spec.on-lemon{background:var(--lemon)}
+.spec.on-ink{background:var(--ink);color:var(--paper)}
+.spec.on-hot{background:var(--hot)}
+.spec .kind{font-weight:700;grid-column:1 / -1;margin-bottom:.4em}
+.spec h3{
+  grid-column:1 / -1;
+  font-weight:900;font-size:clamp(3.4rem,15.5vw,15rem);line-height:.9;letter-spacing:-.055em;
+  margin:.12em 0 0 -.05em;
+}
+.spec.push h3{text-align:right}
+.spec h3.long{font-size:clamp(3rem,12.6vw,12.5rem)}
+.spec h3.airy{letter-spacing:.09em}
+.spec .latin{
+  grid-column:1 / -1;
+  font-family:var(--lat);font-size:clamp(1.5rem,5vw,4.6rem);line-height:1;
+  font-variation-settings:"wdth" 50,"wght" 250;
+  transition:font-variation-settings .55s cubic-bezier(.2,.9,.2,1);
+  margin:.35em 0 1.1em;white-space:nowrap;
+}
+.spec:hover .latin,.spec:focus-within .latin{font-variation-settings:"wdth" 150,"wght" 850}
+.spec.push .latin{text-align:right}
+.spec .desc{grid-column:1 / span 6;max-width:36em}
+.spec.push .desc{grid-column:1 / span 5}
+.spec dl{grid-column:8 / span 5;display:grid;grid-template-columns:5.2em 1fr;row-gap:.5em;align-content:start}
+.spec dt{font-weight:300}
+.spec dd{font-weight:700}
+.spec dd em{
+  font-style:normal;font-family:var(--lat);
+  font-variation-settings:"wdth" 110,"wght" 800;font-size:1.25em;line-height:1;
+}
+
+/* ---------- tools ---------- */
+.tools h2{grid-column:1 / span 3}
+.tools .hint{grid-column:1 / span 5;margin-top:1.2em;max-width:26em}
+.tools ul{
+  grid-column:1 / -1;list-style:none;margin-top:1.4em;
+  display:flex;flex-wrap:wrap;column-gap:.55em;row-gap:.05em;
+  font-size:clamp(2rem,6.6vw,6.6rem);line-height:1.12;letter-spacing:-.03em;
+}
+.tools li.l{font-family:var(--lat);letter-spacing:-.01em}
+.w9{font-weight:900;font-variation-settings:"wdth" 100,"wght" 900}
+.w7{font-weight:700;font-variation-settings:"wdth" 100,"wght" 650}
+.w5{font-weight:500;font-variation-settings:"wdth" 100,"wght" 420}
+.w3{font-weight:300;font-variation-settings:"wdth" 100,"wght" 180}
+.tools li.mark{background:var(--lemon);padding:0 .12em}
+
+/* ---------- history ---------- */
+.hist{background:var(--ink);color:var(--paper)}
+.hist h2{grid-column:1 / span 3;margin-bottom:2.2em}
+.hist ol{grid-column:1 / -1;list-style:none}
+.hist li{
+  display:grid;grid-template-columns:repeat(12,1fr);column-gap:var(--pad);
+  align-items:baseline;padding:.5em 0;border-top:2px solid var(--paper);
+}
+.hist li:last-child{border-bottom:2px solid var(--paper)}
+.hist time{
+  grid-column:1 / span 3;font-family:var(--lat);
+  font-variation-settings:"wdth" 130,"wght" 800;
+  font-size:clamp(2rem,5.4vw,5rem);line-height:1;
+}
+.hist .what{grid-column:4 / span 6;font-weight:700;font-size:1.15em}
+.hist .how{grid-column:10 / span 3;font-weight:300}
+
+/* ---------- contact ---------- */
+.contact{background:var(--hot)}
+.contact .big{
+  grid-column:1 / -1;
+  font-weight:900;font-size:clamp(3.2rem,15vw,15rem);line-height:.92;letter-spacing:-.055em;
+  margin:.25em 0 .35em -.04em;
+}
+.contact .ways{grid-column:1 / span 7;list-style:none;font-weight:700}
+.contact .ways li{display:flex;gap:1em;align-items:baseline;flex-wrap:wrap;padding:.35em 0}
+.contact .ways span{font-weight:300;min-width:5.2em}
+.contact .ways a{
+  font-family:var(--lat);font-variation-settings:"wdth" 90,"wght" 700;
+  font-size:clamp(1.25rem,3vw,2.3rem);line-height:1.2;
+  text-decoration-thickness:3px;text-underline-offset:.18em;
+  transition:font-variation-settings .35s;overflow-wrap:anywhere;
+}
+.contact .ways a:hover,.contact .ways a:focus-visible{font-variation-settings:"wdth" 125,"wght" 900}
+.contact .avail{grid-column:9 / span 4;background:var(--lemon);padding:1.1em 1.3em;align-self:end}
+footer{padding:1.2rem var(--pad);font-weight:300;font-size:.9em}
+
+/* ---------- small screens ---------- */
+@media (max-width:760px){
+  .slab{width:46%;top:20%;height:38%}
+  .hero-foot .who,.hero-foot .note{grid-column:1 / -1}
+  .about h2,.about .side,.about .body{grid-column:1 / -1}
+  .about .side{margin-bottom:2em}
+  .about .say{margin-right:0}
+  .spec .desc,.spec.push .desc,.spec dl{grid-column:1 / -1}
+  .spec dl{margin-top:1.6em}
+  .tools h2,.tools .hint{grid-column:1 / -1}
+  .hist h2{grid-column:1 / -1}
+  .hist time{grid-column:1 / span 4}
+  .hist .what{grid-column:5 / -1}
+  .hist .how{grid-column:5 / -1}
+  .contact .ways,.contact .avail{grid-column:1 / -1}
+  .contact .avail{margin-top:2em}
+}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .js .cell,.js .lat b{opacity:1}
+  .js.ready .cell,.js.ready .lat b{animation:none}
+  .spec .latin,.contact .ways a,.top nav a{transition:none}
+}
+</style>
+</head>
+<body>
+
+<header class="hero" id="top">
+  <div class="top">
+    <p>윤서아 작업 모음, 2026</p>
+    <nav aria-label="바로가기">
+      <a href="#about">소개</a>
+      <a href="#work">작업</a>
+      <a href="#tools">도구</a>
+      <a href="#history">연혁</a>
+      <a href="#contact">연락</a>
+    </nav>
+  </div>
+
+  <div class="slab" aria-hidden="true"></div>
+
+  <h1 class="name" aria-label="윤서아 Yoon Seoa">
+    <span class="han-row" aria-hidden="true">
+      <span class="cell" style="--i:0;--dx:-40vw;--dy:-30vh;--r:-18deg"><span class="g">윤</span></span>
+      <span class="cell" style="--i:1;--dx:6vw;--dy:46vh;--r:12deg"><span class="g">서</span></span>
+      <span class="cell" style="--i:2;--dx:38vw;--dy:-22vh;--r:22deg"><span class="g">아</span></span>
+    </span>
+    <span class="lat" aria-hidden="true"><b style="--i:3;--dx:-12vw;--dy:20vh;--r:-30deg">Y</b><b style="--i:4;--dx:8vw;--dy:-26vh;--r:24deg">O</b><b style="--i:5;--dx:-4vw;--dy:30vh;--r:-14deg">O</b><b style="--i:6;--dx:16vw;--dy:18vh;--r:36deg">N</b><b class="sp" style="--i:6;--dx:0;--dy:0;--r:0deg">&nbsp;</b><b style="--i:7;--dx:-20vw;--dy:-18vh;--r:18deg">S</b><b style="--i:8;--dx:10vw;--dy:28vh;--r:-26deg">E</b><b style="--i:9;--dx:24vw;--dy:-24vh;--r:14deg">O</b><b style="--i:10;--dx:30vw;--dy:22vh;--r:-20deg">A</b></span>
+  </h1>
+
+  <div class="hero-foot">
+    <p class="who">전주대학교 시각디자인학과 4학년.<br>가게와 전시의 이름을 글자로 짓고 그립니다.</p>
+    <p class="note"><strong>이름 위에서 마우스를 움직여 보세요.</strong> 가까운 글자는 넓고 굵어지고, 먼 글자는 좁고 가늘어져요. 화면을 손가락으로 쓸어도 됩니다.</p>
+  </div>
+</header>
+
+<main>
+
+<section class="about wrap" id="about">
+  <div class="grid">
+    <h2><span>소개</span></h2>
+    <p class="say">가게의 첫인상은 <i>간판 글자 세 개</i>에서 정해져요.</p>
+    <dl class="side">
+      <dt>학교</dt><dd>전주대학교 시각디자인학과, 2027년 2월 졸업 예정</dd>
+      <dt>하는 일</dt><dd>로고타입, 한글 레터링, 전시 아이덴티티, 편집 디자인</dd>
+      <dt>사는 곳</dt><dd>전주 완산구, 남부시장까지 자전거로 12분</dd>
+    </dl>
+    <div class="body">
+      <p>2학년 여름에 객사길 간판을 하나씩 사진으로 모으기 시작했어요. 64개쯤 모였을 때 알았습니다. 오래 기억나는 가게는 인테리어보다 글자가 먼저 떠오른다는 걸요.</p>
+      <p>그 뒤로는 로고를 그리기 전에 사장님 말투부터 받아 적어요. 말이 빠른 분의 가게는 획을 짧게, 느긋한 분의 가게는 받침을 넉넉하게 그립니다. 예쁜 글자보다 그 가게처럼 생긴 글자를 만드는 게 목표예요.</p>
+      <p>손으로 먼저 그리고, Glyphs로 다듬고, 리소 인쇄기로 직접 찍어 봅니다. 화면에서 괜찮던 굵기가 종이에서 뭉치는 걸 세 번쯤 겪고 생긴 습관이에요.</p>
+    </div>
+  </div>
+</section>
+
+<section id="work" aria-labelledby="work-h">
+  <div class="work-head"><h2 id="work-h"><span>작업 네 가지</span></h2></div>
+
+  <article class="spec on-lemon">
+    <div class="grid">
+      <p class="kind">남부시장 청년몰 과일청 가게 리브랜딩</p>
+      <h3>달팽이 상회</h3>
+      <p class="latin" aria-hidden="true">Snail Sanghoe</p>
+      <p class="desc">느리게 졸여서 파는 과일청 가게예요. 사장님이 "우리는 느린 게 자랑"이라고 하셔서, 받침 ㄹ과 ㅇ을 달팽이 껍데기처럼 한 번 더 말아 넣었습니다. 간판, 병 스티커 6종, 영수증 도장까지 한 벌의 글자로 맞췄어요. 간판은 사장님과 같이 사다리 타고 직접 달았습니다.</p>
+      <dl>
+        <dt>기간</dt><dd>2025년 3월부터 6월, 14주</dd>
+        <dt>역할</dt><dd>3명 팀에서 로고타입과 글자 전체 담당</dd>
+        <dt>만든 것</dt><dd>로고타입 1종, 전용 글자 42자, 스티커 6종</dd>
+        <dt>결과</dt><dd>교체 두 달 뒤 가게 인스타 팔로워 <em>420</em>명에서 <em>1,130</em>명</dd>
+      </dl>
+    </div>
+  </article>
+
+  <article class="spec push">
+    <div class="grid">
+      <p class="kind">한글 레터링 포스터 연작</p>
+      <h3>받침</h3>
+      <p class="latin" aria-hidden="true">Batchim, 12 posters</p>
+      <p class="desc">받침 하나가 글자의 무게중심을 어떻게 바꾸는지 포스터 12장으로 실험했어요. 같은 초성과 중성에 받침만 바꿔 가며, 받침이 위를 떠받치는 장면과 짓누르는 장면을 번갈아 그렸습니다. 형광 분홍과 검정 2도로 리소 인쇄했어요.</p>
+      <dl>
+        <dt>기간</dt><dd>2025년 9월부터 11월</dd>
+        <dt>역할</dt><dd>개인 작업, 기획부터 인쇄까지</dd>
+        <dt>만든 것</dt><dd>A2 포스터 12장, 리소 2도</dd>
+        <dt>결과</dt><dd>교내 갤러리 5일 전시에 <em>380</em>명 방문, 포스터 <em>96</em>장 판매</dd>
+      </dl>
+    </div>
+  </article>
+
+  <article class="spec on-ink">
+    <div class="grid">
+      <p class="kind">2026 시각디자인학과 졸업전시 아이덴티티</p>
+      <h3 class="airy">여백 있음</h3>
+      <p class="latin" aria-hidden="true">Room to Spare</p>
+      <p class="desc">졸업생 47명의 작업이 한 공간에 들어가는 전시예요. 누구 작업도 가리지 않도록 전시 제목 글자의 자간을 일부러 벌리고, 그 벌어진 틈에 각자 이름이 들어가게 했습니다. 포스터, 도록, 길 안내 사인까지 같은 규칙 하나로 풀었어요.</p>
+      <dl>
+        <dt>기간</dt><dd>2026년 4월부터 11월</dd>
+        <dt>역할</dt><dd>졸업준비위원회 디자인팀장, 팀원 5명</dd>
+        <dt>만든 것</dt><dd>키 비주얼, 도록 208쪽, 사인 23종</dd>
+        <dt>결과</dt><dd>인쇄비 예산 <em>18</em>% 절감, 개막 첫 주 <em>1,240</em>명 방문</dd>
+      </dl>
+    </div>
+  </article>
+
+  <article class="spec push">
+    <div class="grid">
+      <p class="kind">독립출판 진</p>
+      <h3 class="long">간판 읽는 산책</h3>
+      <p class="latin" aria-hidden="true">Sign Walk Zine</p>
+      <p class="desc">객사길과 남부시장을 걸으며 모은 손글씨 간판 64개를 글자 모양별로 묶은 48쪽짜리 진이에요. 붓글씨, 시트지 커팅, 페인트 글씨로 나누고, 간판마다 사장님께 들은 한 줄을 같이 실었습니다. 사진, 글, 편집, 제본을 혼자 했어요.</p>
+      <dl>
+        <dt>기간</dt><dd>2024년 6월부터 10월</dd>
+        <dt>역할</dt><dd>개인 작업</dd>
+        <dt>만든 것</dt><dd>48쪽, 중철 제본, 200부</dd>
+        <dt>결과</dt><dd>200부 중 <em>173</em>부 판매, 동네 책방 <em>4</em>곳 입고</dd>
+      </dl>
+    </div>
+  </article>
+</section>
+
+<section class="tools wrap" id="tools">
+  <div class="grid">
+    <h2><span>도구</span></h2>
+    <p class="hint">글자가 굵을수록 손에 익은 도구예요. 가는 것은 지금 배우는 중입니다.</p>
+    <ul>
+      <li class="w9 mark">손 레터링</li>
+      <li class="l w9">Illustrator</li>
+      <li class="l w9">InDesign</li>
+      <li class="l w7">Glyphs</li>
+      <li class="w7">리소 인쇄</li>
+      <li class="l w7">Figma</li>
+      <li class="w5">실크스크린</li>
+      <li class="l w5">Photoshop</li>
+      <li class="l w3">After Effects</li>
+      <li class="w3">가변 폰트 제작</li>
+    </ul>
+  </div>
+</section>
+
+<section class="hist wrap on-ink" id="history">
+  <div class="grid">
+    <h2><span>전시와 수상</span></h2>
+    <ol>
+      <li><time datetime="2026">2026</time><p class="what">시각디자인학과 졸업전시 「여백 있음」</p><p class="how">디자인팀장</p></li>
+      <li><time datetime="2025">2025</time><p class="what">지역 대학생 디자인 공모전 타이포그래피 부문</p><p class="how">우수상</p></li>
+      <li><time datetime="2025">2025</time><p class="what">한글날 기념 레터링 단체전</p><p class="how">포스터 3점 참여</p></li>
+      <li><time datetime="2024">2024</time><p class="what">지역 독립출판 장터</p><p class="how">『간판 읽는 산책』 판매 부스</p></li>
+      <li><time datetime="2024">2024</time><p class="what">교내 학술제 포스터 부문</p><p class="how">1위</p></li>
+      <li><time datetime="2023">2023</time><p class="what">학과 타이포그래피 소모임 「자간」</p><p class="how">2년 활동, 2025년 모임장</p></li>
+    </ol>
+  </div>
+</section>
+
+<section class="contact wrap on-hot" id="contact">
+  <div class="grid">
+    <h2><span>연락</span></h2>
+    <p class="big">간판 글자, 같이 고민해요.</p>
+    <ul class="ways">
+      <li><span>메일</span><a href="mailto:seoa@example.com">seoa@example.com</a></li>
+      <li><span>인스타그램</span><a href="https://example.com/seoa.type.demo">@seoa.type.demo</a></li>
+      <li><span>작업 파일</span><a href="https://example.com/seoa-portfolio.pdf">PDF 포트폴리오 받기, 24쪽</a></li>
+    </ul>
+    <p class="avail">2027년 3월부터 일할 수 있어요. 브랜드 디자인 스튜디오의 신입 자리를 찾고 있고, 그 전까지는 작은 가게 로고 작업을 한 달에 한 건씩 받습니다.</p>
+  </div>
+</section>
+
+</main>
+
+<footer>데모용으로 만든 가상의 인물입니다.</footer>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  var hero=document.querySelector('.hero');
+  var row=document.querySelector('.han-row');
+  var cells=[].slice.call(row.querySelectorAll('.cell'));
+  var gs=cells.map(function(c){return c.firstElementChild});
+  var lats=[].slice.call(document.querySelectorAll('.lat b:not(.sp)'));
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W=0,nat=[],px=-1,py=-1,last=-1e9,visible=true,started=false;
+  var tH=cells.map(function(){return 0});
+  var tL=lats.map(function(){return 0});
+  var STEPS=[300,500,700,900];
+
+  function measure(){
+    W=row.clientWidth;
+    var fs=Math.min(W/3*0.97,innerHeight*0.47);
+    row.style.fontSize=fs+'px';
+    row.style.display='flex';
+    gs.forEach(function(g){g.style.transform='none';g.style.fontWeight=900});
+    nat=gs.map(function(g){return g.offsetWidth||fs});
+  }
+
+  function fall(d,R){var k=d/R;return Math.exp(-k*k)}
+
+  function frame(now){
+    if(visible){
+      var r=row.getBoundingClientRect();
+      var x,y,auto=(now-last>2600);
+      if(auto){
+        if(reduce){x=r.left+r.width*0.2;y=r.top+r.height*0.5}
+        else{
+          x=r.left+r.width*(0.5+0.47*Math.sin(now*0.00085));
+          y=r.top+r.height*(0.62+0.5*Math.sin(now*0.0006+1.3));
+        }
+      }else{x=px;y=py}
+      var ease=reduce?1:0.13;
+
+      /* read latin centers first */
+      var lc=lats.map(function(b){var q=b.getBoundingClientRect();return [q.left+q.width/2,q.top+q.height/2]});
+
+      /* hangul: cells share the row width, the near one takes more of it */
+      var R=Math.max(W*0.3,150),sum=0,i,ws=[],cx=[];
+      for(i=0;i<cells.length;i++){
+        cx[i]=r.left+W*(i+0.5)/cells.length;
+        var dx=x-cx[i],dy=(y-(r.top+r.height/2))*0.55;
+        var t=fall(Math.sqrt(dx*dx+dy*dy),R);
+        tH[i]+=(t-tH[i])*ease;
+        ws[i]=1+1.7*tH[i];sum+=ws[i];
+      }
+      for(i=0;i<cells.length;i++){
+        var w=W*ws[i]/sum;
+        var sx=w/nat[i];
+        var lean=Math.max(-1,Math.min(1,(x-cx[i])/R))*tH[i]*-7;
+        cells[i].style.width=w+'px';
+        gs[i].style.transform='scaleX('+sx.toFixed(4)+') skewX('+lean.toFixed(2)+'deg)';
+        gs[i].style.fontWeight=STEPS[Math.min(3,Math.floor(tH[i]*4.4))];
+      }
+
+      /* latin: real width and weight axes per letter */
+      var RL=Math.max(innerWidth*0.17,110);
+      for(i=0;i<lats.length;i++){
+        var ax=x-lc[i][0],ay=(y-lc[i][1])*0.6;
+        var tt=fall(Math.sqrt(ax*ax+ay*ay),RL);
+        tL[i]+=(tt-tL[i])*ease;
+        lats[i].style.fontVariationSettings='"wdth" '+(60+90*tL[i]).toFixed(1)+', "wght" '+(200+700*tL[i]).toFixed(0);
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+
+  function point(x,y){px=x;py=y;last=performance.now()}
+  addEventListener('pointermove',function(e){point(e.clientX,e.clientY)},{passive:true});
+  addEventListener('touchmove',function(e){var t=e.touches[0];if(t)point(t.clientX,t.clientY)},{passive:true});
+  addEventListener('touchstart',function(e){var t=e.touches[0];if(t)point(t.clientX,t.clientY)},{passive:true});
+  addEventListener('resize',measure);
+
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(en){visible=en[0].isIntersecting}).observe(hero);
+  }
+
+  function start(){
+    if(started)return;started=true;
+    measure();
+    root.classList.add('ready');
+    requestAnimationFrame(frame);
+  }
+  if(document.fonts&&document.fonts.ready){document.fonts.ready.then(function(){measure();start()})}
+  setTimeout(start,1200);
+})();
+</script>
+</body>
+</html>

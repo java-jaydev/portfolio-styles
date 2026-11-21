@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>임하린, 상을 차리는 사람</title>
+<meta name="description" content="전주대학교 한식조리학과 임하린의 작업 모음. 반상 차림, 팝업 식당, 전통주 페어링.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&family=Song+Myung&display=swap" rel="stylesheet">
+<style>
+:root{
+  --baekja:#F7F8F5;
+  --jjok:#1F3A5F;
+  --jjok-deep:#16294A;
+  --chija:#E3A72F;
+  --omija:#B4233A;
+  --ssuk:#7C8F5E;
+  --jjok-pale:#C8D4E0;
+  --ssuk-pale:#DDE3D0;
+  --display:"Song Myung","Nanum Myeongjo","AppleMyungjo",serif;
+  --body:"Gowun Dodum","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--baekja);color:var(--jjok);
+  font-family:var(--body);font-size:17px;line-height:1.75;
+  -webkit-font-smoothing:antialiased;word-break:keep-all;
+}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--omija);outline-offset:4px}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;line-height:1.25}
+p{margin:0}
+.wrap{width:min(1180px,100% - 48px);margin-inline:auto}
+
+/* 머리 */
+.top{display:flex;justify-content:space-between;align-items:baseline;padding:26px 0 0}
+.top .name{font-family:var(--display);font-size:22px;text-decoration:none}
+.top nav{display:flex;gap:26px;font-size:15px}
+.top nav a{text-decoration:none;padding:4px 0;background:linear-gradient(var(--chija),var(--chija)) 0 100%/0 2px no-repeat;transition:background-size .25s}
+.top nav a:hover,.top nav a:focus-visible{background-size:100% 2px}
+
+/* 첫 화면 */
+.hero{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:56px;align-items:center;padding:40px 0 96px}
+.hero h1{font-size:clamp(40px,5.4vw,76px);letter-spacing:-.01em}
+.hero .who{margin-top:26px;font-size:18px;max-width:26em}
+.hero .facts{margin:34px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(3,auto);gap:0 30px;justify-content:start}
+.hero .facts li{padding-top:12px;border-top:2px dashed var(--jjok)}
+.hero .facts b{display:block;font-family:var(--display);font-weight:400;font-size:34px;line-height:1.1}
+.hero .facts span{font-size:14px}
+
+.cloth-wrap{perspective:1100px}
+.cloth{
+  display:grid;aspect-ratio:1;width:100%;
+  grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(6,1fr);
+  grid-template-areas:
+    "a a b b c c"
+    "a a b b d e"
+    "f g g g d e"
+    "f g g g h h"
+    "i i j k h h"
+    "l l j k m m";
+  transform-style:preserve-3d;
+}
+.patch{position:relative;transform-style:preserve-3d;animation:unfold .7s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--d) * 85ms)}
+.lift{
+  position:absolute;inset:0;background:var(--c);
+  transform:translateZ(calc(var(--l,0) * 34px)) rotateX(calc(var(--rx,0) * 1deg)) rotateY(calc(var(--ry,0) * 1deg));
+  box-shadow:0 calc(var(--l,0) * 16px) calc(var(--l,0) * 26px) rgba(22,41,74,calc(var(--l,0) * .28));
+  will-change:transform;
+}
+.stitch{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.stitch rect{
+  fill:none;stroke:var(--s,var(--baekja));stroke-width:1.6;vector-effect:non-scaling-stroke;
+  stroke-dasharray:calc(5px + var(--l,0) * 7px) 4px;stroke-linecap:round;
+}
+.dish{position:absolute;inset:11%;width:78%;height:78%;animation:set .55s cubic-bezier(.3,1.5,.5,1) both;animation-delay:calc(1050ms + var(--d) * 70ms)}
+@keyframes unfold{from{opacity:0;transform:rotateY(88deg) scale(.7)}to{opacity:1;transform:none}}
+@keyframes set{from{opacity:0;transform:scale(.4) rotate(-25deg)}to{opacity:1;transform:none}}
+.cloth-note{margin-top:14px;font-size:14px;text-align:right}
+
+/* 구역 공통 */
+section{padding:88px 0}
+.sec-head{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:56px;align-items:end;margin-bottom:44px}
+.sec-head h2{font-size:clamp(30px,3.6vw,48px)}
+.sec-head p{max-width:30em}
+.seam{height:10px;border:0;margin:0;background:
+  linear-gradient(90deg,var(--jjok) 0 34%,var(--chija) 34% 52%,var(--omija) 52% 61%,var(--ssuk) 61% 80%,var(--jjok-pale) 80%);
+  position:relative}
+.seam::after{content:"";position:absolute;left:0;right:0;top:4px;border-top:2px dashed var(--baekja)}
+
+/* 작업: 차림표 */
+.menu{list-style:none;margin:0;padding:0}
+.menu li{display:grid;grid-template-columns:120px minmax(0,1fr) minmax(0,260px);gap:36px;align-items:center;padding:30px 0;border-bottom:2px dashed var(--jjok-pale)}
+.menu li:first-child{border-top:2px dashed var(--jjok-pale)}
+.menu svg{width:120px;height:120px;transition:transform .5s cubic-bezier(.3,1.4,.5,1)}
+.menu li:hover svg{transform:rotate(24deg)}
+.menu h3{font-size:28px}
+.menu .when{font-size:15px;color:var(--omija);margin-top:2px}
+.menu .what{margin-top:10px;max-width:34em}
+.menu dl{margin:0;display:grid;grid-template-columns:1fr auto;gap:6px 14px;font-size:15px}
+.menu dt{position:relative;overflow:hidden;white-space:nowrap}
+.menu dt::after{content:"";position:absolute;bottom:.45em;margin-left:8px;width:100%;border-bottom:2px dotted var(--jjok-pale)}
+.menu dd{margin:0;font-family:var(--display);font-size:20px;line-height:1.3;text-align:right}
+
+/* 할 줄 아는 것 */
+.skills{background:var(--jjok);color:var(--baekja)}
+.skills :focus-visible{outline-color:var(--chija)}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.three > div{padding:6px 34px 6px 0}
+.three > div + div{padding-left:34px;border-left:2px dashed rgba(247,248,245,.45)}
+.three h3{font-size:30px;color:var(--chija)}
+.three ul{margin:18px 0 0;padding:0;list-style:none}
+.three li{padding:9px 0;border-bottom:1px solid rgba(247,248,245,.18)}
+
+/* 걸어온 길 */
+.path{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 56px}
+.path li{display:grid;grid-template-columns:96px minmax(0,1fr);gap:18px;padding:16px 0;border-bottom:2px dashed var(--jjok-pale)}
+.path time{font-family:var(--display);font-size:20px;color:var(--ssuk)}
+.path strong{font-weight:400;font-family:var(--display);font-size:20px;display:block}
+.path span{font-size:15px}
+
+/* 연락 */
+.contact{background:var(--chija);color:var(--jjok-deep);padding:96px 0}
+.contact h2{font-size:clamp(32px,4.4vw,60px);max-width:14em}
+.contact .mail{display:inline-block;margin-top:30px;font-family:var(--display);font-size:clamp(24px,3vw,40px);text-decoration:none;border-bottom:3px dashed var(--jjok-deep);padding-bottom:4px}
+.contact .mail:hover{border-bottom-style:solid}
+.contact p{margin-top:20px;max-width:32em}
+footer{padding:22px 0;font-size:14px;background:var(--jjok-deep);color:var(--jjok-pale)}
+
+@media (max-width:900px){
+  .hero,.sec-head{grid-template-columns:1fr;gap:28px}
+  .hero{padding:28px 0 64px}
+  .hero-text{order:0}
+  .menu li{grid-template-columns:84px minmax(0,1fr);gap:20px;align-items:start}
+  .menu svg{width:84px;height:84px}
+  .menu dl{grid-column:1 / -1}
+  .three{grid-template-columns:1fr}
+  .three > div{padding:0 0 26px}
+  .three > div + div{padding:26px 0;border-left:0;border-top:2px dashed rgba(247,248,245,.45)}
+  .path{grid-template-columns:1fr}
+  section{padding:64px 0}
+}
+@media (max-width:520px){
+  body{font-size:16px}
+  .wrap{width:calc(100% - 36px)}
+  .top nav{gap:14px;font-size:14px}
+  .top .name{font-size:19px}
+  .hero .facts{gap:0 18px}
+  .hero .facts b{font-size:27px}
+  .path li{grid-template-columns:78px minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .patch,.dish{animation:none}
+  .menu svg{transition:none}
+  .menu li:hover svg{transform:none}
+}
+</style>
+</head>
+<body>
+
+<header class="wrap top">
+  <a class="name" href="#top">임하린</a>
+  <nav aria-label="구역 이동">
+    <a href="#works">작업</a>
+    <a href="#skills">할 줄 아는 것</a>
+    <a href="#path">걸어온 길</a>
+    <a href="#contact">연락</a>
+  </nav>
+</header>
+
+<main id="top">
+<div class="wrap hero">
+  <div class="hero-text">
+    <h1>한 상을 차리듯<br>메뉴를 짭니다</h1>
+    <p class="who">전주대학교 한식조리학과 3학년 임하린입니다. 맛을 내는 일과 그 맛이 눈에 먼저 닿게 하는 일을 같이 합니다. 푸드 스타일리스트와 한식 메뉴 개발자 사이 어딘가에서 일하고 싶습니다.</p>
+    <ul class="facts">
+      <li><b>4상</b><span>계절 반상</span></li>
+      <li><b>36접시</b><span>직접 차린 찬</span></li>
+      <li><b>62그릇</b><span>하루 식당 판매</span></li>
+    </ul>
+  </div>
+
+  <div class="cloth-wrap">
+    <div class="cloth" id="cloth" role="img" aria-label="조각보 위에 차린 한 상. 비빔밥, 밥, 국, 전, 김치, 나물, 술잔, 수저가 놓여 있다.">
+
+      <div class="patch" style="grid-area:a;--d:2"><div class="lift" style="--c:#1F3A5F">
+        <svg class="stitch" viewBox="0 0 100 100" preserveAspectRatio="none"><rect x="5" y="5" width="90" height="90"/></svg>
+        <svg class="dish" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="#F7F8F5"/><circle cx="50" cy="50" r="31" fill="#fff" stroke="#C8D4E0" stroke-width="2"/><g fill="#C8D4E0"><ellipse cx="40" cy="42" rx="4" ry="2.2"/><ellipse cx="56" cy="38" rx="4" ry="2.2" transform="rotate(30 56 38)"/><ellipse cx="62" cy="54" rx="4" ry="2.2" transform="rotate(-40 62 54)"/><ellipse cx="46" cy="60" rx="4" ry="2.2" transform="rotate(60 46 60)"/><ellipse cx="50" cy="49" rx="4" ry="2.2" transform="rotate(-15 50 49)"/><ellipse cx="36" cy="55" rx="4" ry="2.2" transform="rotate(20 36 55)"/></g><g fill="#16294A"><circle cx="48" cy="44" r="1.5"/><circle cx="57" cy="50" r="1.5"/><circle cx="43" cy="53" r="1.5"/></g></svg>
+      </div></div>
+
+      <div class="patch" style="grid-area:b;--d:1"><div class="lift" style="--c:#E3A72F;--s:#16294A">
+        <svg class="stitch" viewBox="0 0 100 100" preserveAspectRatio="none"><rect x="5" y="5" width="90" height="90"/></svg>
+        <svg class="dish" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="#F7F8F5"/><circle cx="50" cy="50" r="32" fill="#C9B27A"/><circle cx="50" cy="50" r="32" fill="none" stroke="#1F3A5F" stroke-width="1.5"/><g fill="none" stroke="#7C8F5E" stroke-width="3"><circle cx="40" cy="42" r="4"/><circle cx="60" cy="46" r="4"/><circle cx="48" cy="62" r="4"/><circle cx="62" cy="62" r="3"/></g><rect x="30" y="52" width="10" height="10" fill="#F7F8F5" transform="rotate(15 35 57)"/><rect x="50" y="34" width="9" height="9" fill="#F7F8F5" transform="rotate(-20 54 38)"/></svg>
+      </div></div>
+
+      <div class="patch" style="grid-area:c;--d:3"><div class="lift" style="--c:#F7F8F5;--s:#1F3A5F">
+        <svg class="stitch" viewBox="0 0 100 100" preserveAspectRatio="none"><rect x="3" y="8" width="94" height="84"/></svg>
+        <svg class="dish" viewBox="0 0 200 100"><g fill="#1F3A5F"><rect x="20" y="24" width="160" height="5" rx="2.5"/><rect x="20" y="38" width="160" height="5" rx="2.5"/><rect x="62" y="62" width="118" height="6" rx="3"/><ellipse cx="42" cy="65" rx="26" ry="15"/></g><ellipse cx="42" cy="65" rx="19" ry="9.5" fill="#C8D4E0"/></svg>
+      </div></div>
+
+      <div class="patch" style="grid-area:d;--d:2"><div class="lift" style="--c:#B4233A">
+        <svg class="stitch" viewBox="0 0 100 100" preserveAspectRatio="none"><rect x="8" y="4" width="84" height="92"/></svg>
+        <svg class="dish" viewBox="0 0 100 200"><circle cx="50" cy="56" r="30" fill="#F7F8F5"/><circle cx="50" cy="56" r="21" fill="#F1E3B4"/><circle cx="50" cy="144" r="30" fill="#F7F8F5"/><circle cx="50" cy="144" r="21" fill="#F1E3B4"/><path d="M40 138 q10 8 20 0" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/><path d="M40 50 q10 8 20 0" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/></svg>
+      </div></div>
+
+      <div class="patch" style="grid-area:e;--d:3"><div class="lift" style="--c:#C8D4E0;--s:#1F3A5F">
+        <svg class="stitch" viewBox="0 0 100 100" preserveAspectRatio="none"><rect x="8" y="4" width="84" height="92"/></svg>
+        <svg class="dish" viewBox="0 0 100 200"><g fill="none" stroke="#1F3A5F" stroke-width="3" stroke-linecap="round"><path d="M50 30 v140"/><path d="M50 60 q-22 -6 -26 -28 q22 4 26 28"/><path d="M50 100 q22 -6 26 -28 q-22 4 -26 28"/><path d="M50 140 q-22 -6 -26 -28 q22 4 26 28"/></g></svg>
+      </div></div>
+
+      <div class="patch" style="grid-area:f;--d:2"><div class="lift" style="--c:#7C8F5E">
+        <svg class="stitch" viewBox="0 0 100 100" preserveAspectRatio="none"><rect x="8" y="4" width="84" height="92"/></svg>
+        <svg class="dish" viewBox="0 0 100 200"><circle cx="50" cy="100" r="40" fill="#F7F8F5"/><circle cx="50" cy="100" r="30" fill="#fff" stroke="#C8D4E0" stroke-width="2"/><g fill="#B4233A"><path d="M32 92 q10 -12 22 -4 q-4 12 -22 4z"/><path d="M48 104 q12 -10 22 0 q-8 12 -22 0z"/><path d="M34 108 q8 -6 16 2 q-6 10 -16 -2z"/><path d="M52 84 q10 -4 14 6 q-10 6 -14 -6z"/></g><g stroke="#7C8F5E" stroke-width="2.5" stroke-linecap="round"><path d="M40 98 l8 4"/><path d="M58 96 l6 -3"/></g></svg>
+      </div></div>
+
+      <div class="patch" style="grid-area:g;--d:0"><div class="lift" style="--c:#F7F8F5;--s:#B4233A">
+        <svg class="stitch" viewBox="0 0 100 100" preserveAspectRatio="none"><rect x="3" y="4.5" width="94" height="91"/></svg>
+        <svg class="dish" viewBox="0 0 150 100"><circle cx="75" cy="50" r="47" fill="#16294A"/><circle cx="75" cy="50" r="40" fill="#F1ECE0"/>
+          <path d="M75 50 L75 10 A40 40 0 0 1 109.6 30 Z" fill="#7C8F5E"/>
+          <path d="M75 50 L109.6 30 A40 40 0 0 1 109.6 70 Z" fill="#E3A72F"/>
+          <path d="M75 50 L109.6 70 A40 40 0 0 1 75 90 Z" fill="#6B4A32"/>
+          <path d="M75 50 L75 90 A40 40 0 0 1 40.4 70 Z" fill="#DDE3D0"/>
+          <path d="M75 50 L40.4 70 A40 40 0 0 1 40.4 30 Z" fill="#D9742B"/>
+          <path d="M75 50 L40.4 30 A40 40 0 0 1 75 10 Z" fill="#3E5A3A"/>
+          <g stroke="#F1ECE0" stroke-width="1.6"><path d="M75 50 L75 10"/><path d="M75 50 L109.6 30"/><path d="M75 50 L109.6 70"/><path d="M75 50 L75 90"/><path d="M75 50 L40.4 70"/><path d="M75 50 L40.4 30"/></g>
+          <circle cx="75" cy="50" r="15" fill="#fff"/><circle cx="75" cy="50" r="7.5" fill="#E3A72F"/><circle cx="72.5" cy="47.5" r="2" fill="#F6D98A"/>
+          <g fill="#B4233A"><circle cx="64" cy="61" r="2.6"/></g>
+        </svg>
+      </div></div>
+
+      <div class="patch" style="grid-area:h;--d:2"><div class="lift" style="--c:#1F3A5F">
+        <svg class="stitch" viewBox="0 0 100 100" preserveAspectRatio="none"><rect x="5" y="5" width="90" height="90"/></svg>
+        <svg class="dish" viewBox="0 0 100 100"><rect x="10" y="22" width="80" height="56" rx="6" fill="#F7F8F5"/><g fill="#E3A72F" stroke="#C98B1C" stroke-width="1.5"><circle cx="30" cy="50" r="13"/><circle cx="52" cy="46" r="13"/><circle cx="72" cy="52" r="13"/></g><g fill="#7C8F5E"><rect x="24" y="48" width="12" height="3" rx="1.5"/><rect x="46" y="44" width="12" height="3" rx="1.5"/><rect x="66" y="50" width="12" height="3" rx="1.5"/></g><g fill="#B4233A"><circle cx="30" cy="44" r="1.8"/><circle cx="52" cy="40" r="1.8"/><circle cx="72" cy="46" r="1.8"/></g></svg>
+      </div></div>
+
+      <div class="patch" style="grid-area:i;--d:3"><div class="lift" style="--c:#E3A72F;--s:#16294A">
+        <svg class="stitch" viewBox="0 0 100 100" preserveAspectRatio="none"><rect x="3" y="8" width="94" height="84"/></svg>
+        <svg class="dish" viewBox="0 0 200 100"><g><circle cx="45" cy="50" r="32" fill="#F7F8F5"/><circle cx="45" cy="50" r="23" fill="#7C8F5E"/><g stroke="#3E5A3A" stroke-width="2.5" stroke-linecap="round"><path d="M34 44 l20 10"/><path d="M36 58 l18 -12"/><path d="M45 36 l2 26"/></g></g><g><circle cx="150" cy="50" r="32" fill="#F7F8F5"/><circle cx="150" cy="50" r="23" fill="#F1ECE0"/><g stroke="#C9B27A" stroke-width="2.5" stroke-linecap="round" fill="none"><path d="M136 44 q14 -8 28 2"/><path d="M136 54 q14 8 28 -2"/><path d="M140 62 q10 4 20 -2"/></g><circle cx="150" cy="50" r="2.5" fill="#B4233A"/></g></svg>
+      </div></div>
+
+      <div class="patch" style="grid-area:j;--d:2"><div class="lift" style="--c:#B4233A">
+        <svg class="stitch" viewBox="0 0 100 100" preserveAspectRatio="none"><rect x="8" y="4" width="84" height="92"/></svg>
+        <svg class="dish" viewBox="0 0 100 200"><circle cx="50" cy="100" r="34" fill="#F7F8F5"/><circle cx="50" cy="100" r="24" fill="#3A2418"/><ellipse cx="43" cy="93" rx="7" ry="3" fill="#6B4A32"/></svg>
+      </div></div>
+
+      <div class="patch" style="grid-area:k;--d:2"><div class="lift" style="--c:#DDE3D0;--s:#1F3A5F">
+        <svg class="stitch" viewBox="0 0 100 100" preserveAspectRatio="none"><rect x="8" y="4" width="84" height="92"/></svg>
+        <svg class="dish" viewBox="0 0 100 200"><circle cx="50" cy="100" r="34" fill="#F7F8F5"/><circle cx="50" cy="100" r="24" fill="#B4233A"/><g fill="#F7F8F5"><circle cx="44" cy="94" r="1.6"/><circle cx="56" cy="98" r="1.6"/><circle cx="48" cy="108" r="1.6"/><circle cx="58" cy="108" r="1.6"/></g></svg>
+      </div></div>
+
+      <div class="patch" style="grid-area:l;--d:4"><div class="lift" style="--c:#C8D4E0;--s:#1F3A5F">
+        <svg class="stitch" viewBox="0 0 100 100" preserveAspectRatio="none"><rect x="3" y="8" width="94" height="84"/></svg>
+        <svg class="dish" viewBox="0 0 200 100"><g fill="none" stroke="#1F3A5F" stroke-width="3"><circle cx="50" cy="50" r="22"/><circle cx="100" cy="50" r="22"/><circle cx="150" cy="50" r="22"/></g><g fill="#1F3A5F"><circle cx="75" cy="50" r="3"/><circle cx="125" cy="50" r="3"/></g></svg>
+      </div></div>
+
+      <div class="patch" style="grid-area:m;--d:4"><div class="lift" style="--c:#7C8F5E">
+        <svg class="stitch" viewBox="0 0 100 100" preserveAspectRatio="none"><rect x="3" y="8" width="94" height="84"/></svg>
+        <svg class="dish" viewBox="0 0 200 100"><rect x="24" y="22" width="152" height="56" rx="6" fill="#F7F8F5"/><g fill="#DDE3D0" stroke="#7C8F5E" stroke-width="2"><rect x="38" y="34" width="26" height="32" rx="5"/><rect x="72" y="34" width="26" height="32" rx="5"/></g><g fill="#F6D0D6" stroke="#B4233A" stroke-width="2"><rect x="106" y="34" width="26" height="32" rx="5"/><rect x="140" y="34" width="26" height="32" rx="5"/></g></svg>
+      </div></div>
+
+    </div>
+    <p class="cloth-note">마우스나 손가락을 가져가면 보자기가 들립니다. 가운데는 제가 제일 자주 만드는 비빔밥이에요.</p>
+  </div>
+</div>
+
+<hr class="seam">
+
+<section id="works">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>지금까지 차린 상</h2>
+      <p>사진 대신 숫자로 적었습니다. 몇 명이 먹었고, 몇 접시를 냈고, 준비에 얼마나 걸렸는지가 제 실력을 가장 정직하게 보여 준다고 생각해요.</p>
+    </div>
+    <ul class="menu">
+      <li>
+        <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="#1F3A5F"/><path d="M50 50 L50 10 A40 40 0 0 1 90 50 Z" fill="#F6D0D6"/><path d="M50 50 L90 50 A40 40 0 0 1 50 90 Z" fill="#7C8F5E"/><path d="M50 50 L50 90 A40 40 0 0 1 10 50 Z" fill="#E3A72F"/><path d="M50 50 L10 50 A40 40 0 0 1 50 10 Z" fill="#F7F8F5"/><circle cx="50" cy="50" r="9" fill="#1F3A5F"/></svg>
+        <div>
+          <h3>사계 반상 연작</h3>
+          <p class="when">2025년 3월부터 2026년 2월까지</p>
+          <p class="what">계절마다 7첩 반상을 한 상씩 차렸습니다. 전주 남부시장에서 그 주에 가장 좋은 재료를 사서 찬을 정하고, 그릇과 보자기 색까지 계절에 맞췄어요. 겨울 상의 무 조림은 다섯 번 다시 만들었습니다.</p>
+        </div>
+        <dl><dt>차린 상</dt><dd>4상</dd><dt>접시</dt><dd>36접시</dd><dt>한 상 준비</dt><dd>3주</dd></dl>
+      </li>
+      <li>
+        <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="#16294A"/><circle cx="50" cy="50" r="38" fill="#F1ECE0"/><path d="M50 50 L50 12 A38 38 0 0 1 82.9 31 Z" fill="#7C8F5E"/><path d="M50 50 L82.9 69 A38 38 0 0 1 50 88 Z" fill="#6B4A32"/><path d="M50 50 L17.1 69 A38 38 0 0 1 17.1 31 Z" fill="#D9742B"/><circle cx="50" cy="50" r="14" fill="#fff"/><circle cx="50" cy="50" r="7" fill="#E3A72F"/></svg>
+        <div>
+          <h3>하루 식당 「비빔, 다시」</h3>
+          <p class="when">2026년 5월, 학교 앞 공유 주방</p>
+          <p class="what">전주비빔밥을 요즘 점심 한 끼로 다시 짠 팝업입니다. 콩나물 육수로 밥을 짓고, 황포묵은 구워서 올렸어요. 메뉴 구성과 원가 계산, 담음새를 맡았습니다. 설문에 답한 48명 중 41명이 다시 오겠다고 했어요.</p>
+        </div>
+        <dl><dt>팀</dt><dd>5명</dd><dt>판매</dt><dd>62그릇</dd><dt>준비</dt><dd>6주</dd></dl>
+      </li>
+      <li>
+        <svg viewBox="0 0 100 100" aria-hidden="true"><rect x="4" y="4" width="92" height="92" rx="8" fill="#B4233A"/><g fill="#F7F8F5"><circle cx="24" cy="50" r="11"/><circle cx="50" cy="28" r="11"/><circle cx="76" cy="50" r="11"/><circle cx="36" cy="76" r="11"/><circle cx="64" cy="76" r="11"/></g><g fill="#F1E3B4"><circle cx="24" cy="50" r="7"/><circle cx="50" cy="28" r="7"/><circle cx="76" cy="50" r="7"/><circle cx="36" cy="76" r="7"/><circle cx="64" cy="76" r="7"/></g></svg>
+        <div>
+          <h3>전통주 다섯 잔 코스</h3>
+          <p class="when">2025년 11월, 학과 시식회</p>
+          <p class="what">전북에서 빚는 술 다섯 가지를 고르고, 잔마다 한 접시씩 붙였습니다. 탁주에는 들깨 묵전, 약주에는 유자 수육처럼 술의 단맛과 신맛을 먼저 적어 놓고 음식을 맞췄어요.</p>
+        </div>
+        <dl><dt>코스</dt><dd>5잔 5접시</dd><dt>손님</dt><dd>24명</dd><dt>준비</dt><dd>4주</dd></dl>
+      </li>
+      <li>
+        <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="46" fill="#7C8F5E"/><circle cx="50" cy="50" r="36" fill="#F7F8F5"/><g fill="none" stroke="#3E5A3A" stroke-width="3" stroke-linecap="round"><path d="M50 72 V34"/><path d="M50 50 q-14 -2 -16 -16 q14 2 16 16"/><path d="M50 58 q14 -2 16 -16 q-14 2 -16 16"/></g></svg>
+        <div>
+          <h3>쑥 향 나는 봄</h3>
+          <p class="when">2026년 4월, 교내 한식 조리 경연</p>
+          <p class="what">70분 안에 세 접시를 내는 개인전이었습니다. 쑥 완자탕, 두릅 산적, 쑥 설기를 냈고 28명 중 은상을 받았어요. 심사평에서 "접시 여백이 좋다"는 말을 들은 게 제일 기뻤습니다.</p>
+        </div>
+        <dl><dt>제한 시간</dt><dd>70분</dd><dt>접시</dt><dd>3접시</dd><dt>결과</dt><dd>28명 중 은상</dd></dl>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<section class="skills" id="skills">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>할 줄 아는 것</h2>
+      <p>만들고, 담고, 찍는 세 가지를 혼자서 끝까지 할 수 있습니다.</p>
+    </div>
+    <div class="three">
+      <div>
+        <h3>조리</h3>
+        <ul>
+          <li>7첩 반상까지 혼자 차리기</li>
+          <li>나물 손질과 무침 20여 가지</li>
+          <li>육수 네 가지(멸치, 콩나물, 사골, 채소)</li>
+          <li>된장과 간장 담그기, 올해로 2년째</li>
+        </ul>
+      </div>
+      <div>
+        <h3>담음새</h3>
+        <ul>
+          <li>백자, 옹기, 유기 중에 음식에 맞는 그릇 고르기</li>
+          <li>오방색으로 접시 색 균형 잡기</li>
+          <li>담기 전에 손으로 먼저 스케치하기</li>
+          <li>보자기와 수저까지 포함한 상 전체 구성</li>
+        </ul>
+      </div>
+      <div>
+        <h3>촬영</h3>
+        <ul>
+          <li>창가 자연광으로 위에서 찍기</li>
+          <li>미러리스 카메라와 50mm 렌즈</li>
+          <li>라이트룸으로 색 보정</li>
+          <li>촬영 순서표 만들어 음식 식기 전에 끝내기</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="path">
+  <div class="wrap">
+    <div class="sec-head">
+      <h2>걸어온 길</h2>
+      <p>할머니 댁 장독대에서 시작해서 지금은 학교 실습실에 제일 늦게까지 남는 사람이 됐습니다.</p>
+    </div>
+    <ol class="path">
+      <li><time datetime="2023-03">2023. 3</time><div><strong>전주대학교 한식조리학과 입학</strong><span>첫 학기 칼질 실습에서 무 한 상자를 썰었습니다.</span></div></li>
+      <li><time datetime="2023-12">2023. 12</time><div><strong>한식조리기능사</strong><span>실기 두 번째 도전에 합격.</span></div></li>
+      <li><time datetime="2024-08">2024. 8</time><div><strong>양식조리기능사</strong><span>소스를 배우려고 땄습니다.</span></div></li>
+      <li><time datetime="2025-07">2025. 7</time><div><strong>한옥마을 한식당 주방 실습 8주</strong><span>찬 담당으로 하루 평균 120인분을 준비했습니다.</span></div></li>
+      <li><time datetime="2025-11">2025. 11</time><div><strong>떡제조기능사</strong><span>후식까지 한 상에 넣고 싶어서.</span></div></li>
+      <li><time datetime="2026-04">2026. 4</time><div><strong>교내 한식 조리 경연 은상</strong><span>개인전 28명 참가.</span></div></li>
+      <li><time datetime="2026-05">2026. 5</time><div><strong>하루 식당 「비빔, 다시」 운영</strong><span>62그릇을 4시간 만에 다 팔았습니다.</span></div></li>
+      <li><time datetime="2026-09">2026. 9</time><div><strong>학과 푸드 스타일링 소모임 대표</strong><span>회원 14명과 격주로 촬영합니다.</span></div></li>
+    </ol>
+  </div>
+</section>
+</main>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2>같이 상을 차릴 일이 있다면 편하게 불러 주세요</h2>
+    <a class="mail" href="mailto:harin@example.com">harin@example.com</a>
+    <p>메뉴 개발, 촬영 보조, 팝업 식당 일손 모두 좋습니다. 방학에는 전주 밖에서도 일할 수 있어요. 메일은 이틀 안에 답합니다.</p>
+  </div>
+</section>
+
+<footer><div class="wrap">데모용으로 만든 가상의 인물입니다.</div></footer>
+
+<script>
+(function(){
+  var cloth = document.getElementById('cloth');
+  if(!cloth) return;
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var lifts = Array.prototype.slice.call(cloth.querySelectorAll('.lift'));
+  var state = lifts.map(function(){ return {l:0, rx:0, ry:0, cx:0, cy:0}; });
+  var pointer = {x:0, y:0, active:false};
+  var lastMove = 0, visible = true, started = performance.now();
+
+  function measure(){
+    lifts.forEach(function(el, i){
+      var r = el.parentNode.getBoundingClientRect();
+      state[i].cx = r.left + r.width / 2 + window.scrollX;
+      state[i].cy = r.top + r.height / 2 + window.scrollY;
+    });
+  }
+  measure();
+  window.addEventListener('resize', measure);
+  window.addEventListener('load', measure);
+
+  function onPoint(e){
+    pointer.x = e.pageX; pointer.y = e.pageY;
+    pointer.active = true; lastMove = performance.now();
+  }
+  window.addEventListener('pointermove', onPoint, {passive:true});
+  window.addEventListener('pointerdown', onPoint, {passive:true});
+
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(en){ visible = en[0].isIntersecting; }).observe(cloth);
+  }
+
+  function frame(now){
+    requestAnimationFrame(frame);
+    if(!visible) return;
+
+    var box = cloth.getBoundingClientRect();
+    var R = Math.max(150, box.width * 0.38);
+    var px, py, strength;
+
+    // 손이 2.5초 넘게 멈추면 바람이 천을 한 번씩 쓸고 지나간다
+    if(!pointer.active || now - lastMove > 2500){
+      var t = (now - started) / 1000;
+      px = box.left + window.scrollX + box.width * (0.5 + 0.42 * Math.sin(t * 0.55));
+      py = box.top + window.scrollY + box.height * (0.5 + 0.36 * Math.sin(t * 0.83 + 1.2));
+      strength = now - started < 2200 ? 0 : 0.55;
+    } else {
+      px = pointer.x; py = pointer.y; strength = 1;
+    }
+
+    for(var i = 0; i < lifts.length; i++){
+      var s = state[i];
+      var dx = px - s.cx, dy = py - s.cy;
+      var d = Math.sqrt(dx * dx + dy * dy);
+      var f = Math.max(0, 1 - d / R);
+      f = f * f * (3 - 2 * f) * strength;
+      var trx = (dy / R) * -14 * f;
+      var tryy = (dx / R) * 14 * f;
+      s.l += (f - s.l) * 0.12;
+      s.rx += (trx - s.rx) * 0.12;
+      s.ry += (tryy - s.ry) * 0.12;
+      var el = lifts[i];
+      el.style.setProperty('--l', s.l.toFixed(3));
+      el.style.setProperty('--rx', s.rx.toFixed(2));
+      el.style.setProperty('--ry', s.ry.toFixed(2));
+      el.parentNode.style.zIndex = s.l > 0.02 ? Math.round(s.l * 10) + 1 : '';
+    }
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

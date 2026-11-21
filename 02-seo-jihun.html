@@ -1,0 +1,745 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>서지훈 | 게임 프로그래머 포트폴리오</title>
+<meta name="description" content="전주대학교 게임콘텐츠학과 3학년 서지훈의 게임 포트폴리오">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<style>@font-face{font-family:"Galmuri11";src:url("Galmuri11.woff2") format("woff2");font-display:swap}</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+:root{
+  --night:#2B1B4D;
+  --night-deep:#1E1238;
+  --night-lift:#3A2766;
+  --violet:#5A3FA0;
+  --coral:#FF5A5F;
+  --mint:#7DE2D1;
+  --cream:#FFE66D;
+  --paper:#FFF6CF;
+  --px:4px;
+  --sx:4px;
+  --sy:4px;
+  --pixel:"Galmuri11","Galmuri9","DungGeunMo","NeoDunggeunmo",ui-monospace,"Apple SD Gothic Neo",monospace;
+  --body:"Pretendard","Apple SD Gothic Neo","Malgun Gothic","Noto Sans KR",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--night);
+  color:var(--paper);
+  font-family:var(--body);
+  font-size:17px;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+a{color:var(--mint)}
+:focus-visible{outline:4px solid var(--mint);outline-offset:4px}
+h1,h2,h3{font-family:var(--pixel);font-weight:400;line-height:1.3;margin:0}
+p{margin:0 0 1em;max-width:34em}
+.wrap{width:min(1180px,100% - 40px);margin-inline:auto}
+
+/* 상단 바 */
+.top{
+  position:sticky;top:0;z-index:20;
+  background:var(--night-deep);
+  border-bottom:var(--px) solid var(--cream);
+}
+.top .wrap{display:flex;align-items:center;gap:16px;padding:10px 0;flex-wrap:wrap}
+.brand{font-family:var(--pixel);font-size:18px;color:var(--cream);text-decoration:none;margin-right:auto}
+.brand span{color:var(--coral)}
+.stage-nav{display:flex;gap:10px;flex-wrap:wrap}
+.stage-nav a{
+  font-family:var(--pixel);font-size:14px;
+  text-decoration:none;
+  padding:6px 12px 6px 10px;
+  display:inline-flex;align-items:center;gap:8px;
+  border:var(--px) solid var(--cream);
+  background:var(--cream);color:var(--night);
+  box-shadow:3px 3px 0 var(--coral);
+}
+.stage-nav a::before{
+  content:"";width:8px;height:8px;background:var(--coral);
+}
+.stage-nav a.locked{
+  background:transparent;color:var(--paper);
+  border-style:dashed;border-color:var(--violet);
+  box-shadow:none;opacity:.75;
+}
+.stage-nav a.locked::before{background:var(--violet)}
+.stage-nav a.pop{animation:pop .5s steps(5) 1}
+@keyframes pop{
+  0%{transform:translateY(0)}
+  40%{transform:translateY(-12px)}
+  100%{transform:translateY(0)}
+}
+
+/* 히어로 */
+.hero{padding:48px 0 72px}
+.hero .wrap{
+  display:grid;grid-template-columns:5fr 8fr;gap:48px;align-items:center;
+}
+.hero h1{font-size:clamp(30px,3.6vw,52px);color:var(--cream);margin-bottom:24px}
+.hero h1 .line{display:block}
+.hero h1 .line:nth-child(2){color:var(--paper)}
+.hero h1 .line:nth-child(3){color:var(--mint)}
+.hero h1 .rest{visibility:hidden}
+.hero h1 .caret{display:inline-block;width:.5em;height:.9em;background:var(--coral);vertical-align:-0.08em;margin-left:2px}
+.hint{
+  font-family:var(--pixel);font-size:14px;color:var(--mint);
+  border-left:var(--px) solid var(--mint);padding-left:12px;margin-top:24px;
+}
+.btn{
+  font-family:var(--pixel);font-size:14px;
+  background:var(--coral);color:var(--night-deep);
+  border:0;padding:10px 16px;cursor:pointer;
+  box-shadow:var(--sx) var(--sy) 0 var(--cream);
+  text-decoration:none;display:inline-block;
+}
+.btn:active{transform:translate(4px,4px);box-shadow:0 0 0 var(--cream)}
+.btn.ghost{background:transparent;color:var(--cream);border:var(--px) solid var(--cream);box-shadow:none;padding:6px 12px}
+
+.cabinet{
+  background:var(--night-deep);
+  border:var(--px) solid var(--cream);
+  box-shadow:calc(var(--sx)*2) calc(var(--sy)*2) 0 var(--coral);
+}
+.hud{
+  display:flex;justify-content:space-between;gap:12px;
+  font-family:var(--pixel);font-size:14px;
+  padding:8px 12px;
+  background:var(--cream);color:var(--night-deep);
+}
+.hud b{font-weight:400;color:#B4232B}
+#game{
+  display:block;width:100%;height:auto;aspect-ratio:320/176;
+  image-rendering:pixelated;image-rendering:crisp-edges;
+  background:var(--night);
+  touch-action:pan-y;cursor:crosshair;
+}
+.cabinet-foot{
+  font-family:var(--pixel);font-size:12px;color:var(--mint);
+  padding:8px 12px;border-top:var(--px) solid var(--violet);
+  display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;
+}
+
+/* 섹션 공통 */
+section{padding:72px 0;scroll-margin-top:60px}
+.band{background:var(--night-deep);border-block:var(--px) solid var(--violet)}
+h2{font-size:clamp(24px,2.6vw,36px);color:var(--cream);margin-bottom:32px}
+h2 i{font-style:normal;display:inline-block;width:14px;height:14px;background:var(--coral);margin-right:14px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+/* 소개 */
+.about{display:grid;grid-template-columns:7fr 5fr;gap:56px;align-items:start}
+.about p{font-size:18px}
+.save{
+  border:var(--px) solid var(--mint);
+  background:var(--night);
+  box-shadow:var(--sx) var(--sy) 0 var(--mint);
+  padding:20px 22px;margin:0;
+  font-family:var(--pixel);font-size:14px;
+}
+.save h3{font-size:14px;color:var(--mint);margin-bottom:14px}
+.save dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:8px 18px}
+.save dt{color:var(--cream)}
+.save dd{margin:0;color:var(--paper)}
+
+/* 스테이지 선택 */
+.carts{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;margin-bottom:44px}
+.cart{
+  --body-c:var(--coral);--ink:var(--night-deep);
+  background:none;border:0;padding:0;cursor:pointer;text-align:left;
+  font-family:var(--pixel);color:var(--ink);
+  filter:drop-shadow(var(--sx) var(--sy) 0 var(--night-deep));
+  transition:transform .2s steps(2);
+  position:relative;
+}
+.band .cart{filter:drop-shadow(var(--sx) var(--sy) 0 #000)}
+.cart .shell{
+  display:block;background:var(--body-c);
+  padding:18px 14px 12px;
+  clip-path:polygon(0 12px,12px 12px,12px 0,calc(100% - 12px) 0,calc(100% - 12px) 12px,100% 12px,100% 100%,78% 100%,78% calc(100% - 8px),22% calc(100% - 8px),22% 100%,0 100%);
+}
+.cart .label{
+  display:block;background:var(--night);
+  padding:12px 10px 10px;text-align:center;
+}
+.cart canvas{width:72px;height:72px;image-rendering:pixelated;display:block;margin:0 auto 8px}
+.cart .title{display:block;color:var(--cream);font-size:15px;line-height:1.3;min-height:2.6em}
+.cart .meta{display:flex;justify-content:space-between;font-size:12px;padding:8px 2px 10px}
+.cart[aria-selected="true"]{transform:translateY(-12px)}
+.cart[aria-selected="true"]::after{
+  content:"";position:absolute;left:50%;bottom:-22px;margin-left:-6px;
+  width:12px;height:12px;background:var(--cream);animation:blink 1s steps(1) infinite;
+}
+.cart:nth-child(2){--body-c:var(--mint)}
+.cart:nth-child(3){--body-c:var(--cream)}
+.cart:nth-child(4){--body-c:var(--violet);--ink:var(--paper)}
+
+.stage{
+  border:var(--px) solid var(--cream);background:var(--night);
+  padding:28px 30px;
+  display:grid;grid-template-columns:7fr 5fr;gap:40px;
+}
+.stage.swap{animation:wipe .35s steps(6) 1}
+@keyframes wipe{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+.stage h3{font-size:24px;color:var(--cream);margin-bottom:6px}
+.stage .kind{font-family:var(--pixel);font-size:14px;color:var(--mint);margin-bottom:16px}
+.stage ul{margin:0;padding-left:1.1em;max-width:34em}
+.stage li{margin-bottom:6px}
+.score{margin:0;font-family:var(--pixel);font-size:14px;display:grid;gap:10px;align-content:start}
+.score div{display:flex;justify-content:space-between;gap:16px;border-bottom:2px dashed var(--violet);padding-bottom:8px}
+.score dt{color:var(--mint)}
+.score dd{margin:0;color:var(--cream);text-align:right}
+
+/* 장비창 */
+.inv{display:grid;grid-template-columns:6fr 6fr;gap:40px;align-items:start}
+.slots{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.slot{
+  aspect-ratio:1;
+  font-family:var(--pixel);font-size:14px;color:var(--paper);
+  background:var(--night-lift);
+  border:var(--px) solid var(--violet);
+  cursor:pointer;padding:4px;
+  display:grid;place-items:center;text-align:center;line-height:1.2;
+}
+.slot small{display:block;font-size:11px;color:var(--mint);margin-top:4px}
+.slot[aria-pressed="true"]{border-color:var(--cream);background:var(--night-deep);color:var(--cream);box-shadow:var(--sx) var(--sy) 0 var(--coral)}
+.talk{
+  border:var(--px) solid var(--paper);background:var(--night-deep);
+  padding:22px 24px;min-height:190px;
+}
+.talk h3{font-size:18px;color:var(--cream);margin-bottom:10px}
+.talk p{margin:0}
+.talk .lv{font-family:var(--pixel);font-size:13px;color:var(--mint);margin-bottom:10px}
+
+/* 세이브 기록 */
+.log{list-style:none;margin:0;padding:0;max-width:760px}
+.log li{
+  display:grid;grid-template-columns:110px 1fr;gap:20px;
+  padding:14px 0;border-bottom:2px dashed var(--violet);
+}
+.log time{font-family:var(--pixel);font-size:14px;color:var(--mint);padding-top:3px}
+.log strong{color:var(--cream);font-weight:600}
+
+/* 연락 */
+.contact h2{font-size:clamp(26px,3.4vw,46px);margin-bottom:20px}
+.contact dl{font-family:var(--pixel);font-size:15px;display:grid;grid-template-columns:auto 1fr;gap:10px 22px;margin:28px 0 32px;max-width:520px}
+.contact dt{color:var(--mint)}
+.contact dd{margin:0;word-break:break-all}
+footer{padding:22px 0 40px;font-size:14px;color:var(--mint);font-family:var(--pixel)}
+
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+@media (max-width:900px){
+  .hero .wrap,.about,.stage,.inv{grid-template-columns:1fr;gap:32px}
+  .carts{grid-template-columns:repeat(2,1fr);gap:30px 20px}
+  section{padding:56px 0}
+  .hero{padding:32px 0 56px}
+}
+@media (max-width:480px){
+  body{font-size:16px}
+  .wrap{width:calc(100% - 28px)}
+  .brand{width:100%}
+  .stage-nav{gap:8px}
+  .stage-nav a{font-size:12px;padding:5px 8px}
+  .hud{font-size:12px;padding:6px 8px}
+  .stage{padding:20px 18px}
+  .slot{font-size:12px}
+  .log li{grid-template-columns:84px 1fr;gap:12px}
+  .cart .title{font-size:13px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none !important;transition:none !important}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#top">서지훈<span>.</span>게임</a>
+    <nav class="stage-nav" aria-label="섹션 이동">
+      <a class="locked" href="#about" data-i="0">소개</a>
+      <a class="locked" href="#games" data-i="1">게임</a>
+      <a class="locked" href="#skills" data-i="2">장비</a>
+      <a class="locked" href="#contact" data-i="3">연락</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <h1>
+        <span class="line">게임 만드는</span>
+        <span class="line">전주대 3학년</span>
+        <span class="line">서지훈입니다</span>
+      </h1>
+      <p>기획서보다 프로토타입을 먼저 만듭니다. 손에 쥐었을 때 재미있는지는 직접 눌러 봐야 알 수 있어서요. 지금까지 완성해서 공개한 게임은 네 개입니다.</p>
+      <p class="hint" id="hint">오른쪽 화면에서 마우스를 움직이면 지훈이 따라옵니다. 코인 네 개를 모으면 위쪽 메뉴가 열려요.</p>
+      <p style="margin-top:20px"><button class="btn ghost" id="skip" type="button">코인 없이 전부 열기</button></p>
+    </div>
+    <div class="cabinet">
+      <div class="hud" aria-hidden="true">
+        <span>스테이지 1-1 전주</span>
+        <span>코인 <b id="hudCoin">0</b>/4</span>
+        <span>시간 <b id="hudTime">00:00</b></span>
+      </div>
+      <canvas id="game" width="320" height="176" tabindex="0" role="img"
+        aria-label="픽셀 캐릭터가 마우스를 따라 걸으며 코인을 모으는 작은 게임. 방향키로도 움직일 수 있습니다."></canvas>
+      <div class="cabinet-foot">
+        <span>마우스, 터치, 방향키로 이동</span>
+        <span id="footMsg">남은 코인 4개</span>
+      </div>
+    </div>
+    <p class="sr" aria-live="polite" id="live"></p>
+  </div>
+</section>
+
+<section id="about" class="band">
+  <div class="wrap">
+    <h2><i></i>소개</h2>
+    <div class="about">
+      <div>
+        <p>중학교 때 RPG 만들기 툴로 반 친구들을 주인공으로 넣은 게임을 만든 게 시작이었습니다. 쉬는 시간마다 친구들이 제 노트북 앞에 줄을 섰고, 그 줄이 좋아서 지금까지 만들고 있습니다.</p>
+        <p>팀에서는 주로 프로그래밍을 맡습니다. 조작감, 판정, 카메라처럼 플레이어 손끝에 닿는 부분을 다듬는 일을 가장 좋아합니다. 점프 높이 숫자 하나를 두고 이틀을 쓴 적도 있습니다.</p>
+        <p>졸업 전 목표는 스팀에 유료 게임 하나를 출시하는 것입니다. 지금은 캡스톤 작품 '처마 밑 등불'을 그 후보로 키우고 있습니다.</p>
+      </div>
+      <aside class="save" aria-label="기본 정보">
+        <h3>세이브 파일 1번</h3>
+        <dl>
+          <dt>이름</dt><dd>서지훈</dd>
+          <dt>소속</dt><dd>전주대학교 게임콘텐츠학과</dd>
+          <dt>학년</dt><dd>3학년 2학기</dd>
+          <dt>직업</dt><dd>게임 프로그래머 지망</dd>
+          <dt>주 무기</dt><dd>Unity, C#</dd>
+          <dt>완성한 게임</dt><dd>4개</dd>
+          <dt>게임잼 완주</dt><dd>5회</dd>
+        </dl>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section id="games">
+  <div class="wrap">
+    <h2><i></i>스테이지 선택</h2>
+    <div class="carts" role="tablist" aria-label="게임 프로젝트">
+      <button class="cart" role="tab" aria-selected="true" aria-controls="stage" id="tab0" data-g="0" type="button">
+        <span class="shell"><span class="label"><canvas width="12" height="12" data-icon="lantern"></canvas><span class="title">처마 밑 등불</span></span><span class="meta"><span>1-1</span><span>2026</span></span></span>
+      </button>
+      <button class="cart" role="tab" aria-selected="false" aria-controls="stage" id="tab1" data-g="1" tabindex="-1" type="button">
+        <span class="shell"><span class="label"><canvas width="12" height="12" data-icon="fish"></canvas><span class="title">48시간 붕어빵</span></span><span class="meta"><span>1-2</span><span>2026</span></span></span>
+      </button>
+      <button class="cart" role="tab" aria-selected="false" aria-controls="stage" id="tab2" data-g="2" tabindex="-1" type="button">
+        <span class="shell"><span class="label"><canvas width="12" height="12" data-icon="note"></canvas><span class="title">톡톡 비트</span></span><span class="meta"><span>1-3</span><span>2025</span></span></span>
+      </button>
+      <button class="cart" role="tab" aria-selected="false" aria-controls="stage" id="tab3" data-g="3" tabindex="-1" type="button">
+        <span class="shell"><span class="label"><canvas width="12" height="12" data-icon="wave"></canvas><span class="title">물결 셰이더 실험실</span></span><span class="meta"><span>1-4</span><span>2025</span></span></span>
+      </button>
+    </div>
+    <div class="stage" id="stage" role="tabpanel" aria-labelledby="tab0" tabindex="0"></div>
+  </div>
+</section>
+
+<section id="skills" class="band">
+  <div class="wrap">
+    <h2><i></i>장비창</h2>
+    <div class="inv">
+      <div class="slots" id="slots"></div>
+      <div class="talk" aria-live="polite">
+        <h3 id="talkName"></h3>
+        <div class="lv" id="talkLv"></div>
+        <p id="talkText"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="log">
+  <div class="wrap">
+    <h2><i></i>세이브 기록</h2>
+    <ol class="log">
+      <li><time datetime="2024-03">2024.03</time><div><strong>전주대학교 게임콘텐츠학과 입학</strong><br>첫 학기에 교내 게임 제작 동아리에 들어갔습니다.</div></li>
+      <li><time datetime="2024-11">2024.11</time><div><strong>첫 게임잼 완주</strong><br>48시간 동안 점프만 되는 게임을 만들었습니다. 부끄럽지만 끝까지 냈습니다.</div></li>
+      <li><time datetime="2025-07">2025.07</time><div><strong>교내 게임 공모전 우수상</strong><br>'톡톡 비트' 프로토타입으로 23개 팀 가운데 2등을 했습니다.</div></li>
+      <li><time datetime="2025-12">2025.12</time><div><strong>지역 인디게임 전시 참가</strong><br>이틀 동안 관람객 210명이 제 게임을 직접 해 봤습니다.</div></li>
+      <li><time datetime="2026-05">2026.05</time><div><strong>게임잼 인기상 3위</strong><br>'48시간 붕어빵'이 참가 62개 팀 가운데 인기 투표 3위에 올랐습니다.</div></li>
+      <li><time datetime="2026-09">2026.09</time><div><strong>캡스톤 팀 리드</strong><br>4명 팀에서 '처마 밑 등불'의 프로그래밍과 일정 관리를 맡고 있습니다.</div></li>
+    </ol>
+  </div>
+</section>
+
+<section id="contact" class="band contact">
+  <div class="wrap">
+    <h2><i></i>같이 만들 사람을 찾고 있어요</h2>
+    <p>인턴, 게임잼 팀원, 플레이 테스트 요청 모두 환영합니다. 메일을 주시면 보통 하루 안에 답장합니다.</p>
+    <dl>
+      <dt>메일</dt><dd>jihun.seo@example.com</dd>
+      <dt>itch</dt><dd>jihun-pixel.example.com</dd>
+      <dt>깃허브</dt><dd>github.example.com/seo-jihun</dd>
+      <dt>사는 곳</dt><dd>전북 전주시</dd>
+    </dl>
+    <a class="btn" href="mailto:jihun.seo@example.com">메일 보내기</a>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">데모용으로 만든 가상의 인물입니다.</div></footer>
+
+<script>
+(function(){
+"use strict";
+var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+var C = {night:"#2B1B4D",deep:"#1E1238",lift:"#33215A",violet:"#5A3FA0",coral:"#FF5A5F",mint:"#7DE2D1",cream:"#FFE66D",paper:"#FFF6CF"};
+
+/* ---------- 픽셀 그림 도우미 ---------- */
+function drawMap(ctx, rows, x, y, pal, flip){
+  for(var r=0;r<rows.length;r++){
+    var row=rows[r], n=row.length;
+    for(var c=0;c<n;c++){
+      var ch=row.charAt(flip?n-1-c:c);
+      if(ch==="."||!pal[ch])continue;
+      ctx.fillStyle=pal[ch];
+      ctx.fillRect(x+c,y+r,1,1);
+    }
+  }
+}
+
+/* ---------- 카트리지 아이콘 ---------- */
+var ICONS={
+  lantern:["....kkkk....",".....kk.....","...yyyyyy...","..yyyyyyyy..","..yycyycyy..","..yyyyyyyy..","..yycyycyy..","..yyyyyyyy..","...yyyyyy...","....kkkk....",".....cc.....",".....cc....."],
+  fish:["............","............","...yyyy....y","..yyyyyy..yy",".yykyyyyyyyy",".yyyyyyyyyyy",".yycyycyyyyy","..yyyyyy..yy","...yyyy....y","............","............","............"],
+  note:[".....yyyyyy.",".....yyyyyy.",".....y....y.",".....y....y.",".....y....y.",".....y....y.","...yyy..yyy.","..yyyy.yyyy.","..yyyy.yyyy.","...yy...yy..","............","............"],
+  wave:["............","..yy....yy..",".y..y..y..y.","y....yy....y","............","..cc....cc..",".c..c..c..c.","c....cc....c","............","..yy....yy..",".y..y..y..y.","y....yy....y"]
+};
+var iconPal={y:C.cream,c:C.coral,k:C.mint};
+document.querySelectorAll("canvas[data-icon]").forEach(function(cv){
+  drawMap(cv.getContext("2d"),ICONS[cv.dataset.icon],0,0,iconPal,false);
+});
+
+/* ---------- 스테이지 선택 ---------- */
+var GAMES=[
+  {t:"처마 밑 등불",k:"2D 퍼즐 플랫포머, 캡스톤 작품",
+   d:"전주 한옥마을의 밤 골목이 배경입니다. 등불을 들고 다니면 빛이 닿는 곳에만 발판이 생기고, 등불을 내려놓으면 길이 그대로 남습니다. 어디에 빛을 두고 갈지 고르는 것이 퍼즐입니다.",
+   l:["4명 팀에서 프로그래밍 전체와 일정 관리 담당","빛 영역과 타일 충돌을 묶는 시스템을 직접 구현","점프 버퍼, 코요테 타임을 넣어 조작 불만 설문 응답을 31%에서 9%로 줄임"],
+   s:[["스테이지","24개"],["체험판 다운로드","1,280회"],["평균 플레이","41분"],["도구","Unity 6, C#"]]},
+  {t:"48시간 붕어빵",k:"타이밍 아케이드, 게임잼 작품",
+   d:"주제는 '뒤집기'였습니다. 틀 여덟 칸의 붕어빵이 저마다 다른 속도로 익고, 딱 맞는 순간에 뒤집어야 합니다. 손님이 늘수록 손이 꼬이는 재미를 노렸습니다.",
+   l:["3명 팀, 48시간 안에 기획부터 웹 빌드까지 완성","난이도 곡선을 수식 하나로 관리해 마지막 3시간에 밸런스를 12번 수정","참가 62개 팀 가운데 인기 투표 3위"],
+   s:[["제작 시간","48시간"],["웹 플레이","3,400회"],["최고 기록","붕어빵 187개"],["도구","Unity WebGL"]]},
+  {t:"톡톡 비트",k:"모바일 리듬 게임 프로토타입",
+   d:"한 손 엄지로만 하는 세로형 리듬 게임입니다. 기기마다 다른 소리 지연 때문에 판정이 어긋나는 문제를 붙잡고 한 학기를 보냈습니다.",
+   l:["오디오 시간 기준으로 노트를 배치해 프레임이 떨어져도 판정이 밀리지 않게 함","기기별 지연을 재는 보정 화면을 만들어 판정 오차를 18ms 안으로 맞춤","테스터 37명의 기록을 모아 판정 범위를 조정"],
+   s:[["수록곡","6곡"],["판정 오차","18ms 이내"],["테스터","37명"],["도구","Unity, FMOD"]]},
+  {t:"물결 셰이더 실험실",k:"셰이더 모음, 개인 공부 기록",
+   d:"픽셀아트 게임에 어울리는 물, 빛, 바람 효과를 하나씩 만들어 정리한 저장소입니다. '처마 밑 등불'의 등불 빛과 개울물이 여기서 나왔습니다.",
+   l:["셰이더 그래프로 먼저 만들고 HLSL로 다시 써 보며 원리를 익힘","픽셀이 뭉개지지 않게 화면 좌표를 격자에 맞추는 방법을 정리","효과마다 설명 글과 성능 측정값을 함께 기록"],
+   s:[["효과","9종"],["저장소 별","86개"],["설명 글","9편"],["도구","URP, HLSL"]]}
+];
+var stage=document.getElementById("stage");
+var tabs=[].slice.call(document.querySelectorAll(".cart"));
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+function showGame(i,focus,anim){
+  var g=GAMES[i];
+  tabs.forEach(function(t,j){
+    t.setAttribute("aria-selected",j===i?"true":"false");
+    t.tabIndex=j===i?0:-1;
+  });
+  stage.setAttribute("aria-labelledby","tab"+i);
+  stage.innerHTML="<div><h3>"+esc(g.t)+"</h3><div class='kind'>"+esc(g.k)+"</div><p>"+esc(g.d)+"</p><ul>"+
+    g.l.map(function(x){return "<li>"+esc(x)+"</li>";}).join("")+"</ul></div><dl class='score'>"+
+    g.s.map(function(x){return "<div><dt>"+esc(x[0])+"</dt><dd>"+esc(x[1])+"</dd></div>";}).join("")+"</dl>";
+  if(anim!==false){stage.classList.remove("swap");void stage.offsetWidth;stage.classList.add("swap");}
+  if(focus)tabs[i].focus();
+}
+tabs.forEach(function(t,i){
+  t.addEventListener("click",function(){showGame(i,false);});
+  t.addEventListener("keydown",function(e){
+    var d=e.key==="ArrowRight"?1:e.key==="ArrowLeft"?-1:0;
+    if(!d)return;
+    e.preventDefault();showGame((i+d+tabs.length)%tabs.length,true);
+  });
+});
+showGame(0,false,false);
+
+/* ---------- 장비창 ---------- */
+var ITEMS=[
+  ["Unity 6","Lv.7 매일 씀","게임 네 개를 모두 Unity로 만들었습니다. 2D 물리, 타일맵, 애니메이터, WebGL과 안드로이드 빌드까지 혼자 처리할 수 있습니다."],
+  ["C#","Lv.7 매일 씀","상태 머신, 오브젝트 풀, 이벤트 기반 구조를 프로젝트에 맞게 골라 씁니다. 요즘은 가비지가 생기지 않는 코드를 쓰는 연습을 하고 있습니다."],
+  ["HLSL","Lv.4 공부 중","셰이더 그래프로 만든 효과를 손으로 다시 써 보는 중입니다. 물결, 외곽선, 2D 조명 9종을 만들었습니다."],
+  ["Git","Lv.6 자주 씀","팀 프로젝트에서 브랜치 규칙을 정하고 충돌을 정리하는 역할을 맡습니다. 씬 파일 충돌로 하루를 날린 뒤에 규칙을 만들었습니다."],
+  ["Aseprite","Lv.3 필요할 때","임시 그래픽은 제가 직접 찍습니다. 이 페이지 위쪽의 작은 캐릭터도 제가 찍은 도트입니다."],
+  ["FMOD","Lv.4 리듬 게임용","'톡톡 비트'에서 오디오 시간 동기화와 효과음 믹싱에 썼습니다."],
+  ["Blender","Lv.2 기초","간단한 소품 모델링과 내보내기 정도만 합니다. 3D 게임을 만들기 전에 더 배울 계획입니다."],
+  ["기획서","Lv.5 한 장으로","한 장짜리 기획서를 씁니다. 목표, 조작, 재미 포인트 세 칸만 채우고 바로 프로토타입을 만듭니다."]
+];
+var slotsEl=document.getElementById("slots"),slotBtns=[];
+function showItem(i){
+  slotBtns.forEach(function(b,j){b.setAttribute("aria-pressed",j===i?"true":"false");});
+  document.getElementById("talkName").textContent=ITEMS[i][0];
+  document.getElementById("talkLv").textContent=ITEMS[i][1];
+  document.getElementById("talkText").textContent=ITEMS[i][2];
+}
+ITEMS.forEach(function(it,i){
+  var b=document.createElement("button");
+  b.type="button";b.className="slot";
+  b.innerHTML="<span>"+esc(it[0])+"<small>"+esc(it[1].split(" ")[0])+"</small></span>";
+  b.addEventListener("click",function(){showItem(i);});
+  b.addEventListener("mouseenter",function(){showItem(i);});
+  b.addEventListener("focus",function(){showItem(i);});
+  slotsEl.appendChild(b);slotBtns.push(b);
+});
+showItem(0);
+
+/* ---------- 마우스 위치에 따라 픽셀 그림자 방향 바꾸기 ---------- */
+if(!reduce){
+  var pend=false,mx=0,my=0;
+  window.addEventListener("pointermove",function(e){
+    if(e.pointerType==="touch")return;
+    mx=e.clientX;my=e.clientY;
+    if(pend)return;pend=true;
+    requestAnimationFrame(function(){
+      pend=false;
+      var sx=Math.round((0.5-mx/window.innerWidth)*6)*2;
+      var sy=Math.round((0.5-my/window.innerHeight)*6)*2;
+      if(sx===0&&sy===0)sy=2;
+      document.documentElement.style.setProperty("--sx",sx+"px");
+      document.documentElement.style.setProperty("--sy",sy+"px");
+    });
+  },{passive:true});
+}
+
+/* ---------- 제목 타자 효과: 페이지에서 한 번만 ---------- */
+(function(){
+  if(reduce)return;
+  var lines=[].slice.call(document.querySelectorAll(".hero h1 .line"));
+  var texts=lines.map(function(l){return l.textContent;});
+  lines.forEach(function(l,i){l.setAttribute("aria-label",texts[i]);});
+  var li=0,ci=0;
+  function paint(){
+    lines.forEach(function(l,i){
+      var shown=i<li?texts[i]:i===li?texts[i].slice(0,ci):"";
+      var rest=texts[i].slice(shown.length);
+      l.innerHTML="<span aria-hidden='true'>"+shown+(i===li?"<span class='caret'></span>":"")+"<span class='rest'>"+rest+"</span></span>";
+    });
+  }
+  function tick(){
+    if(li>=lines.length){lines.forEach(function(l,i){l.textContent=texts[i];});return;}
+    ci++;
+    if(ci>texts[li].length){li++;ci=0;}
+    paint();
+    setTimeout(tick,li<lines.length&&ci===0?220:80);
+  }
+  paint();setTimeout(tick,300);
+})();
+
+/* ---------- 히어로 게임 ---------- */
+var cv=document.getElementById("game"),ctx=cv.getContext("2d");
+ctx.imageSmoothingEnabled=false;
+var W=320,H=176,T=16;
+var navLinks=[].slice.call(document.querySelectorAll(".stage-nav a"));
+var hudCoin=document.getElementById("hudCoin"),hudTime=document.getElementById("hudTime");
+var footMsg=document.getElementById("footMsg"),hint=document.getElementById("hint"),live=document.getElementById("live");
+
+var HERO_A=["..cccccc..",".cccccccc.",".cssssssc.",".sksssks..",".ssssssss.","..mmmmmm..",".mmmmmmmm.",".smmmmmms.","..mmmmmm..","..pp..pp..","..pp..pp..","..yy..yy.."];
+var HERO_B=["..cccccc..",".cccccccc.",".cssssssc.",".sksssks..",".ssssssss.","..mmmmmm..",".mmmmmmmm.",".smmmmmms.","..mmmmmm..","..pppppp..",".pp....pp.",".yy....yy."];
+var heroPal={c:C.coral,s:C.paper,k:C.deep,m:C.mint,p:C.violet,y:C.cream};
+
+var coins=[
+  {x:44,y:60,name:"소개"},
+  {x:268,y:52,name:"게임"},
+  {x:76,y:140,name:"장비"},
+  {x:250,y:136,name:"연락"}
+];
+coins.forEach(function(c){c.got=false;});
+var hero={x:160,y:100,tx:160,ty:100,flip:false,moving:false};
+var parts=[],floats=[],dust=[];
+var frame=0,started=0,endedAt=0,got=0,visible=true,hasInput=false;
+
+/* 바닥 장식: 고정 난수 */
+var seed=7;function rnd(){seed=(seed*16807)%2147483647;return seed/2147483647;}
+var deco=[];for(var i=0;i<46;i++){deco.push({x:Math.floor(rnd()*W),y:24+Math.floor(rnd()*(H-28)),k:rnd()<.5?0:1});}
+var stars=[];for(i=0;i<14;i++){stars.push({x:Math.floor(rnd()*W),y:24+Math.floor(rnd()*(H-30)),p:Math.floor(rnd()*60)});}
+
+function drawWorld(){
+  ctx.fillStyle=C.night;ctx.fillRect(0,0,W,H);
+  /* 바둑판 돌바닥 */
+  ctx.fillStyle=C.lift;
+  for(var ty=1;ty<11;ty++)for(var tx=0;tx<20;tx++){if((tx+ty)%2===0)ctx.fillRect(tx*T,ty*T,T,T);}
+  /* 개울 */
+  ctx.fillStyle="#3E6E86";
+  for(var y=16;y<H;y+=4){var off=Math.round(Math.sin(y/22)*10);ctx.fillRect(148+off,y,22,4);}
+  ctx.fillStyle=C.mint;
+  for(y=16;y<H;y+=8){off=Math.round(Math.sin(y/22)*10);var s=(Math.floor(frame/20)+y/8)%3;ctx.fillRect(150+off+s*6,y+2,4,1);}
+  /* 징검다리 */
+  ctx.fillStyle=C.paper;
+  var by=96,boff=Math.round(Math.sin(by/22)*10);
+  ctx.fillRect(149+boff,by,6,5);ctx.fillRect(157+boff,by+2,6,5);ctx.fillRect(164+boff,by,6,5);
+  /* 기와 담장 */
+  ctx.fillStyle=C.deep;ctx.fillRect(0,0,W,16);
+  for(var x=0;x<W;x+=8){
+    ctx.fillStyle=C.coral;ctx.fillRect(x,2,7,5);
+    ctx.fillStyle="#B4232B";ctx.fillRect(x,7,7,2);
+    ctx.fillStyle=C.paper;ctx.fillRect(x+2,11,4,3);
+  }
+  ctx.fillStyle=C.cream;ctx.fillRect(0,15,W,1);
+  /* 풀과 돌 */
+  for(var d=0;d<deco.length;d++){
+    var o=deco[d];
+    if(o.x>138&&o.x<184)continue;
+    if(o.k===0){ctx.fillStyle="#4FA89E";ctx.fillRect(o.x,o.y,1,3);ctx.fillRect(o.x+2,o.y+1,1,2);}
+    else{ctx.fillStyle=C.violet;ctx.fillRect(o.x,o.y,3,2);}
+  }
+  /* 반딧불 */
+  for(var i=0;i<stars.length;i++){
+    var st=stars[i];
+    if(Math.floor((frame+st.p)/30)%3===0){ctx.fillStyle=C.cream;ctx.fillRect(st.x,st.y,1,1);}
+  }
+}
+function drawCoin(c,i){
+  if(c.got)return;
+  var f=Math.floor(frame/8+i)%4,w=[8,6,2,6][f];
+  var bob=Math.floor(frame/16+i)%2;
+  var x=Math.round(c.x-w/2),y=c.y-5-bob;
+  ctx.fillStyle=C.deep;ctx.fillRect(c.x-4,c.y+5,8,2);
+  ctx.fillStyle=C.cream;ctx.fillRect(x,y+1,w,8);
+  if(w>2){ctx.fillRect(x+1,y,w-2,10);ctx.fillStyle=C.coral;ctx.fillRect(x+Math.floor(w/2)-1,y+3,2,4);}
+  ctx.font="12px Galmuri11, monospace";ctx.textAlign="center";ctx.textBaseline="alphabetic";
+  ctx.fillStyle=C.deep;ctx.fillText(c.name,c.x+1,c.y-9);
+  ctx.fillStyle=C.paper;ctx.fillText(c.name,c.x,c.y-10);
+}
+function drawHero(){
+  var walk=hero.moving&&Math.floor(frame/8)%2===1;
+  ctx.fillStyle=C.deep;ctx.fillRect(Math.round(hero.x)-4,Math.round(hero.y)+5,8,2);
+  drawMap(ctx,walk?HERO_B:HERO_A,Math.round(hero.x)-5,Math.round(hero.y)-6-(walk?1:0),heroPal,hero.flip);
+}
+function drawTarget(){
+  if(!hasInput||!hero.moving)return;
+  if(Math.floor(frame/10)%2)return;
+  var x=Math.round(hero.tx),y=Math.round(hero.ty);
+  ctx.fillStyle=C.mint;
+  ctx.fillRect(x-4,y,3,1);ctx.fillRect(x+2,y,3,1);ctx.fillRect(x,y-4,1,3);ctx.fillRect(x,y+2,1,3);
+}
+function drawFx(){
+  var i;
+  for(i=dust.length-1;i>=0;i--){
+    var u=dust[i];u.l--;
+    if(u.l<=0){dust.splice(i,1);continue;}
+    ctx.fillStyle=C.violet;ctx.fillRect(u.x,u.y,u.l>6?2:1,u.l>6?2:1);
+  }
+  for(i=parts.length-1;i>=0;i--){
+    var p=parts[i];p.l--;
+    if(p.l<=0){parts.splice(i,1);continue;}
+    if(frame%2===0){p.x+=p.vx;p.y+=p.vy;p.vy+=.3;}
+    ctx.fillStyle=p.c;ctx.fillRect(Math.round(p.x),Math.round(p.y),2,2);
+  }
+  ctx.font="12px Galmuri11, monospace";ctx.textAlign="center";
+  for(i=floats.length-1;i>=0;i--){
+    var f=floats[i];f.l--;
+    if(f.l<=0){floats.splice(i,1);continue;}
+    var yy=Math.round(f.y-(60-f.l)/4);
+    var xx=Math.max(34,Math.min(W-34,f.x));
+    ctx.fillStyle=C.deep;ctx.fillText(f.t,xx+1,yy+1);
+    ctx.fillStyle=C.cream;ctx.fillText(f.t,xx,yy);
+  }
+  if(got===4&&Math.floor(frame/24)%2===0){
+    ctx.fillStyle=C.deep;ctx.fillRect(84,74,152,26);
+    ctx.fillStyle=C.cream;ctx.fillRect(84,74,152,2);ctx.fillRect(84,98,152,2);
+    ctx.fillStyle=C.cream;ctx.fillText("스테이지 클리어!",160,92);
+  }
+}
+function fmt(ms){var s=Math.floor(ms/1000),m=Math.floor(s/60);s%=60;return (m<10?"0":"")+m+":"+(s<10?"0":"")+s;}
+
+function unlock(i,quiet){
+  var c=coins[i];if(c.got)return;
+  c.got=true;got++;
+  hudCoin.textContent=got;
+  navLinks[i].classList.remove("locked");
+  if(!quiet){
+    navLinks[i].classList.remove("pop");void navLinks[i].offsetWidth;navLinks[i].classList.add("pop");
+    for(var k=0;k<10;k++){var a=k/10*Math.PI*2;parts.push({x:c.x,y:c.y,vx:Math.cos(a)*2,vy:Math.sin(a)*2-1,l:22,c:k%2?C.cream:C.coral});}
+    floats.push({x:c.x,y:c.y-12,t:c.name+" 열림",l:60});
+    live.textContent=c.name+" 메뉴가 열렸습니다.";
+  }
+  footMsg.textContent=got===4?"코인을 전부 모았어요":"남은 코인 "+(4-got)+"개";
+  if(got===4){
+    endedAt=performance.now();
+    hint.textContent="전부 모았습니다. 위쪽 메뉴를 누르거나 아래로 내려가면 진짜 스테이지가 나옵니다.";
+  }
+}
+function update(){
+  var dx=hero.tx-hero.x,dy=hero.ty-hero.y,dist=Math.sqrt(dx*dx+dy*dy);
+  hero.moving=dist>2;
+  if(hero.moving){
+    var sp=Math.min(1.5,dist);
+    hero.x+=dx/dist*sp;hero.y+=dy/dist*sp;
+    if(Math.abs(dx)>1)hero.flip=dx<0;
+    if(frame%8===0)dust.push({x:Math.round(hero.x)-1,y:Math.round(hero.y)+5,l:12});
+  }
+  for(var i=0;i<coins.length;i++){
+    var c=coins[i];if(c.got)continue;
+    var ex=c.x-hero.x,ey=c.y-hero.y;
+    if(ex*ex+ey*ey<100)unlock(i,false);
+  }
+  if(started&&!endedAt)hudTime.textContent=fmt(performance.now()-started);
+}
+function render(){
+  drawWorld();
+  for(var i=0;i<coins.length;i++)drawCoin(coins[i],i);
+  drawTarget();drawHero();drawFx();
+}
+function loop(){
+  if(visible){frame++;update();render();}
+  requestAnimationFrame(loop);
+}
+function setTarget(cx,cy){
+  var r=cv.getBoundingClientRect();
+  if(!r.width)return;
+  var x=(cx-r.left)/r.width*W,y=(cy-r.top)/r.height*H;
+  hero.tx=Math.max(8,Math.min(W-8,x));
+  hero.ty=Math.max(26,Math.min(H-10,y));
+  if(!hasInput){hasInput=true;started=performance.now();}
+}
+
+if(reduce){
+  for(var q=0;q<4;q++)unlock(q,true);
+  hint.textContent="움직임 줄이기 설정이 켜져 있어 메뉴를 미리 열어 두었습니다.";
+  document.getElementById("skip").hidden=true;
+  render();
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(render);
+}else{
+  window.addEventListener("pointermove",function(e){
+    if(e.pointerType==="touch"||!visible)return;
+    setTarget(e.clientX,e.clientY);
+  },{passive:true});
+  cv.addEventListener("pointerdown",function(e){setTarget(e.clientX,e.clientY);});
+  cv.addEventListener("pointermove",function(e){if(e.pointerType==="touch")setTarget(e.clientX,e.clientY);});
+  cv.addEventListener("keydown",function(e){
+    var k={ArrowLeft:[-16,0],ArrowRight:[16,0],ArrowUp:[0,-16],ArrowDown:[0,16]}[e.key];
+    if(!k)return;
+    e.preventDefault();
+    hero.tx=Math.max(8,Math.min(W-8,hero.tx+k[0]));
+    hero.ty=Math.max(26,Math.min(H-10,hero.ty+k[1]));
+    if(!hasInput){hasInput=true;started=performance.now();}
+  });
+  document.getElementById("skip").addEventListener("click",function(){
+    for(var i=0;i<4;i++)unlock(i,false);
+    this.hidden=true;
+  });
+  if("IntersectionObserver" in window){
+    new IntersectionObserver(function(en){visible=en[0].isIntersecting;},{threshold:0}).observe(cv);
+  }
+  requestAnimationFrame(loop);
+}
+})();
+</script>
+</body>
+</html>
