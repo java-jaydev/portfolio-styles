@@ -1,0 +1,681 @@
+<!doctype html>
+<!--
+  portfolio-styles: https://github.com/java-jaydev/portfolio-styles
+  MIT License, Copyright (c) 2026 java-jaydev
+  가져가서 쓸 때는 이 표시를 지우지 말고, 화면에도 출처를 남겨 주세요.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mina Seo, Forward Deployed Engineer</title>
+<meta name="description" content="Field notebook of Mina Seo, Forward Deployed Engineer. 11 customer sites, 4 countries.">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=gambetta@400,600&f[]=cabinet-grotesk@400,800&display=swap" rel="stylesheet">
+<style>
+  @property --fold { syntax: '<length>'; inherits: false; initial-value: 0px; }
+
+  :root {
+    --g: 16px;
+    --paper: #e6ecef;
+    --line: #cfdae1;
+    --line5: #b9c9d3;
+    --stock: #cdd8df;
+    --flap: #b7c6d0;
+    --desk: #9fb1bd;
+    --ink: #17255a;
+    --ink-soft: #4a557d;
+    --red: #c5352c;
+    --green: #23734f;
+    --W: min(84vw, 150svh);
+    --H: min(72svh, calc(var(--W) * .58));
+    --peek: clamp(20px, 5vw, 80px);
+    --serif: 'Gambetta', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+    --grot: 'Cabinet Grotesk', 'Avenir Next', 'Helvetica Neue', Arial, sans-serif;
+  }
+  @media (max-width: 700px) {
+    :root { --g: 14px; --H: 72svh; }
+  }
+
+  @media (min-width: 1200px) and (min-height: 760px) {
+    :root { --g: 20px; }
+    html { font-size: 125%; }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    overflow: hidden;
+    background: var(--desk);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 1rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+  ::selection { background: var(--ink); color: var(--paper); }
+
+  .desk { position: fixed; inset: 0; overflow: hidden; }
+
+  .track {
+    position: absolute;
+    left: 0;
+    top: calc(50% - var(--H) / 2 - var(--g));
+    display: flex;
+    gap: calc((100vw - var(--W)) / 2 - var(--peek));
+    cursor: grab;
+    touch-action: none;
+  }
+  .track.dragging { cursor: grabbing; user-select: none; -webkit-user-select: none; }
+
+  /* one loose leaf */
+  .leaf {
+    position: relative;
+    flex: none;
+    width: var(--W);
+    height: var(--H);
+    padding: calc(var(--g) * 3) calc(var(--g) * 3) calc(var(--g) * 2) calc(var(--g) * 7);
+    background-color: var(--paper);
+    background-image:
+      radial-gradient(circle, var(--desk) calc(var(--g) * .5), transparent calc(var(--g) * .5 + 1px)),
+      radial-gradient(circle, var(--desk) calc(var(--g) * .5), transparent calc(var(--g) * .5 + 1px)),
+      radial-gradient(circle, var(--desk) calc(var(--g) * .5), transparent calc(var(--g) * .5 + 1px)),
+      linear-gradient(var(--line5) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line5) 1px, transparent 1px),
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size:
+      calc(var(--g) * 2) calc(var(--g) * 2),
+      calc(var(--g) * 2) calc(var(--g) * 2),
+      calc(var(--g) * 2) calc(var(--g) * 2),
+      calc(var(--g) * 5) calc(var(--g) * 5),
+      calc(var(--g) * 5) calc(var(--g) * 5),
+      var(--g) var(--g),
+      var(--g) var(--g);
+    background-position:
+      calc(var(--g) * 1) 14%,
+      calc(var(--g) * 1) 50%,
+      calc(var(--g) * 1) 86%,
+      0 0, 0 0, 0 0, 0 0;
+    background-repeat: no-repeat, no-repeat, no-repeat, repeat, repeat, repeat, repeat;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, var(--fold) 100%, 0 calc(100% - var(--fold)));
+    --sx: 80%;
+    --sy: 70%;
+  }
+  .leaf::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: var(--fold);
+    height: var(--fold);
+    background: var(--flap);
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+  }
+  .leaf:focus { outline: none; }
+  .leaf:focus-visible { outline: 3px solid var(--red); outline-offset: -9px; }
+
+  @media (max-width: 700px) {
+    .leaf {
+      padding: calc(var(--g) * 3) var(--g) calc(var(--g) * 2) calc(var(--g) * 3);
+      background-position:
+        calc(var(--g) * .5) 14%,
+        calc(var(--g) * .5) 50%,
+        calc(var(--g) * .5) 86%,
+        0 0, 0 0, 0 0, 0 0;
+      --sx: 68%;
+      --sy: 86%;
+    }
+  }
+
+  .no {
+    position: absolute;
+    top: var(--g);
+    right: calc(var(--g) * 1.5);
+    font: 400 .8125rem/var(--g) var(--grot);
+    color: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* cover */
+  .cover {
+    background-color: var(--stock);
+    background-image: linear-gradient(90deg, var(--ink) calc(var(--g) * 4), transparent calc(var(--g) * 4));
+    background-size: auto;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: calc(var(--g) * 5);
+    --sx: 74%;
+    --sy: 38%;
+  }
+  .cover h1 {
+    font: 600 clamp(1.75rem, 3.6vw, 3rem)/1.2 var(--serif);
+    letter-spacing: -.01em;
+    width: min(100%, calc(var(--g) * 30));
+    padding-bottom: calc(var(--g) * .5);
+    border-bottom: 2px solid var(--ink);
+  }
+  .cover p {
+    font: 400 clamp(1.0625rem, 1.5vw, 1.375rem)/1.3 var(--grot);
+    width: min(100%, calc(var(--g) * 30));
+    padding: calc(var(--g) * .75) 0 calc(var(--g) * .5);
+    border-bottom: 1px solid var(--ink);
+  }
+  @media (max-width: 700px) {
+    .cover {
+      background-image: linear-gradient(90deg, var(--ink) calc(var(--g) * 2), transparent calc(var(--g) * 2));
+      padding-bottom: calc(var(--g) * 14);
+      --sx: 62%;
+      --sy: 80%;
+    }
+  }
+
+  /* site leaves */
+  .body {
+    display: grid;
+    grid-template-columns: calc(var(--g) * 18) minmax(0, calc(var(--g) * 34));
+    column-gap: calc(var(--g) * 3);
+    align-items: start;
+  }
+  .kind {
+    font: 600 2rem/calc(var(--g) * 2) var(--serif);
+    letter-spacing: -.01em;
+    margin-bottom: var(--g);
+  }
+  dt {
+    font: 400 .875rem/var(--g) var(--grot);
+    color: var(--ink-soft);
+  }
+  .facts dd {
+    font: 800 3rem/calc(var(--g) * 3) var(--grot);
+    letter-spacing: -.02em;
+    white-space: nowrap;
+    margin-bottom: var(--g);
+  }
+  .notes { padding-top: calc(var(--g) * 3); }
+  .notes dd, .plain {
+    font: 400 1.5rem/calc(var(--g) * 2) var(--serif);
+    margin-bottom: var(--g);
+    text-wrap: pretty;
+  }
+  .n {
+    font: 800 1.08em/1 var(--grot);
+    letter-spacing: -.01em;
+  }
+  .cells {
+    display: flex;
+    flex-wrap: wrap;
+    width: calc(var(--g) * 15);
+    margin-top: var(--g);
+  }
+  .cells i {
+    width: var(--g);
+    height: var(--g);
+    box-shadow: inset 0 0 0 1px var(--ink);
+  }
+  .cells i.on { background: var(--ink); }
+  .cells.ship i.on { background: var(--green); box-shadow: inset 0 0 0 1px var(--green); }
+
+  .mail {
+    display: inline-block;
+    font: 600 clamp(1.5rem, 3.4vw, 2.75rem)/calc(var(--g) * 4) var(--serif);
+    letter-spacing: -.01em;
+    color: var(--ink);
+    text-decoration-thickness: 2px;
+    text-underline-offset: .16em;
+    overflow-wrap: anywhere;
+  }
+  .mail:focus-visible { outline: 3px solid var(--red); outline-offset: 4px; }
+  @media (hover: hover) { .mail:hover { color: var(--red); } }
+  .last .plain { max-width: calc(var(--g) * 34); margin-top: calc(var(--g) * 2); }
+
+  @media (max-width: 700px) {
+    .body { grid-template-columns: minmax(0, 1fr); }
+    .kind { font-size: 1.375rem; }
+    .facts dd { font-size: 1.875rem; }
+    .notes { padding-top: var(--g); }
+    .notes dd, .plain { font-size: 1.0625rem; margin-bottom: var(--g); }
+    .mail { line-height: calc(var(--g) * 3); }
+    .last .plain { margin-top: var(--g); }
+  }
+
+  /* ink */
+  .ink {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .stamp {
+    position: absolute;
+    left: var(--sx);
+    top: var(--sy);
+    width: clamp(132px, 17vw, 244px);
+    translate: -50% -50%;
+    mix-blend-mode: multiply;
+    opacity: var(--o, .9);
+  }
+  .stamp.round { width: clamp(112px, 13vw, 190px); }
+  .stamp svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .stamp.red { color: var(--red); }
+  .stamp.green { color: var(--green); }
+  .stamp text {
+    font-family: var(--grot);
+    font-weight: 800;
+    fill: currentColor;
+    text-anchor: middle;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .stamp.hit { animation: hit 120ms cubic-bezier(.2, 0, 0, 1) both; }
+    @keyframes hit {
+      from { opacity: 0; scale: 1.22; }
+      to { opacity: var(--o, .9); scale: 1; }
+    }
+  }
+
+  .notice {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: calc(var(--g) * 1.25);
+    text-align: center;
+    font: 400 .8125rem/1.4 var(--grot);
+    color: var(--ink);
+  }
+</style>
+</head>
+<body>
+<main class="desk">
+  <div class="track" id="track">
+
+    <section class="leaf cover" tabindex="0" aria-label="Cover" data-die="cover">
+      <h1>Mina Seo</h1>
+      <p>Forward Deployed Engineer</p>
+      <div class="ink" aria-hidden="true"></div>
+    </section>
+
+    <section class="leaf" tabindex="0" aria-label="Logistics startup" data-die="vellmoor" data-seal="-7">
+      <span class="no" aria-hidden="true">2/6</span>
+      <div class="body">
+        <div class="facts">
+          <h2 class="kind">Logistics startup</h2>
+          <dl>
+            <div><dt>Arrived</dt><dd>Mar 4, 2024</dd></div>
+            <div><dt>Stayed</dt><dd>6 weeks</dd></div>
+          </dl>
+        </div>
+        <dl class="notes">
+          <dt>Problem</dt>
+          <dd>Reconciliation by hand, <span class="n">30</span> hours a week.</dd>
+          <dt>Result</dt>
+          <dd><span class="n">3</span> hours a week.</dd>
+          <div class="cells" data-n="30" data-on="3" aria-hidden="true"></div>
+        </dl>
+      </div>
+      <div class="ink" aria-hidden="true"></div>
+    </section>
+
+    <section class="leaf" tabindex="0" aria-label="Hospital group" data-die="ostera" data-seal="5">
+      <span class="no" aria-hidden="true">3/6</span>
+      <div class="body">
+        <div class="facts">
+          <h2 class="kind">Hospital group</h2>
+          <dl>
+            <div><dt>Arrived</dt><dd>Sep 9, 2024</dd></div>
+            <div><dt>Stayed</dt><dd>3 weeks</dd></div>
+          </dl>
+        </div>
+        <dl class="notes">
+          <dt>Problem</dt>
+          <dd>Appointment booking not connected.</dd>
+          <dt>Result</dt>
+          <dd>Live in <span class="n">3</span> weeks. First-month error rate <span class="n">0.2%</span>.</dd>
+        </dl>
+      </div>
+      <div class="ink" aria-hidden="true"></div>
+    </section>
+
+    <section class="leaf" tabindex="0" aria-label="Manufacturer" data-die="kanjuri" data-seal="-11">
+      <span class="no" aria-hidden="true">4/6</span>
+      <div class="body">
+        <div class="facts">
+          <h2 class="kind">Manufacturer</h2>
+          <dl>
+            <div><dt>Arrived</dt><dd>Feb 3, 2025</dd></div>
+            <div><dt>Stayed</dt><dd>14 weeks</dd></div>
+          </dl>
+        </div>
+        <dl class="notes">
+          <dt>Problem</dt>
+          <dd>Data locked in a <span class="n">20</span>-year-old ERP.</dd>
+          <dt>Result</dt>
+          <dd>Nightly batch export. <span class="n">2</span> customer staff trained to run it.</dd>
+        </dl>
+      </div>
+      <div class="ink" aria-hidden="true"></div>
+    </section>
+
+    <section class="leaf" tabindex="0" aria-label="Home office" data-die="home" data-seal="4">
+      <span class="no" aria-hidden="true">5/6</span>
+      <div class="body">
+        <div class="facts">
+          <h2 class="kind">Home office</h2>
+          <dl>
+            <div><dt>Filed</dt><dd>23</dd></div>
+            <div><dt>Shipped</dt><dd>9</dd></div>
+          </dl>
+        </div>
+        <dl class="notes">
+          <dt>Carried back</dt>
+          <dd>Product requests from customer sites.</dd>
+          <div class="cells ship" data-n="23" data-on="9" aria-hidden="true"></div>
+        </dl>
+      </div>
+      <div class="ink" aria-hidden="true"></div>
+    </section>
+
+    <section class="leaf last" tabindex="0" aria-label="Contact" data-die="mail" data-seal="-6">
+      <span class="no" aria-hidden="true">6/6</span>
+      <a class="mail" href="mailto:mina@example.com">mina@example.com</a>
+      <p class="plain"><span class="n">11</span> sites, <span class="n">4</span> countries. Longest stay <span class="n">14</span> weeks, shortest <span class="n">4</span> days.</p>
+      <p class="plain">Python, SQL, TypeScript, and the whiteboard in the customer's meeting room.</p>
+      <div class="ink" aria-hidden="true"></div>
+    </section>
+
+  </div>
+  <p class="notice">A fictional person, made as a demo.</p>
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  var track = document.getElementById('track');
+  var leaves = Array.prototype.slice.call(track.querySelectorAll('.leaf'));
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* graph cells */
+  Array.prototype.forEach.call(document.querySelectorAll('.cells'), function (el) {
+    var n = +el.dataset.n, on = +el.dataset.on, html = '';
+    for (var i = 0; i < n; i++) html += i < on ? '<i class="on"></i>' : '<i></i>';
+    el.innerHTML = html;
+  });
+
+  /* stamp dies */
+  var DIES = {
+    cover:    { shape: 'round', color: 'red',   ring: 'FIELD NOTES', ring2: 'MINA SEO', big: 'MS' },
+    vellmoor: { shape: 'rect',  color: 'red',   top: 'ARRIVED', mid: 'PORT VELLMOOR', bot: '04 MAR 2024' },
+    ostera:   { shape: 'oval',  color: 'green', top: 'ENTRY', mid: 'SANTA OSTERA', bot: '09 SEP 2024' },
+    kanjuri:  { shape: 'round', color: 'red',   ring: 'KANJURI WORKS', ring2: 'GATE PASS', big: '03', small: 'FEB 2025' },
+    home:     { shape: 'rect',  color: 'green', top: 'HOME OFFICE', mid: 'SHIPPED', bot: '9 OF 23' },
+    mail:     { shape: 'oval',  color: 'red',   top: 'WRITE TO', mid: 'MINA SEO', bot: 'EXAMPLE.COM' }
+  };
+  var uid = 0;
+
+  function r(a, b) { return a + Math.random() * (b - a); }
+
+  function midText(s, y, max, cap) {
+    var size = Math.min(cap, max / (s.length * 0.64));
+    var fit = s.length > 8 ? ' textLength="' + max + '" lengthAdjust="spacingAndGlyphs"' : '';
+    return '<text x="110" y="' + y + '" font-size="' + size.toFixed(1) + '"' + fit + '>' + s + '</text>';
+  }
+
+  function dieSVG(d) {
+    var id = 'k' + (++uid);
+    var f =
+      '<filter id="' + id + '" x="-12%" y="-12%" width="124%" height="124%">' +
+      '<feTurbulence type="fractalNoise" baseFrequency="' + r(0.025, 0.05).toFixed(3) + '" numOctaves="2" seed="' + Math.floor(r(1, 900)) + '" result="w"/>' +
+      '<feDisplacementMap in="SourceGraphic" in2="w" scale="' + r(1.2, 3.6).toFixed(2) + '" result="d"/>' +
+      '<feGaussianBlur in="d" stdDeviation="' + r(0.1, 0.95).toFixed(2) + '" result="b"/>' +
+      '<feTurbulence type="fractalNoise" baseFrequency="' + r(0.5, 0.9).toFixed(2) + '" numOctaves="2" seed="' + Math.floor(r(1, 900)) + '" result="n"/>' +
+      '<feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -9 ' + r(6.2, 7.3).toFixed(2) + '" result="m"/>' +
+      '<feComposite in="b" in2="m" operator="in"/>' +
+      '</filter>';
+    var g = '', vb;
+    if (d.shape === 'round') {
+      vb = '0 0 160 160';
+      g =
+        '<circle cx="80" cy="80" r="74" fill="none" stroke="currentColor" stroke-width="5"/>' +
+        '<circle cx="80" cy="80" r="45" fill="none" stroke="currentColor" stroke-width="1.5"/>' +
+        '<path id="' + id + 'a" d="M25,80 a55,55 0 1,1 110,0" fill="none"/>' +
+        '<path id="' + id + 'b" d="M16,80 a64,64 0 0,0 128,0" fill="none"/>' +
+        '<text font-size="13" letter-spacing="2"><textPath href="#' + id + 'a" startOffset="50%">' + d.ring + '</textPath></text>' +
+        '<text font-size="11" letter-spacing="2"><textPath href="#' + id + 'b" startOffset="50%">' + d.ring2 + '</textPath></text>' +
+        (d.small
+          ? '<text x="80" y="88" font-size="34">' + d.big + '</text><text x="80" y="104" font-size="10.5" letter-spacing="1">' + d.small + '</text>'
+          : '<text x="80" y="95" font-size="42">' + d.big + '</text>');
+    } else if (d.shape === 'oval') {
+      vb = '0 0 220 140';
+      g =
+        '<ellipse cx="110" cy="70" rx="104" ry="64" fill="none" stroke="currentColor" stroke-width="5"/>' +
+        '<ellipse cx="110" cy="70" rx="93" ry="53" fill="none" stroke="currentColor" stroke-width="1.5"/>' +
+        '<text x="110" y="46" font-size="13" letter-spacing="2.5">' + d.top + '</text>' +
+        midText(d.mid, 80, 150, 30) +
+        '<text x="110" y="104" font-size="13" letter-spacing="2">' + d.bot + '</text>';
+    } else {
+      vb = '0 0 220 140';
+      g =
+        '<rect x="6" y="6" width="208" height="128" rx="10" fill="none" stroke="currentColor" stroke-width="5"/>' +
+        '<rect x="16" y="16" width="188" height="108" rx="4" fill="none" stroke="currentColor" stroke-width="1.5"/>' +
+        '<text x="110" y="46" font-size="14" letter-spacing="3">' + d.top + '</text>' +
+        midText(d.mid, 84, 172, 34) +
+        '<text x="110" y="112" font-size="14" letter-spacing="2.5">' + d.bot + '</text>';
+    }
+    return '<svg viewBox="' + vb + '" xmlns="http://www.w3.org/2000/svg"><defs>' + f + '</defs><g filter="url(#' + id + ')">' + g + '</g></svg>';
+  }
+
+  function ink(leaf, opt) {
+    var d = DIES[leaf.dataset.die];
+    var layer = leaf.querySelector('.ink');
+    var el = document.createElement('div');
+    el.className = 'stamp ' + d.color + (d.shape === 'round' ? ' round' : '') + (opt.user ? ' user' : '') + (opt.hit && !still ? ' hit' : '');
+    if (opt.x != null) { el.style.left = opt.x + '%'; el.style.top = opt.y + '%'; }
+    el.style.rotate = (opt.rot != null ? opt.rot : r(-15, 15)).toFixed(1) + 'deg';
+    el.style.setProperty('--o', r(0.72, 0.96).toFixed(2));
+    el.innerHTML = dieSVG(d);
+    layer.appendChild(el);
+    var mine = layer.querySelectorAll('.user');
+    if (mine.length > 28) mine[0].remove();
+    if (opt.hit && !still && leaf.animate) {
+      leaf.animate(
+        [{ transform: 'translateY(0)' }, { transform: 'translateY(3px)' }, { transform: 'translateY(0)' }],
+        { duration: 160, easing: 'cubic-bezier(.2,0,0,1)' }
+      );
+    }
+  }
+
+  /* the stamp each site already carries */
+  leaves.forEach(function (leaf) {
+    if (leaf.dataset.seal != null) ink(leaf, { rot: +leaf.dataset.seal });
+  });
+  if (still) ink(leaves[0], { rot: -9 });
+  else setTimeout(function () { ink(leaves[0], { rot: -9, hit: true }); }, 700);
+
+  /* leaves on a strip: drag, throw, settle */
+  var vw = 0, centers = [];
+  var x = 0, v = 0, target = 0, active = 0;
+  var mode = 'rest'; // rest | drag | free | spring
+  var lastInput = performance.now();
+  var folds = leaves.map(function () { return 0; });
+
+  function measure() {
+    vw = document.documentElement.clientWidth;
+    centers = leaves.map(function (l) { return l.offsetLeft + l.offsetWidth / 2; });
+  }
+  function posOf(i) { return vw / 2 - centers[i]; }
+  function nearest(px) {
+    var best = 0, bd = Infinity;
+    for (var i = 0; i < centers.length; i++) {
+      var dd = Math.abs(posOf(i) - px);
+      if (dd < bd) { bd = dd; best = i; }
+    }
+    return best;
+  }
+  function place() { track.style.transform = 'translate3d(' + x.toFixed(2) + 'px,0,0)'; }
+  function setFold(i, val) {
+    if (Math.abs(folds[i] - val) < 0.05) return;
+    folds[i] = val;
+    leaves[i].style.setProperty('--fold', val.toFixed(1) + 'px');
+  }
+  function goTo(i, v0) {
+    i = Math.max(0, Math.min(leaves.length - 1, i));
+    active = i;
+    target = posOf(i);
+    lastInput = performance.now();
+    if (still) {
+      x = target; v = 0; mode = 'rest'; place();
+      leaves.forEach(function (_, k) { setFold(k, k === active + 1 ? 22 : 0); });
+    } else {
+      if (v0 != null) v = v0;
+      mode = 'spring';
+    }
+  }
+
+  measure();
+  x = target = posOf(0);
+  place();
+  if (still) setFold(1, 22);
+
+  window.addEventListener('resize', function () {
+    measure();
+    x = target = posOf(active); v = 0;
+    if (mode !== 'drag') mode = 'rest';
+    place();
+  });
+
+  /* pointer */
+  var pid = null, sx = 0, sy = 0, sx0 = 0, moved = false, downLeaf = null, downActive = 0;
+  var trail = [];
+
+  track.addEventListener('pointerdown', function (e) {
+    if (e.button || e.target.closest('a')) return;
+    pid = e.pointerId;
+    sx = e.clientX; sy = e.clientY; sx0 = x;
+    moved = false;
+    downLeaf = e.target.closest('.leaf');
+    downActive = active;
+    trail = [{ t: e.timeStamp, x: e.clientX }];
+    lastInput = performance.now();
+  });
+
+  track.addEventListener('pointermove', function (e) {
+    if (e.pointerId !== pid) return;
+    var dx = e.clientX - sx;
+    if (!moved) {
+      if (Math.abs(dx) < 7) return;
+      moved = true;
+      mode = 'drag';
+      track.classList.add('dragging');
+      try { track.setPointerCapture(pid); } catch (err) {}
+    }
+    var nx = sx0 + dx, lo = posOf(leaves.length - 1), hi = posOf(0);
+    if (nx > hi) nx = hi + (nx - hi) * 0.3;
+    if (nx < lo) nx = lo + (nx - lo) * 0.3;
+    x = nx;
+    place();
+    trail.push({ t: e.timeStamp, x: e.clientX });
+    if (trail.length > 6) trail.shift();
+    lastInput = performance.now();
+  });
+
+  function release(e) {
+    if (e.pointerId !== pid) return;
+    pid = null;
+    track.classList.remove('dragging');
+    if (moved) {
+      var a = trail[0], b = trail[trail.length - 1];
+      var vel = b.t > a.t && e.timeStamp - b.t < 90 ? (b.x - a.x) / (b.t - a.t) * 1000 : 0;
+      vel = Math.max(-5200, Math.min(5200, vel));
+      goTo(nearest(x + vel * 0.22), vel);
+      return;
+    }
+    if (e.type === 'pointercancel' || !downLeaf) return;
+    var i = leaves.indexOf(downLeaf);
+    if (i !== downActive) { goTo(i); return; }
+    var box = downLeaf.getBoundingClientRect();
+    ink(downLeaf, {
+      user: true, hit: true,
+      x: (e.clientX - box.left) / box.width * 100,
+      y: (e.clientY - box.top) / box.height * 100
+    });
+    lastInput = performance.now();
+  }
+  track.addEventListener('pointerup', release);
+  track.addEventListener('pointercancel', release);
+
+  /* wheel and trackpad */
+  var wheelT = 0;
+  window.addEventListener('wheel', function (e) {
+    e.preventDefault();
+    var d = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+    if (e.deltaMode === 1) d *= 32;
+    x = Math.max(posOf(leaves.length - 1) - 60, Math.min(posOf(0) + 60, x - d));
+    v = 0; mode = 'free';
+    place();
+    lastInput = performance.now();
+    clearTimeout(wheelT);
+    wheelT = setTimeout(function () { goTo(nearest(x)); }, 130);
+  }, { passive: false });
+
+  /* keys */
+  document.addEventListener('keydown', function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var k = e.key, to = null;
+    if (k === 'ArrowRight' || k === 'PageDown') to = active + 1;
+    else if (k === 'ArrowLeft' || k === 'PageUp') to = active - 1;
+    else if (k === 'Home') to = 0;
+    else if (k === 'End') to = leaves.length - 1;
+    if (to != null) { e.preventDefault(); goTo(to); return; }
+    if ((k === 'Enter' || k === ' ') && e.target.classList && e.target.classList.contains('leaf')) {
+      e.preventDefault();
+      ink(e.target, { user: true, hit: true, x: r(30, 82), y: r(28, 78) });
+      lastInput = performance.now();
+    }
+  });
+  track.addEventListener('focusin', function (e) {
+    var leaf = e.target.closest('.leaf');
+    var i = leaves.indexOf(leaf);
+    if (pid == null && i > -1 && i !== active) goTo(i);
+    track.parentNode.scrollLeft = 0;
+    document.documentElement.scrollLeft = 0;
+  });
+
+  /* frame */
+  if (!still) {
+    var prev = performance.now();
+    (function frame(now) {
+      var dt = Math.min(0.032, (now - prev) / 1000);
+      prev = now;
+      if (mode === 'spring') {
+        var acc = -150 * (x - target) - 24 * v;
+        v += acc * dt;
+        x += v * dt;
+        if (Math.abs(x - target) < 0.3 && Math.abs(v) < 4) { x = target; v = 0; mode = 'rest'; }
+        place();
+      }
+      var idle = mode === 'rest' && pid == null && now - lastInput > 2200;
+      var lift = Math.min(vw * 0.07, 34);
+      for (var i = 0; i < leaves.length; i++) {
+        var want = idle && i === active + 1 ? lift * (0.82 + 0.18 * Math.sin(now / 780)) : 0;
+        if (want === 0 && folds[i] === 0) continue;
+        var next = folds[i] + (want - folds[i]) * Math.min(1, dt * (want ? 3.2 : 14));
+        setFold(i, next < 0.2 && want === 0 ? 0 : next);
+      }
+      requestAnimationFrame(frame);
+    })(prev);
+  }
+
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(function () { measure(); if (mode === 'rest') { x = target = posOf(active); place(); } });
+  }
+})();
+</script>
+</body>
+</html>

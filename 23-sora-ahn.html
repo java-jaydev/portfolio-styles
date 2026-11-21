@@ -1,0 +1,399 @@
+<!doctype html>
+<!--
+  portfolio-styles: https://github.com/java-jaydev/portfolio-styles
+  MIT License, Copyright (c) 2026 java-jaydev
+  가져가서 쓸 때는 이 표시를 지우지 말고, 화면에도 출처를 남겨 주세요.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sora Ahn, Developer Advocate</title>
+<meta name="description" content="Sora Ahn, Developer Advocate. 34 talks in 9 cities.">
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,600,700&f[]=general-sans@400,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --stage:#2a0f35;
+  --rail:#4d2360;
+  --ink:#1c0924;
+  --yellow:#eaff2e;
+  --white:#fff;
+  --pink:#ff2d92;
+  --metal:#e6d9ee;
+  --soft:#cdb8d8;
+  --display:"Clash Display","Avenir Next Condensed","Arial Narrow",system-ui,sans-serif;
+  --text:"General Sans","Avenir Next","Helvetica Neue",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;-webkit-text-size-adjust:100%;background:var(--stage);overflow-x:clip;scrollbar-color:var(--pink) var(--stage)}
+body{margin:0;background:var(--stage);color:var(--soft);font-family:var(--text);font-size:1rem;line-height:1.5;overflow-x:clip}
+::selection{background:var(--yellow);color:var(--ink)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+
+/* hanging things */
+.hang{position:relative}
+.straps{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.straps path{fill:none;stroke:var(--pink);stroke-width:var(--strap);stroke-linejoin:round}
+.badge{
+  position:absolute;left:0;top:0;width:var(--bw);padding:0;margin:0;border:0;background:none;
+  font:inherit;font-size:calc(var(--bw)/var(--em));color:var(--ink);text-align:left;
+  transform-origin:50% 0;cursor:grab;touch-action:pan-y;user-select:none;-webkit-user-select:none;
+  -webkit-tap-highlight-color:transparent;border-radius:1.1em;
+}
+.badge.held{cursor:grabbing;z-index:5}
+.badge:focus-visible{outline:3px solid var(--white);outline-offset:6px}
+.clip{display:block;width:1.5em;height:2.1em;margin:0 auto -1.25em;border-radius:.4em;background:var(--metal);position:relative;z-index:2}
+.card{display:block;position:relative;width:100%;height:calc(var(--bw)*var(--ratio));transform-style:preserve-3d;transform:perspective(60em) rotateY(0deg);transition:transform .55s cubic-bezier(.2,0,0,1)}
+.badge[aria-pressed="true"] .card{transform:perspective(60em) rotateY(180deg)}
+.face{position:absolute;inset:0;display:flex;flex-direction:column;border-radius:1.1em;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden}
+.face.back{transform:rotateY(180deg)}
+.slot{display:block;flex:none;width:3.4em;height:.7em;border-radius:1em;background:var(--stage);margin:1.15em auto 0}
+.y{background:var(--yellow)}
+.w{background:var(--white)}
+
+/* main badge */
+.stage{height:92vh;height:92svh;min-height:520px;max-height:1000px}
+.stage{--bw:min(74vw,340px,37vh);--em:20;--ratio:1.38;--strap:16px}
+.main .front{padding:0}
+.name{font-family:var(--display);font-weight:700;font-size:6.5em;line-height:.84;letter-spacing:-.02em;margin:auto 0 0;padding:0 .2em}
+.role{font-weight:600;font-size:1.08em;line-height:1.2;padding:.75em 1.3em 1.2em}
+.band{display:flex;align-items:center;justify-content:space-between;background:var(--white);padding:.85em 1.3em;font-family:var(--display);font-weight:600;font-size:1.25em;line-height:1}
+.bars{width:5em;height:1.5em;background:repeating-linear-gradient(90deg,var(--ink) 0 .12em,transparent .12em .3em,var(--ink) .3em .36em,transparent .36em .5em,var(--ink) .5em .72em,transparent .72em .86em)}
+.main .back{padding:0 1.3em 1em}
+.main .back .slot{margin-bottom:.5em}
+.row{display:block;flex:1;border-top:.1em solid var(--ink);padding-top:.5em}
+.slot + .row{border-top:0}
+.row b{display:block;font-family:var(--display);font-weight:700;font-size:2.9em;line-height:1;letter-spacing:-.01em;font-variant-numeric:tabular-nums}
+.row b i{font-style:normal;font-weight:400;font-size:.45em;letter-spacing:0;margin:0 .35em}
+.row span{display:block;font-size:max(.84em,12px);line-height:1.3;margin-top:.2em}
+
+/* past talks */
+.rack{list-style:none;margin:0 auto;padding:0;display:grid;grid-template-columns:repeat(2,1fr);max-width:1180px;--base:min(34vw,170px)}
+.rack li{height:calc(var(--base)*3.05);--bw:calc(var(--base)*var(--s,1));--em:12;--ratio:1.45;--strap:9px}
+.rack li::before{content:"";position:absolute;top:-3px;left:-50vw;right:-50vw;height:6px;background:var(--rail)}
+.rack li::after{content:"";position:absolute;top:-7px;left:calc(50% - 7px);width:14px;height:14px;border-radius:50%;background:var(--metal);z-index:1}
+.rack .face{padding:0 1em 1em}
+.city{font-family:var(--display);font-weight:600;font-size:1.75em;line-height:1;letter-spacing:-.01em;margin-top:.7em}
+.when{font-size:max(.9em,12px);font-weight:600;margin-top:.5em}
+.talk{font-size:max(.95em,12px);line-height:1.3;margin-top:auto;text-wrap:balance}
+.seats{font-family:var(--display);font-weight:700;font-size:3.3em;line-height:1;letter-spacing:-.02em;margin-top:auto;font-variant-numeric:tabular-nums}
+.room{font-size:max(.95em,12px);font-weight:600;margin-top:.3em}
+@media (min-width:760px){
+  .rack{grid-template-columns:repeat(4,1fr);--base:min(17vw,180px)}
+}
+
+footer{padding:clamp(56px,10vw,120px) 24px 40px;text-align:center}
+.mail{font-family:var(--display);font-weight:600;font-size:clamp(1.75rem,6vw,3.5rem);line-height:1.1;color:var(--yellow);text-decoration:underline;text-decoration-color:var(--pink);text-decoration-thickness:.09em;text-underline-offset:.16em;overflow-wrap:anywhere}
+.mail:focus-visible{outline:3px solid var(--white);outline-offset:6px;border-radius:4px}
+@media (hover:hover){.mail:hover{text-decoration-color:var(--yellow)}}
+.fine{margin:clamp(40px,7vw,72px) 0 0;font-size:.875rem}
+.fine a{color:inherit;text-underline-offset:.2em}
+.fine a:focus-visible{outline:2px solid var(--white);outline-offset:3px}
+
+@media (prefers-reduced-motion:reduce){
+  .card{transition:none}
+  .badge{cursor:pointer}
+}
+</style>
+</head>
+<body>
+<main>
+  <h1 class="sr">Sora Ahn, Developer Advocate</h1>
+
+  <section class="stage hang main" data-hang="v">
+    <svg class="straps" aria-hidden="true"></svg>
+    <button class="badge" type="button" aria-pressed="false">
+      <span class="clip"></span>
+      <span class="card">
+        <span class="face front y">
+          <span class="slot"></span>
+          <span class="name">Sora<br>Ahn</span>
+          <span class="role">Developer Advocate</span>
+          <span class="band"><span>Speaker</span><span class="bars"></span></span>
+        </span>
+        <span class="face back w" aria-hidden="true">
+          <span class="slot"></span>
+          <span class="row"><b>34</b><span>talks in 9 cities</span></span>
+          <span class="row"><b>4,200</b><span>stars on the sample repo</span></span>
+          <span class="row"><b>22<i>to</i>6</b><span>minutes to a first API call</span></span>
+          <span class="row"><b>2,900</b><span>community questions answered</span></span>
+        </span>
+      </span>
+    </button>
+  </section>
+
+  <h2 class="sr">Talks</h2>
+  <ul class="rack">
+    <li class="hang" data-k=".62" style="--s:1.15">
+      <svg class="straps" aria-hidden="true"></svg>
+      <button class="badge" type="button" aria-pressed="false"><span class="clip"></span><span class="card">
+        <span class="face front y"><span class="slot"></span><span class="city">Port Ellery</span><span class="when">Sep 2025</span><span class="talk">Your quickstart is 16 minutes too long</span></span>
+        <span class="face back w" aria-hidden="true"><span class="slot"></span><span class="seats">1,800</span><span class="room">in the room</span></span>
+      </span></button>
+    </li>
+    <li class="hang" data-k=".95" style="--s:.88">
+      <svg class="straps" aria-hidden="true"></svg>
+      <button class="badge" type="button" aria-pressed="false"><span class="clip"></span><span class="card">
+        <span class="face front w"><span class="slot"></span><span class="city">Marlow Bay</span><span class="when">May 2025</span><span class="talk">Six people, one whiteboard</span></span>
+        <span class="face back y" aria-hidden="true"><span class="slot"></span><span class="seats">6</span><span class="room">in the room</span></span>
+      </span></button>
+    </li>
+    <li class="hang" data-k=".78">
+      <svg class="straps" aria-hidden="true"></svg>
+      <button class="badge" type="button" aria-pressed="false"><span class="clip"></span><span class="card">
+        <span class="face front w"><span class="slot"></span><span class="city">Vantana</span><span class="when">Nov 2024</span><span class="talk">What 2,900 questions say about your docs</span></span>
+        <span class="face back y" aria-hidden="true"><span class="slot"></span><span class="seats">640</span><span class="room">in the room</span></span>
+      </span></button>
+    </li>
+    <li class="hang" data-k=".5" style="--s:1.05">
+      <svg class="straps" aria-hidden="true"></svg>
+      <button class="badge" type="button" aria-pressed="false"><span class="clip"></span><span class="card">
+        <span class="face front y"><span class="slot"></span><span class="city">Kestrel Point</span><span class="when">Jun 2024</span><span class="talk">Sample code is a product</span></span>
+        <span class="face back w" aria-hidden="true"><span class="slot"></span><span class="seats">420</span><span class="room">in the room</span></span>
+      </span></button>
+    </li>
+    <li class="hang" data-k=".86">
+      <svg class="straps" aria-hidden="true"></svg>
+      <button class="badge" type="button" aria-pressed="false"><span class="clip"></span><span class="card">
+        <span class="face front w"><span class="slot"></span><span class="city">New Carrow</span><span class="when">Oct 2023</span><span class="talk">Error messages are docs</span></span>
+        <span class="face back y" aria-hidden="true"><span class="slot"></span><span class="seats">950</span><span class="room">in the room</span></span>
+      </span></button>
+    </li>
+    <li class="hang" data-k=".55" style="--s:.95">
+      <svg class="straps" aria-hidden="true"></svg>
+      <button class="badge" type="button" aria-pressed="false"><span class="clip"></span><span class="card">
+        <span class="face front y"><span class="slot"></span><span class="city">Sundry Falls</span><span class="when">Apr 2023</span><span class="talk">A 5-hour median reply on issues</span></span>
+        <span class="face back w" aria-hidden="true"><span class="slot"></span><span class="seats">310</span><span class="room">in the room</span></span>
+      </span></button>
+    </li>
+    <li class="hang" data-k=".7" style="--s:1.08">
+      <svg class="straps" aria-hidden="true"></svg>
+      <button class="badge" type="button" aria-pressed="false"><span class="clip"></span><span class="card">
+        <span class="face front y"><span class="slot"></span><span class="city">Alder Quay</span><span class="when">Aug 2022</span><span class="talk">Live coding with the Wi-Fi off</span></span>
+        <span class="face back w" aria-hidden="true"><span class="slot"></span><span class="seats">85</span><span class="room">in the room</span></span>
+      </span></button>
+    </li>
+    <li class="hang" data-k="1" style="--s:.9">
+      <svg class="straps" aria-hidden="true"></svg>
+      <button class="badge" type="button" aria-pressed="false"><span class="clip"></span><span class="card">
+        <span class="face front w"><span class="slot"></span><span class="city">Brightwater</span><span class="when">Mar 2021</span><span class="talk">First talk, 11 slides</span></span>
+        <span class="face back y" aria-hidden="true"><span class="slot"></span><span class="seats">40</span><span class="room">in the room</span></span>
+      </span></button>
+    </li>
+  </ul>
+</main>
+
+<footer>
+  <a class="mail" href="mailto:sora@example.com">sora@example.com</a>
+  <p class="fine">A fictional person, made as a demo. <a href="https://github.com/java-jaydev/portfolio-styles">portfolio-styles</a></p>
+</footer>
+
+<script>
+(function(){
+  var RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var G = 2600, DT = 1/120, DAMP = 0.9935, NS = 'http://www.w3.org/2000/svg';
+
+  function Hanger(el, i){
+    this.el = el; this.i = i;
+    this.btn = el.querySelector('.badge');
+    this.svg = el.querySelector('.straps');
+    this.v = el.dataset.hang === 'v';
+    this.seed = i*1.93 + 0.4;
+    this.live = true; this.hold = false; this.moved = false;
+    this.paths = [];
+    for (var n = 0; n < (this.v ? 2 : 1); n++){
+      var p = document.createElementNS(NS, 'path');
+      this.svg.appendChild(p); this.paths.push(p);
+    }
+    this.layout();
+    this.bind();
+  }
+
+  Hanger.prototype.layout = function(){
+    var W = this.el.clientWidth, H = this.el.clientHeight, cx = W/2;
+    var card = this.btn.querySelector('.card'), clip = this.btn.querySelector('.clip');
+    this.bw = this.btn.offsetWidth;
+    this.S = clip.offsetHeight*0.4 + card.offsetHeight*0.5;
+    var anchors, rest, segs;
+    if (this.v){
+      var d = Math.min(W*0.14, 96), depth = H*0.2 + 12;
+      anchors = [[cx-d,-12],[cx+d,-12]]; rest = [cx, depth-12]; segs = 8;
+      this.L = Math.hypot(depth, d);
+    } else {
+      this.L = parseFloat(this.el.dataset.k) * H/3.05;
+      anchors = [[cx,0]]; rest = [cx, this.L]; segs = 4;
+    }
+    this.anchors = anchors;
+    var pts = [], cons = [], chains = [];
+    function pt(x,y,w){ pts.push({x:x,y:y,px:x,py:y,w:w}); return pts.length-1; }
+    var P = pt(rest[0], rest[1], 1), Q = pt(rest[0], rest[1]+this.S, 0.2);
+    cons.push([P,Q,this.S]);
+    var L = this.L;
+    anchors.forEach(function(a){
+      var chain = [], prev = -1;
+      for (var k = 0; k < segs; k++){
+        var t = k/segs, id = pt(a[0]+(rest[0]-a[0])*t, a[1]+(rest[1]-a[1])*t, k ? 1 : 0);
+        if (prev >= 0) cons.push([prev,id,L/segs]);
+        chain.push(id); prev = id;
+      }
+      cons.push([prev,P,L/segs]); chain.push(P);
+      chains.push(chain);
+    });
+    this.pts = pts; this.cons = cons; this.chains = chains; this.P = pts[P]; this.Q = pts[Q];
+    this.render();
+  };
+
+  Hanger.prototype.step = function(t){
+    var pts = this.pts, P = this.P, Q = this.Q, i, p;
+    var wind = (this.v ? 80 : 60) * (Math.sin(t*0.6+this.seed) + 0.5*Math.sin(t*1.7+this.seed*2.3));
+    for (i = 0; i < pts.length; i++){
+      p = pts[i];
+      if (!p.w || (this.hold && (p === P || p === Q))) continue;
+      var vx = (p.x-p.px)*DAMP, vy = (p.y-p.py)*DAMP;
+      p.px = p.x; p.py = p.y;
+      p.x += vx + (p === Q ? wind : 0)*DT*DT;
+      p.y += vy + G*DT*DT;
+    }
+    if (this.hold) this.place();
+    for (var it = 0; it < 12; it++){
+      for (i = 0; i < this.cons.length; i++){
+        var c = this.cons[i], a = pts[c[0]], b = pts[c[1]];
+        var wa = (this.hold && (a === P || a === Q)) ? 0 : a.w;
+        var wb = (this.hold && (b === P || b === Q)) ? 0 : b.w;
+        if (wa + wb === 0) continue;
+        var dx = b.x-a.x, dy = b.y-a.y, dist = Math.hypot(dx,dy) || 0.001;
+        var f = (dist-c[2])/dist/(wa+wb);
+        a.x += dx*f*wa; a.y += dy*f*wa; b.x -= dx*f*wb; b.y -= dy*f*wb;
+      }
+    }
+  };
+
+  /* while held: the body follows the pointer, the clip end points back along the strap */
+  Hanger.prototype.place = function(){
+    var A = this.anchors, ax = 0, ay = 0, i;
+    for (i = 0; i < A.length; i++){ ax += A[i][0]/A.length; ay += A[i][1]/A.length; }
+    var qx = this.tx, qy = this.ty;
+    var dx = qx-ax, dy = qy-ay, d = Math.hypot(dx,dy) || 1;
+    if (d < this.S + 20){ dx = 0; dy = 1; d = 1; }
+    var ux = dx/d, uy = dy/d;
+    var px = qx-ux*this.S, py = qy-uy*this.S;
+    for (i = 0; i < A.length; i++){
+      var ex = px-A[i][0], ey = py-A[i][1], e = Math.hypot(ex,ey);
+      if (e > this.L){ px = A[i][0]+ex/e*this.L; py = A[i][1]+ey/e*this.L; }
+    }
+    this.P.x = px; this.P.y = py;
+    this.Q.x = px+ux*this.S; this.Q.y = py+uy*this.S;
+  };
+
+  Hanger.prototype.render = function(){
+    var P = this.P, Q = this.Q, ang = Math.atan2(Q.y-P.y, Q.x-P.x) - Math.PI/2;
+    this.btn.style.transform = 'translate3d(' + (P.x-this.bw/2).toFixed(2) + 'px,' + P.y.toFixed(2) + 'px,0) rotate(' + ang.toFixed(4) + 'rad)';
+    for (var n = 0; n < this.chains.length; n++){
+      var ch = this.chains[n], pts = this.pts, a = pts[ch[0]], d = 'M' + a.x.toFixed(1) + ' ' + a.y.toFixed(1);
+      for (var k = 1; k < ch.length-1; k++){
+        var b = pts[ch[k]], c = pts[ch[k+1]];
+        d += 'Q' + b.x.toFixed(1) + ' ' + b.y.toFixed(1) + ' ' + ((b.x+c.x)/2).toFixed(1) + ' ' + ((b.y+c.y)/2).toFixed(1);
+      }
+      var z = pts[ch[ch.length-1]];
+      d += 'L' + z.x.toFixed(1) + ' ' + z.y.toFixed(1);
+      this.paths[n].setAttribute('d', d);
+    }
+  };
+
+  Hanger.prototype.flip = function(){
+    var on = this.btn.getAttribute('aria-pressed') !== 'true';
+    this.btn.setAttribute('aria-pressed', on);
+    this.btn.querySelector('.front').setAttribute('aria-hidden', on);
+    this.btn.querySelector('.back').setAttribute('aria-hidden', !on);
+    if (!RM) this.Q.px += (this.i % 2 ? 3 : -3);
+  };
+
+  Hanger.prototype.bind = function(){
+    var self = this, btn = this.btn, sx, sy, lx, ly, lt, vx = 0, vy = 0;
+    btn.addEventListener('click', function(){
+      if (self.moved){ self.moved = false; return; }
+      self.flip();
+    });
+    if (RM) return;
+    function local(e){ var r = self.el.getBoundingClientRect(); return [e.clientX-r.left, e.clientY-r.top]; }
+    btn.addEventListener('pointerdown', function(e){
+      if (e.button) return;
+      var m = local(e);
+      self.gx = self.Q.x-m[0]; self.gy = self.Q.y-m[1];
+      self.tx = self.Q.x; self.ty = self.Q.y;
+      sx = e.clientX; sy = e.clientY; lx = self.tx; ly = self.ty; lt = e.timeStamp; vx = vy = 0;
+      self.moved = false; self.down = true;
+      btn.setPointerCapture(e.pointerId);
+    });
+    btn.addEventListener('pointermove', function(e){
+      if (!self.down) return;
+      if (!self.hold){
+        if (Math.hypot(e.clientX-sx, e.clientY-sy) < 6) return;
+        self.hold = true; self.moved = true; btn.classList.add('held');
+      }
+      var m = local(e);
+      self.tx = m[0]+self.gx; self.ty = m[1]+self.gy;
+      var dt = Math.max(e.timeStamp-lt, 1)/1000;
+      vx = vx*0.6 + (self.tx-lx)/dt*0.4; vy = vy*0.6 + (self.ty-ly)/dt*0.4;
+      lx = self.tx; ly = self.ty; lt = e.timeStamp;
+    });
+    function up(e){
+      if (!self.down) return;
+      self.down = false;
+      if (self.hold){
+        self.hold = false; btn.classList.remove('held');
+        if (e.timeStamp-lt > 80) vx = vy = 0;
+        var sp = Math.hypot(vx,vy), cap = 3200, k = sp > cap ? cap/sp : 1;
+        [self.P, self.Q].forEach(function(p){ p.px = p.x-vx*k*DT; p.py = p.y-vy*k*DT; });
+      }
+    }
+    btn.addEventListener('pointerup', up);
+    btn.addEventListener('pointercancel', function(e){ up(e); self.moved = false; });
+  };
+
+  var hangers = [].map.call(document.querySelectorAll('.hang'), function(el, i){ return new Hanger(el, i); });
+
+  var lastW = innerWidth, lastH = innerHeight;
+  addEventListener('resize', function(){
+    if (innerWidth === lastW && Math.abs(innerHeight-lastH) < 120) return;
+    lastW = innerWidth; lastH = innerHeight;
+    hangers.forEach(function(h){ h.layout(); });
+  });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ hangers.forEach(function(h){ h.layout(); if (!RM && h.v) kick(h); }); });
+
+  function kick(h){ h.Q.px = h.Q.x + 5; h.P.px = h.P.x + 2; }
+
+  if (RM) return;
+
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(es){
+      es.forEach(function(e){ e.target._h.live = e.isIntersecting; });
+    }, {rootMargin:'200px'});
+    hangers.forEach(function(h){ h.el._h = h; io.observe(h.el); });
+  }
+
+  var lastY = scrollY;
+  addEventListener('scroll', function(){
+    var dy = Math.max(-50, Math.min(50, scrollY-lastY)); lastY = scrollY;
+    hangers.forEach(function(h){ if (h.live && !h.hold) h.Q.px += dy*0.012*(h.i % 2 ? 1 : -1); });
+  }, {passive:true});
+
+  kick(hangers[0]);
+  var last = performance.now(), acc = 0, T = 0;
+  function frame(now){
+    var dt = Math.min((now-last)/1000, 0.05); last = now; acc += dt;
+    var n = 0;
+    while (acc >= DT && n < 8){
+      T += DT; acc -= DT; n++;
+      for (var i = 0; i < hangers.length; i++) if (hangers[i].live) hangers[i].step(T);
+    }
+    if (n === 8) acc = 0;
+    for (var j = 0; j < hangers.length; j++) if (hangers[j].live) hangers[j].render();
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
