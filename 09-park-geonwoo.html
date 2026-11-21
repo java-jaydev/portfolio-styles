@@ -1,0 +1,514 @@
+<!doctype html>
+<!--
+  portfolio-styles: https://github.com/java-jaydev/portfolio-styles
+  MIT License, Copyright (c) 2026 java-jaydev
+  가져가서 쓸 때는 이 표시를 지우지 말고, 화면에도 출처를 남겨 주세요.
+-->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>박건우, 태권도 트레이너 포트폴리오</title>
+<meta name="description" content="전주대학교 태권도학과 4학년 박건우의 포트폴리오. 데모용 가상 인물입니다.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#E0282E; --blue:#1B4BA0; --k:#000000; --w:#FFFFFF; --mute:#474747;
+  --pad:clamp(20px,5vw,64px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"Noto Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  color:var(--k);background:var(--w);line-height:1.75;font-size:17px;
+  word-break:keep-all;overflow-wrap:anywhere;-webkit-font-smoothing:antialiased;
+}
+.d{font-family:"Black Han Sans","Noto Sans KR","Apple SD Gothic Neo",sans-serif;font-weight:400}
+a{color:inherit}
+:focus-visible{outline:4px solid var(--blue);outline-offset:3px}
+ul,ol{list-style:none}
+
+/* hero */
+#hero{
+  position:relative;min-height:100vh;min-height:min(100svh,1000px);overflow:hidden;
+  display:grid;grid-template-rows:auto 1fr auto;touch-action:pan-y;
+  padding-bottom:18px;
+}
+#hero::after{
+  content:"";position:absolute;left:0;right:0;bottom:0;height:18px;
+  background:linear-gradient(90deg,var(--blue) 0 10%,var(--k) 10% 90%,var(--red) 90% 100%);
+}
+#stage{position:absolute;inset:0;width:100%;height:100%;display:block}
+.top{
+  position:relative;z-index:2;display:flex;justify-content:space-between;align-items:baseline;
+  gap:16px;flex-wrap:wrap;padding:22px var(--pad) 0;
+}
+.top .me{font-weight:700;text-decoration:none;font-size:16px}
+.top nav{display:flex;gap:clamp(12px,2vw,28px);flex-wrap:wrap}
+.top nav a{font-weight:500;font-size:15px;text-decoration:none;border-bottom:3px solid transparent;padding-bottom:2px}
+.top nav a:hover{border-bottom-color:var(--red)}
+.pitch{position:relative;z-index:1;align-self:center;padding:28px var(--pad);max-width:min(56%,760px)}
+.pitch h1{font-size:clamp(84px,15vw,230px);line-height:.92;letter-spacing:-.01em;margin-left:-.04em}
+.lead{font-weight:700;font-size:clamp(20px,2.1vw,30px);line-height:1.38;margin-top:18px;max-width:16em}
+.sub{margin-top:12px;color:var(--mute);font-size:16px}
+.hint{margin-top:22px;font-size:15px;padding-left:14px;border-left:6px solid var(--red);max-width:26em}
+.kick{
+  margin-top:18px;font:inherit;font-weight:700;font-size:16px;cursor:pointer;
+  background:var(--k);color:var(--w);border:0;padding:12px 22px;border-radius:0;
+}
+.kick:hover{background:var(--red)}
+.kick:active{transform:translateY(2px)}
+.read{
+  position:relative;z-index:1;display:flex;margin:0 var(--pad) 26px;width:fit-content;
+  border:3px solid var(--k);background:var(--w);
+}
+.read div{padding:8px 18px 6px;min-width:112px}
+.read div+div{border-left:3px solid var(--k)}
+.read dt{font-size:13px;font-weight:500;line-height:1.3}
+.read dd{font-size:40px;line-height:1.05;font-variant-numeric:tabular-nums}
+.read dd small{font-family:"Noto Sans KR",sans-serif;font-size:14px;font-weight:700;margin-left:3px}
+.ring{display:none}
+.hint .mo{display:none}
+
+/* sections */
+main section{border-top:8px solid var(--k);padding:clamp(48px,8vw,104px) var(--pad)}
+main section#about{border-top:0}
+.wrap{max-width:1180px;margin:0 auto}
+h2{font-size:clamp(44px,7vw,96px);line-height:1}
+.two{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(24px,5vw,72px);align-items:start}
+.say{font-weight:700;font-size:clamp(21px,2.3vw,29px);line-height:1.45}
+.two p+p{margin-top:16px}
+.two .body{max-width:34em}
+
+/* bouts */
+.bouts{margin-top:clamp(28px,4vw,52px);border-top:3px solid var(--k)}
+.bout{
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(20px,4vw,56px);
+  padding:clamp(24px,3.4vw,40px) 0;border-bottom:3px solid var(--k);align-items:center;
+}
+.bout h3{font-size:clamp(21px,2.2vw,27px);font-weight:700;line-height:1.3}
+.bout .who{font-weight:500;margin-top:6px}
+.bout .what{margin-top:10px;max-width:36em;color:#1c1c1c}
+.board{width:clamp(280px,30vw,372px)}
+.board .pair{display:grid;grid-template-columns:1fr 1fr}
+.board .cell{color:var(--w);padding:10px 14px 8px;min-height:118px;display:flex;flex-direction:column;justify-content:space-between}
+.board .before{background:var(--blue)}
+.board .after{background:var(--red)}
+.board .cell span{font-size:14px;font-weight:700}
+.board .cell b{font-family:"Black Han Sans","Noto Sans KR",sans-serif;font-weight:400;font-size:clamp(40px,4.3vw,58px);line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
+.board .cell b small{font-size:.42em;margin-left:2px}
+.board figcaption{font-size:14px;font-weight:500;padding-top:8px;line-height:1.45}
+
+/* log */
+.log{margin-top:clamp(28px,4vw,52px);border-top:3px solid var(--k)}
+.log div{display:grid;grid-template-columns:minmax(0,4fr) minmax(0,8fr);gap:8px 32px;padding:18px 0;border-bottom:1px solid var(--k)}
+.log dt{font-weight:700;font-size:18px}
+.log dd{max-width:38em}
+
+/* years */
+.years{margin-top:clamp(28px,4vw,52px);border-top:3px solid var(--k)}
+.years li{display:grid;grid-template-columns:clamp(92px,12vw,150px) minmax(0,1fr);gap:8px 24px;padding:16px 0;border-bottom:1px solid var(--k);align-items:baseline}
+.years time{font-family:"Black Han Sans","Noto Sans KR",sans-serif;font-size:clamp(30px,3.6vw,44px);line-height:1}
+.years p{max-width:38em}
+.years strong{font-weight:700}
+
+/* contact */
+main section.call{background:var(--k);color:var(--w);border-top:0}
+.call h2{max-width:9em}
+.call p{margin-top:20px;max-width:32em}
+.call .mail{display:block;margin-top:28px;font-weight:700;font-size:clamp(20px,3.4vw,40px);text-decoration:underline;text-decoration-thickness:4px;text-underline-offset:8px;text-decoration-color:var(--red);width:fit-content;overflow-wrap:anywhere}
+.call .copy{margin-top:22px;font:inherit;font-weight:700;font-size:16px;cursor:pointer;background:var(--w);color:var(--k);border:0;padding:12px 22px}
+.call .copy:hover{background:var(--red);color:var(--w)}
+.call :focus-visible{outline-color:var(--w)}
+.call .where{font-size:15px;margin-top:26px;border-left:6px solid var(--blue);padding-left:14px}
+footer{background:var(--k);color:var(--w);padding:0 var(--pad) 36px;font-size:14px}
+footer p{max-width:1180px;margin:0 auto;border-top:1px solid #fff;padding-top:16px}
+
+@media (max-width:819px){
+  body{font-size:16px}
+  #hero{min-height:0;grid-template-rows:auto auto auto auto}
+  .pitch{max-width:none;padding-top:22px;padding-bottom:10px}
+  .pitch h1{font-size:clamp(84px,26vw,170px)}
+  .read{margin-top:14px;margin-bottom:22px}
+  .sub{display:none}
+  .hint .pc{display:none}
+  .hint .mo{display:inline}
+  .hint{margin-top:16px}
+  .read div{min-width:0;padding:6px 12px 4px}
+  .read dd{font-size:30px}
+  .ring{display:block;height:clamp(270px,74vw,440px)}
+  .two{grid-template-columns:1fr}
+  .bout{grid-template-columns:1fr}
+  .board{width:100%;max-width:420px}
+  .log div{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .kick:active{transform:none}
+}
+</style>
+</head>
+<body>
+
+<section id="hero" aria-label="박건우 소개">
+  <canvas id="stage" aria-hidden="true"></canvas>
+
+  <header class="top">
+    <a class="me" href="#hero">박건우, 전주대학교 태권도학과</a>
+    <nav aria-label="페이지 안 이동">
+      <a href="#about">소개</a>
+      <a href="#work">한 일</a>
+      <a href="#skill">자격과 기술</a>
+      <a href="#years">걸어온 길</a>
+      <a href="#call">연락</a>
+    </nav>
+  </header>
+
+  <div class="pitch">
+    <h1 class="d">박건우</h1>
+    <p class="lead">세게 차는 법보다, 덜 다치고 오래 차는 법을 가르치고 싶습니다.</p>
+    <p class="sub">태권도학과 4학년입니다. 선수 트레이너와 지도자를 준비하고 있습니다.</p>
+    <p class="hint"><span class="pc">마우스를 움직이면 미트를 따라 발이 나갑니다. 누르면 빠르게 찹니다.</span><span class="mo">아래 그림 근처를 누르면 그쪽으로 찹니다. 옆으로 끌면 발이 따라갑니다.</span></p>
+    <button class="kick" id="kickBtn" type="button">한 번 차기</button>
+  </div>
+
+  <div class="ring" id="ring" aria-hidden="true"></div>
+
+  <dl class="read" aria-hidden="true">
+    <div><dt>발 높이</dt><dd class="d"><span id="oH">0</span><small>cm</small></dd></div>
+    <div><dt>다리 각도</dt><dd class="d"><span id="oA">0</span><small>도</small></dd></div>
+    <div><dt>맞힌 횟수</dt><dd class="d"><span id="oN">0</span><small>번</small></dd></div>
+  </dl>
+
+</section>
+
+<main>
+  <section id="about">
+    <div class="wrap two">
+      <h2 class="d">소개</h2>
+      <div class="body">
+        <p class="say">초등학교 2학년 때 도장에 처음 갔고, 올해로 14년째 도복을 입습니다.</p>
+        <p>고등학교 2학년 때 무릎을 다쳐서 5개월을 쉬었습니다. 그때 재활을 도와주신 트레이너 선생님이 "아픈 걸 참는 건 실력이 아니야"라고 하셨는데, 그 말이 진로를 바꿨습니다. 그 뒤로는 제가 잘 차는 것보다 옆 사람이 안 다치고 차는 데 더 관심이 갑니다.</p>
+        <p>감으로 가르치지 않으려고 합니다. 훈련 전후를 영상으로 찍고, 횟수와 시간을 적고, 숫자가 안 바뀌면 프로그램을 바꿉니다. 아래에 적은 숫자는 모두 제가 직접 재고 기록한 것입니다.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="wrap">
+      <h2 class="d">한 일</h2>
+      <div class="bouts">
+
+        <article class="bout">
+          <div>
+            <h3>초등부 겨루기 팀 12주 훈련 프로그램</h3>
+            <p class="who">선수 9명, 12주, 주 3회, 보조 코치로 참여</p>
+            <p class="what">지역 도장 초등부 팀의 훈련표를 관장님과 함께 다시 짰습니다. 발차기 반복을 줄이고 착지와 방향 전환 연습을 앞에 넣었습니다. 발목이나 무릎이 아파서 빠진 날이 지난 학기 11일에서 3일로 줄었습니다.</p>
+          </div>
+          <figure class="board">
+            <div class="pair">
+              <div class="cell before"><span>1주차</span><b>14<small>회</small></b></div>
+              <div class="cell after"><span>12주차</span><b>18<small>회</small></b></div>
+            </div>
+            <figcaption>10초 동안 돌려차기 횟수, 9명 평균</figcaption>
+          </figure>
+        </article>
+
+        <article class="bout">
+          <div>
+            <h3>발차기 속도 측정 기록 프로젝트</h3>
+            <p class="who">학과 동기 16명, 6주, 영상 384개</p>
+            <p class="what">휴대폰 초당 240장 촬영으로 발이 떨어지는 순간부터 미트에 닿는 순간까지를 프레임 단위로 셌습니다. 골반을 먼저 여는 연습을 6주 한 뒤 다시 쟀고, 16명 중 13명의 기록이 빨라졌습니다. 느려진 3명은 따로 원인을 적어 두었습니다.</p>
+          </div>
+          <figure class="board">
+            <div class="pair">
+              <div class="cell before"><span>연습 전</span><b>0.31<small>초</small></b></div>
+              <div class="cell after"><span>6주 뒤</span><b>0.27<small>초</small></b></div>
+            </div>
+            <figcaption>돌려차기가 몸통 높이 미트에 닿는 시간, 평균</figcaption>
+          </figure>
+        </article>
+
+        <article class="bout">
+          <div>
+            <h3>시범단 교내 축제 공연 구성</h3>
+            <p class="who">단원 18명, 7분 공연, 준비 5주</p>
+            <p class="what">격파 순서와 이동 동선을 맡았습니다. 송판 잡는 사람과 차는 사람이 무대에서 엇갈리던 구간 4곳을 찾아 자리를 바꿨고, 리허설을 전부 찍어서 실수를 세었습니다. 본공연에서는 송판 46장 중 44장을 깼습니다.</p>
+          </div>
+          <figure class="board">
+            <div class="pair">
+              <div class="cell before"><span>첫 리허설</span><b>9<small>번</small></b></div>
+              <div class="cell after"><span>마지막 리허설</span><b>2<small>번</small></b></div>
+            </div>
+            <figcaption>한 번 공연하는 동안 나온 실수</figcaption>
+          </figure>
+        </article>
+
+        <article class="bout">
+          <div>
+            <h3>생활체육 지도 실습, 성인 저녁반</h3>
+            <p class="who">수강생 22명, 8주, 주 2회</p>
+            <p class="what">주민센터 저녁반을 맡았습니다. 20대부터 60대까지 섞여 있어서 같은 동작을 세 가지 난이도로 준비했고, 수업 끝에 "오늘 어디가 불편했는지"를 한 줄씩 받았습니다. 3주차부터 출석이 올랐고 8주 뒤 15명이 다음 기수에 다시 등록했습니다.</p>
+          </div>
+          <figure class="board">
+            <div class="pair">
+              <div class="cell before"><span>1, 2주차</span><b>61<small>%</small></b></div>
+              <div class="cell after"><span>7, 8주차</span><b>84<small>%</small></b></div>
+            </div>
+            <figcaption>수업 출석률</figcaption>
+          </figure>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="skill">
+    <div class="wrap">
+      <h2 class="d">자격과 기술</h2>
+      <dl class="log">
+        <div><dt>태권도 4단</dt><dd>2023년 승단. 주 종목은 겨루기이고 68kg 이하 체급에서 뛰었습니다.</dd></div>
+        <div><dt>생활스포츠지도사 2급</dt><dd>필기는 합격했고 실기와 구술을 준비하고 있습니다. 2027년 상반기 취득이 목표입니다.</dd></div>
+        <div><dt>스포츠 테이핑</dt><dd>발목과 무릎 위주로 합니다. 시범단과 초등부 팀에서 한 주에 15번쯤 감습니다. 교내 테이핑 실습 과정 30시간을 마쳤습니다.</dd></div>
+        <div><dt>영상 분석</dt><dd>초당 240장으로 찍어 프레임 단위로 시간을 재고, 관절 각도를 표시해서 선수에게 보여 줍니다. 말로 열 번 하는 것보다 화면 한 번이 빠릅니다.</dd></div>
+        <div><dt>훈련 프로그램 짜기</dt><dd>4주, 8주, 12주 단위 훈련표를 만들고 주마다 기록을 보고 고칩니다. 지금까지 세 팀의 훈련표를 짰습니다.</dd></div>
+        <div><dt>응급처치</dt><dd>심폐소생술과 자동심장충격기 교육을 받았고 2년마다 다시 받습니다.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section id="years">
+    <div class="wrap">
+      <h2 class="d">걸어온 길</h2>
+      <ol class="years">
+        <li><time datetime="2012">2012</time><p><strong>동네 도장에서 태권도를 시작했습니다.</strong> 초등학교 2학년이었습니다.</p></li>
+        <li><time datetime="2018">2018</time><p><strong>고등부 선수로 도 대회에 출전했습니다.</strong> 두 번 나가 한 번은 8강에서 졌습니다.</p></li>
+        <li><time datetime="2019">2019</time><p><strong>왼쪽 무릎을 다쳐 5개월 동안 재활했습니다.</strong> 트레이너라는 일을 이때 처음 가까이서 봤습니다.</p></li>
+        <li><time datetime="2021">2021</time><p><strong>전주대학교 태권도학과에 입학했습니다.</strong> 1학년을 마치고 군 복무를 했습니다.</p></li>
+        <li><time datetime="2024">2024</time><p><strong>복학하고 학과 시범단에 들어갔습니다.</strong> 가을 교내 축제 공연의 동선을 맡았습니다.</p></li>
+        <li><time datetime="2025">2025</time><p><strong>초등부 겨루기 팀 보조 코치를 했습니다.</strong> 교내 겨루기 대회에서는 68kg 이하 체급 2위를 했습니다.</p></li>
+        <li><time datetime="2026">2026</time><p><strong>발차기 속도 측정 프로젝트와 성인 저녁반 실습을 마쳤습니다.</strong> 졸업 뒤에는 선수 팀 트레이너로 일하고 싶습니다.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="call" class="call">
+    <div class="wrap">
+      <h2 class="d">같이 훈련할 팀을 찾습니다</h2>
+      <p>실습생이나 보조 코치 자리가 있으면 알려 주세요. 훈련표 예시와 측정 기록 원본을 보내 드릴 수 있습니다.</p>
+      <a class="mail" id="mail" href="mailto:geonwoo.park@example.com">geonwoo.park@example.com</a>
+      <button class="copy" id="copyBtn" type="button">메일 주소 복사</button>
+      <p class="where">전주에 있습니다. 평일 저녁 7시 훈련이 끝난 뒤에는 답장이 빠릅니다.</p>
+    </div>
+  </section>
+</main>
+
+<footer><p>데모용으로 만든 가상의 인물입니다.</p></footer>
+
+<script>
+(function(){
+  var hero=document.getElementById('hero'),cv=document.getElementById('stage'),ctx=cv.getContext('2d');
+  var ring=document.getElementById('ring');
+  var oH=document.getElementById('oH'),oA=document.getElementById('oA'),oN=document.getElementById('oN');
+  var RED='#E0282E',BLUE='#1B4BA0',BLACK='#000000';
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W=0,HH=0,H=300,FX=0,G=0,L1,L2,TO,HR,UA,FA,maxR;
+  var face=1,faceT=1;
+  var foot={x:0,y:0,vx:0,vy:0};
+  var ptr={x:0,y:0,inside:false,last:-1e9};
+  var trail=[],flashes=[],hits=0,snap=null,nextAuto=-1,firstAuto=true,visible=true,last=0,inited=false;
+  var shownH=-1,shownA=-1,narrow=false;
+
+  function size(){
+    var r=hero.getBoundingClientRect();W=r.width;HH=r.height;
+    var dpr=Math.min(window.devicePixelRatio||1,2);
+    cv.width=Math.round(W*dpr);cv.height=Math.round(HH*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);
+    narrow=W<820;G=HH-18;
+    if(narrow){var rr=ring.getBoundingClientRect();G=rr.bottom-r.top-10;H=Math.min(rr.height*0.94,W*0.74);FX=W*0.5;}
+    else{H=Math.min(HH*0.6,W*0.3);FX=W*0.71;}
+    L1=H*0.245;L2=H*0.245;TO=H*0.3;HR=H*0.068;UA=H*0.155;FA=H*0.15;maxR=(L1+L2)*0.985;
+    if(!inited){foot.x=FX+H*0.17;foot.y=G;inited=true;}
+    if(foot.y>G)foot.y=G;
+    if(reduce)staticPose(FX+maxR,G-H*0.72,false);
+  }
+  function kAmt(){return Math.max(0,Math.min(1,(G-foot.y)/(H*0.78)));}
+  function hipPos(now,k){
+    var b=reduce?0:Math.sin(now*0.0085)*H*0.012*(1-k*0.7);
+    return {x:FX+face*k*H*0.035,y:G-(L1+L2)*0.9+b-k*H*0.03};
+  }
+  function reachPt(tx,ty,h){
+    ty=Math.min(ty,G);
+    var dx=tx-h.x,dy=ty-h.y,d=Math.hypot(dx,dy)||1,mn=(L1+L2)*0.34;
+    if(d>maxR){dx*=maxR/d;dy*=maxR/d;}else if(d<mn){dx*=mn/d;dy*=mn/d;}
+    return {x:h.x+dx,y:Math.min(h.y+dy,G)};
+  }
+  function ik(ax,ay,bx,by,l1,l2,s){
+    var dx=bx-ax,dy=by-ay,d=Math.hypot(dx,dy);
+    d=Math.max(Math.abs(l1-l2)+0.001,Math.min(d,l1+l2-0.001));
+    var c=(l1*l1+d*d-l2*l2)/(2*l1*d);c=Math.max(-1,Math.min(1,c));
+    var ang=Math.atan2(dy,dx)+s*Math.acos(c);
+    return {x:ax+Math.cos(ang)*l1,y:ay+Math.sin(ang)*l1};
+  }
+  function autoKick(now,count){
+    var side=firstAuto?1:(Math.random()<0.5?-1:1);
+    var a=(firstAuto?128:(84+Math.random()*58))*Math.PI/180;
+    firstAuto=false;
+    var h=hipPos(now,0);
+    kickAt(h.x+side*Math.sin(a)*maxR,h.y+Math.cos(a)*maxR,count,now);
+  }
+  function kickAt(x,y,count,now){
+    if(reduce){staticPose(x,y,count);return;}
+    snap={x:x,y:y,t0:now,hit:0,count:count};
+  }
+  function staticPose(x,y,count){
+    if(Math.abs(x-FX)>H*0.04){face=x>FX?1:-1;faceT=face;}
+    var p=reachPt(x,y,hipPos(0,0));foot.x=p.x;foot.y=p.y;
+    p=reachPt(x,y,hipPos(0,kAmt()));foot.x=p.x;foot.y=p.y;
+    if(count){hits++;oN.textContent=hits;}
+    draw(0);
+  }
+
+  function update(dt,now){
+    var active=ptr.inside&&now-ptr.last<2500;
+    var tx=0,ty=0,kicking=false,stiff=150;
+    if(!snap&&!active){
+      if(nextAuto<0)nextAuto=now+700;
+      if(now>nextAuto){autoKick(now,false);nextAuto=now+1e9;}
+    }
+    if(snap){tx=snap.x;ty=snap.y;kicking=true;stiff=640;}
+    else if(active){tx=ptr.x;ty=ptr.y;kicking=true;}
+    if(kicking&&Math.abs(tx-FX)>H*0.04)faceT=tx>FX?1:-1;
+    face+=(faceT-face)*Math.min(1,dt*12);
+    var h=hipPos(now,kAmt());
+    var d=kicking?reachPt(tx,ty,h):{x:FX+face*H*0.17,y:G};
+    var damp=2*Math.sqrt(stiff)*0.78;
+    foot.vx+=(stiff*(d.x-foot.x)-damp*foot.vx)*dt;
+    foot.vy+=(stiff*(d.y-foot.y)-damp*foot.vy)*dt;
+    foot.x+=foot.vx*dt;foot.y+=foot.vy*dt;
+    if(foot.y>G){foot.y=G;foot.vy=0;}
+    var dx=foot.x-h.x,dy=foot.y-h.y,dd=Math.hypot(dx,dy),lim=L1+L2-0.5;
+    if(dd>lim){foot.x=h.x+dx*lim/dd;foot.y=Math.min(G,h.y+dy*lim/dd);}
+    if(Math.hypot(foot.vx,foot.vy)>60&&foot.y<G-3)trail.push({x:foot.x,y:foot.y,t:now,c:face>=0?RED:BLUE});
+    while(trail.length&&now-trail[0].t>400)trail.shift();
+    if(snap){
+      var dist=Math.hypot(d.x-foot.x,d.y-foot.y);
+      if(!snap.hit&&(dist<H*0.05||now-snap.t0>240)){
+        snap.hit=now;flashes.push({x:foot.x,y:foot.y,t:now,c:face>=0?RED:BLUE});
+        if(snap.count){hits++;oN.textContent=hits;}
+      }
+      if(snap.hit&&now-snap.hit>210){snap=null;nextAuto=now+2500+Math.random()*1700;}
+    }
+    for(var i=flashes.length-1;i>=0;i--)if(now-flashes[i].t>340)flashes.splice(i,1);
+  }
+
+  function line(ax,ay,bx,by,w,c){ctx.lineWidth=w;ctx.strokeStyle=c;ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.stroke();}
+  function norm(x,y){var d=Math.hypot(x,y)||1;return {x:x/d,y:y/d};}
+
+  function draw(now){
+    ctx.clearRect(0,0,W,HH);
+    ctx.lineCap='round';ctx.lineJoin='round';
+    var k=kAmt(),h=hipPos(now,k),s=face>=0?-1:1,col=face>=0?RED:BLUE,other=face>=0?BLUE:RED;
+    var i,a;
+    ctx.lineCap='butt';
+
+    if(narrow){ctx.fillStyle=BLACK;ctx.fillRect(0,G+H*0.03,W,6);}
+    // 발 궤적
+    for(i=1;i<trail.length;i++){
+      var p0=trail[i-1],p1=trail[i];
+      if(p1.t-p0.t>90)continue;
+      a=1-(now-p1.t)/400;if(a<=0)continue;
+      ctx.globalAlpha=a*0.55;line(p0.x,p0.y,p1.x,p1.y,H*0.075*a+3,p1.c);
+    }
+    ctx.globalAlpha=1;ctx.lineCap='round';
+
+    var sup={x:FX-face*H*0.17,y:G};
+    var kneeS=ik(h.x,h.y,sup.x,sup.y,L1,L2,s),kneeK=ik(h.x,h.y,foot.x,foot.y,L1,L2,s);
+    var th=face*0.1*(1-k)-face*k*0.58,ux=Math.sin(th),uy=-Math.cos(th);
+    var sh={x:h.x+ux*TO,y:h.y+uy*TO};
+    var hd={x:sh.x+ux*HR*1.55+face*HR*0.3,y:sh.y+uy*HR*1.55};
+    function arm(ex,ey,fx,fy){var e=norm(ex,ey),el={x:sh.x+e.x*UA,y:sh.y+e.y*UA},f=norm(fx,fy);return [el,{x:el.x+f.x*FA,y:el.y+f.y*FA}];}
+    var front=arm(face*0.55,0.85,face*0.5,-0.87);
+    var rear=arm(-face*(0.35+0.55*k),0.95-0.75*k,-face*(0.25+0.75*k)+(1-k)*face*0.45,-0.95+1.3*k);
+    var lw=H*0.056,aw=H*0.044;
+
+    // 뒤쪽 팔, 디딤 다리
+    line(sh.x,sh.y,rear[0].x,rear[0].y,aw,BLACK);line(rear[0].x,rear[0].y,rear[1].x,rear[1].y,aw,BLACK);
+    line(h.x,h.y,kneeS.x,kneeS.y,lw,BLACK);line(kneeS.x,kneeS.y,sup.x,sup.y,lw,BLACK);
+    line(sup.x,sup.y,sup.x+face*H*0.07,sup.y,lw,BLACK);
+    // 몸통
+    line(h.x,h.y,sh.x,sh.y,H*0.088,BLACK);
+    // 차는 다리
+    line(h.x,h.y,kneeK.x,kneeK.y,lw,BLACK);line(kneeK.x,kneeK.y,foot.x,foot.y,lw,BLACK);
+    var fd=foot.y<G-4?norm(foot.x-kneeK.x,foot.y-kneeK.y):{x:face>=0?1:-1,y:0};
+    line(foot.x,foot.y,foot.x+fd.x*H*0.07,foot.y+fd.y*H*0.07,H*0.066,col);
+    // 앞쪽 팔, 머리
+    line(sh.x,sh.y,front[0].x,front[0].y,aw,BLACK);line(front[0].x,front[0].y,front[1].x,front[1].y,aw,BLACK);
+    ctx.fillStyle=BLACK;ctx.beginPath();ctx.arc(hd.x,hd.y,HR,0,Math.PI*2);ctx.fill();
+
+    // 미트
+    var active=ptr.inside&&now-ptr.last<2500&&!reduce;
+    if(active){
+      var ang=Math.atan2(ptr.y-h.y,ptr.x-h.x);
+      ctx.save();ctx.translate(ptr.x,ptr.y);ctx.rotate(ang);
+      line(H*0.05,0,H*0.15,0,H*0.03,BLACK);
+      ctx.fillStyle=other;ctx.beginPath();
+      if(ctx.roundRect)ctx.roundRect(-H*0.012,-H*0.085,H*0.062,H*0.17,H*0.02);else ctx.rect(-H*0.012,-H*0.085,H*0.062,H*0.17);
+      ctx.fill();ctx.restore();
+    }
+
+    // 타격 표시
+    for(i=0;i<flashes.length;i++){
+      var f=flashes[i];a=(now-f.t)/340;
+      ctx.globalAlpha=1-a;
+      var r0=H*0.06+a*H*0.09,r1=r0+H*0.085*(1-a);
+      for(var j=0;j<8;j++){var q=j*Math.PI/4+0.39;line(f.x+Math.cos(q)*r0,f.y+Math.sin(q)*r0,f.x+Math.cos(q)*r1,f.y+Math.sin(q)*r1,H*0.024,f.c);}
+    }
+    ctx.globalAlpha=1;
+
+    // 수치
+    var cmv=Math.max(0,Math.round((G-foot.y)*178/(H*0.91)));
+    var dd=Math.hypot(foot.x-h.x,foot.y-h.y)||1;
+    var av=Math.round(Math.acos(Math.max(-1,Math.min(1,(foot.y-h.y)/dd)))*180/Math.PI);
+    if(cmv!==shownH){shownH=cmv;oH.textContent=cmv;}
+    if(av!==shownA){shownA=av;oA.textContent=av;}
+  }
+
+  function frame(now){
+    var dt=Math.min(0.033,(now-last)/1000);if(!(dt>0))dt=0.016;last=now;
+    if(visible){update(dt,now);draw(now);}
+    requestAnimationFrame(frame);
+  }
+  function rel(e){var r=hero.getBoundingClientRect();return {x:e.clientX-r.left,y:e.clientY-r.top};}
+
+  hero.addEventListener('pointermove',function(e){var p=rel(e);ptr.x=p.x;ptr.y=p.y;ptr.inside=true;ptr.last=performance.now();});
+  hero.addEventListener('pointerleave',function(){ptr.inside=false;});
+  hero.addEventListener('pointercancel',function(){ptr.inside=false;});
+  hero.addEventListener('pointerdown',function(e){
+    if(e.target.closest('a,button'))return;
+    var p=rel(e),now=performance.now();
+    ptr.x=p.x;ptr.y=p.y;ptr.inside=true;ptr.last=now;
+    kickAt(p.x,p.y,true,now);
+  });
+  document.getElementById('kickBtn').addEventListener('click',function(){autoKick(performance.now(),true);});
+
+  var rt;
+  window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(size,80);});
+  if('IntersectionObserver' in window){new IntersectionObserver(function(en){visible=en[0].isIntersecting;}).observe(hero);}
+  size();
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(size);
+  window.addEventListener('load',size);
+  if(!reduce)requestAnimationFrame(frame);
+
+  // 메일 주소 복사
+  var cb=document.getElementById('copyBtn'),addr='geonwoo.park@example.com';
+  cb.addEventListener('click',function(){
+    function done(ok){cb.textContent=ok?'복사했습니다':'주소를 길게 눌러 복사해 주세요';setTimeout(function(){cb.textContent='메일 주소 복사';},2200);}
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(addr).then(function(){done(true);},function(){done(false);});}
+    else done(false);
+  });
+})();
+</script>
+</body>
+</html>
