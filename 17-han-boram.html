@@ -1,0 +1,425 @@
+<!doctype html>
+<!--
+  portfolio-styles: https://github.com/java-jaydev/portfolio-styles
+  MIT License, Copyright (c) 2026 java-jaydev
+  가져가서 쓸 때는 이 표시를 지우지 말고, 화면에도 출처를 남겨 주세요.
+-->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>한보람 주문서</title>
+<meta name="description" content="한보람의 지원용 포트폴리오. 영수증 한 장.">
+<script>document.documentElement.classList.add("js")</script>
+<style>
+@font-face{font-family:"BMHANNAPro";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.0/BMHANNAPro.woff") format("woff");font-display:swap}
+@font-face{font-family:"BMJUA";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/BMJUA.woff") format("woff");font-display:swap}
+@font-face{font-family:"DungGeunMo";src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/DungGeunMo.woff") format("woff");font-display:swap}
+
+:root{
+  --mint:#2AC1BC;
+  --shade:#1E9F9B;
+  --paper:#fff;
+  --ink:#000;
+  --hl:#FFE600;
+  --print:"DungGeunMo","D2Coding","Menlo",monospace;
+  --jua:"BMJUA","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --hanna:"BMHANNAPro","BMJUA","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+}
+*{box-sizing:border-box}
+html{overflow-x:clip;background:var(--mint);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;scrollbar-color:var(--ink) var(--mint)}
+body{margin:0;overflow-x:clip;color:var(--ink);font-family:var(--print);font-size:1rem;line-height:1.5}
+::selection{background:var(--hl);color:var(--ink)}
+
+#shade{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+
+.roll{position:relative;z-index:1;width:min(22em,calc(100vw - 1.5rem));margin:0 auto;padding:2rem 0 9rem}
+.js .roll{visibility:hidden}
+.js.ready .roll{visibility:visible}
+.sheet{position:relative}
+.sheet.later{display:none}
+.sheet.wait > .ln:not(.peek){display:none}
+
+/* 한 줄 = 종이 한 조각 */
+.ln{display:block;margin:0;background:var(--paper);padding:0 1.25em;isolation:isolate;box-shadow:0 .6px 0 var(--paper),0 -.6px 0 var(--paper);font-variant-numeric:tabular-nums}
+.roll .ln{border-bottom:2px solid var(--paper);margin-bottom:-2px}
+.gap{height:.9em}
+.lead{height:2.2em}
+.kind{padding-top:.2em;padding-bottom:.9em}
+.kind b{display:block;background:var(--ink);color:var(--paper);font:400 2.6em/1.5 var(--hanna);text-align:center}
+.edge{height:.5em;padding:0}
+.edge.top{clip-path:var(--zig-top)}
+.edge.bot{clip-path:var(--zig-bot)}
+
+h1.ln{font:400 2.5em/1.15 var(--hanna);text-align:center;padding-top:.25em}
+h2.ln{font:400 1.6em/1.3 var(--hanna);text-align:center;padding:.15em 0 .25em}
+.who{font-family:var(--jua);text-align:center;padding-bottom:.9em}
+.rule{padding-top:.7em;padding-bottom:.7em}
+.rule::before{content:"";display:block;border-top:2px dashed var(--ink)}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:1em}
+.row > :last-child{text-align:right}
+.name{padding-top:.55em}
+.name > :first-child{font-family:var(--jua);font-size:1.25em;line-height:1.3}
+.sum > *{font-family:var(--jua);font-size:1.25em}
+
+mark{position:relative;background:none;color:inherit;white-space:nowrap}
+mark::before{content:"";position:absolute;z-index:-1;inset:.05em -.3em;background:var(--hl);transform:rotate(-1.5deg) skewX(-10deg)}
+
+.req{display:flex;gap:.6em;align-items:center;padding-top:.6em;font-family:var(--jua);font-size:1.0625em;line-height:1.35}
+.req svg{flex:none;width:1.15em;height:1.15em}
+.proof{padding-left:3.1em}
+
+.mail{text-align:center;padding-top:.4em;padding-bottom:.5em}
+.mail a{font-family:var(--jua);font-size:1.3em;color:var(--ink);text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.2em}
+.mail a:focus-visible{outline:3px solid var(--ink);outline-offset:4px}
+@media (hover:hover){.mail a:hover{background:var(--hl)}}
+.bars{padding-top:.4em}
+.bars svg{display:block;width:100%;height:3.4em}
+.code{text-align:center;letter-spacing:.3em;padding-bottom:.6em}
+
+/* 절취선 */
+.tear{width:100%;height:2.75em;border:0;border-radius:0;font:inherit;color:var(--ink);cursor:grab;touch-action:pan-y;position:relative;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+.tear::before{content:"";position:absolute;left:0;right:0;top:50%;border-top:2px dashed var(--ink)}
+.tear span{position:relative;display:inline-flex;align-items:center;gap:.4em;background:var(--paper);padding:0 .6em}
+.tear svg{width:1.1em;height:1.1em;transition:transform .15s ease-out}
+.tear:active{cursor:grabbing}
+.tear:focus-visible{outline:3px solid var(--ink);outline-offset:-5px}
+@media (hover:hover){.tear:hover svg{transform:translateX(.3em) rotate(-12deg)}}
+.torn > .tear{clip-path:var(--zig-half);cursor:default;pointer-events:none}
+.torn > .tear > *,.torn > .tear::before{visibility:hidden}
+
+/* 프린터 */
+.printer{position:fixed;z-index:2;left:50%;bottom:0;translate:-50% 0;width:min(27em,100vw);background:var(--ink);color:var(--paper);border-radius:1em 1em 0 0;padding:1.05em 2.6em .8em 1.2em}
+.printer::before{content:"";position:absolute;left:1.2em;right:1.2em;top:.4em;height:.25em;border-radius:1em;background:var(--mint)}
+.printer i{position:absolute;right:1.1em;top:1.25em;width:.55em;height:.55em;border-radius:50%;background:var(--paper)}
+.printer p{margin:0;font:400 .75rem/1.45 var(--jua);text-wrap:pretty}
+@media (prefers-reduced-motion:no-preference){
+  .printer.on i{animation:led .22s steps(2,jump-none) infinite}
+  @keyframes led{from{background:var(--paper)}to{background:var(--hl)}}
+}
+
+@media (min-width:700px){.roll,.printer{font-size:1.1875rem}}
+@media (min-width:1000px) and (min-height:760px){.roll,.printer{font-size:1.375rem}}
+</style>
+</head>
+<body>
+<canvas id="shade" aria-hidden="true"></canvas>
+
+<main class="roll">
+  <section class="sheet" aria-label="주문서">
+    <div class="ln edge top"></div>
+    <div class="ln lead"></div>
+    <h1 class="ln">한보람</h1>
+    <div class="ln who">전주대학교 시각디자인학과 4학년</div>
+    <div class="ln kind"><b>지원 1건</b></div>
+    <div class="ln row"><span>받는 곳</span><span>배달의민족</span></div>
+    <div class="ln row head"><span>자리</span><span>콘텐츠 마케터, UX 라이터 신입</span></div>
+    <div class="ln rule"></div>
+    <div class="ln row"><span>메뉴</span><span>결과</span></div>
+    <div class="ln rule"></div>
+
+    <div class="ln row name"><span>세트 권하는 메뉴판</span><span><mark>22→35%</mark></span></div>
+    <div class="ln row"><span>분식집 4주, 세트 주문</span><span>612건</span></div>
+
+    <div class="ln row name"><span>식기 전에 여는 알림</span><span><mark>1.6배</mark></span></div>
+    <div class="ln row"><span>학식 알림 A/B, 열람률</span><span>1,840명</span></div>
+
+    <div class="ln row name"><span>포스터 모둠 한 접시</span><span><mark>31→74명</mark></span></div>
+    <div class="ln row"><span>동아리 모집, 지원자</span><span>12장</span></div>
+
+    <div class="ln row name"><span>사장님 말씀 곱빼기</span><span>400분</span></div>
+    <div class="ln row"><span>가게 인터뷰, 40분씩</span><span>10명</span></div>
+
+    <div class="ln rule"></div>
+    <div class="ln row sum"><span>합계</span><span>4건</span></div>
+    <div class="ln row"><span>결제</span><span>숫자</span></div>
+    <button class="ln tear" type="button" aria-label="절취선 뜯기"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="6" cy="7" r="3"/><circle cx="6" cy="17" r="3"/><path d="M8.6 8.6 21 18M8.6 15.4 21 6"/></svg>절취선</span></button>
+  </section>
+
+  <section class="sheet" aria-label="요청 사항">
+    <div class="ln edge top"></div>
+    <div class="ln gap peek"></div>
+    <h2 class="ln peek">요청 사항</h2>
+    <div class="ln rule"></div>
+
+    <div class="ln req"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18"/><path d="m7 12.5 3.6 3.6L17.5 8"/></svg>짧은 문장으로 사람을 움직인 경험</div>
+    <div class="ln proof">메뉴판 한 줄, 세트 주문 22→35%</div>
+
+    <div class="ln req"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18"/><path d="m7 12.5 3.6 3.6L17.5 8"/></svg>브랜드 말투를 지키며 쓰기</div>
+    <div class="ln proof">포스터 12장, 한 목소리</div>
+
+    <div class="ln req"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18"/><path d="m7 12.5 3.6 3.6L17.5 8"/></svg>실험하고 숫자로 확인</div>
+    <div class="ln proof">A/B 1,840명, 열람률 1.6배</div>
+
+    <div class="ln req"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18"/><path d="m7 12.5 3.6 3.6L17.5 8"/></svg>디자이너, 개발자와 협업</div>
+    <div class="ln proof">학식 알림, 개발 동아리와 배포</div>
+
+    <div class="ln req"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18"/><path d="m7 12.5 3.6 3.6L17.5 8"/></svg>사장님과 고객을 직접 만남</div>
+    <div class="ln proof">사장님 10명, 한 명당 40분</div>
+
+    <div class="ln rule"></div>
+    <div class="ln row sum"><span>요청 5건</span><span><mark>확인 5건</mark></span></div>
+    <div class="ln gap"></div>
+    <button class="ln tear" type="button" aria-label="절취선 뜯기"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="6" cy="7" r="3"/><circle cx="6" cy="17" r="3"/><path d="M8.6 8.6 21 18M8.6 15.4 21 6"/></svg>절취선</span></button>
+  </section>
+
+  <section class="sheet" aria-label="호출 벨">
+    <div class="ln edge top"></div>
+    <div class="ln gap peek"></div>
+    <h2 class="ln peek">호출 벨</h2>
+    <div class="ln mail"><a href="mailto:boram@example.com">boram@example.com</a></div>
+    <div class="ln rule"></div>
+    <div class="ln row"><span>발행</span><span>2026.11.21</span></div>
+    <div class="ln row"><span>발행인</span><span>한보람</span></div>
+    <div class="ln bars" id="bars" aria-hidden="true"></div>
+    <div class="ln code">HANBORAM 1121</div>
+    <div class="ln edge bot"></div>
+  </section>
+</main>
+
+<footer class="printer">
+  <i aria-hidden="true"></i>
+  <p>데모용으로 만든 가상의 인물입니다. 배달의민족과 아무 관계가 없고, 공고 요건도 가상으로 만든 것입니다.</p>
+</footer>
+
+<script>
+(() => {
+  const root = document.documentElement;
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const roll = document.querySelector(".roll");
+  const printer = document.querySelector(".printer");
+  const cv = document.getElementById("shade");
+  const ctx = cv.getContext("2d");
+  const sheets = [...roll.querySelectorAll(".sheet")];
+  const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+  /* 톱니 모양 가장자리 */
+  const zig = (y0, y1, n = 28) => {
+    let p = "";
+    for (let i = n; i >= 0; i--) p += `,${(i / n * 100).toFixed(2)}% ${i % 2 ? y0 : y1}`;
+    return p;
+  };
+  root.style.setProperty("--zig-bot", `polygon(0 0,100% 0${zig("100%", "20%")})`);
+  root.style.setProperty("--zig-half", `polygon(0 0,100% 0${zig("50%", "40%")})`);
+  let top = "";
+  for (let i = 0; i <= 28; i++) top += `${(i / 28 * 100).toFixed(2)}% ${i % 2 ? "0" : "80%"},`;
+  root.style.setProperty("--zig-top", `polygon(${top}100% 100%,0 100%)`);
+
+  /* 바코드 */
+  {
+    let x = 0, r = "";
+    for (const ch of "HANBORAM20261121BORAM") {
+      const c = ch.charCodeAt(0);
+      for (let k = 0; k < 3; k++) {
+        const w = 1 + ((c >> (k * 2)) & 3);
+        if (k % 2 === 0) r += `<rect x="${x}" width="${w}" height="10"/>`;
+        x += w;
+      }
+      x += 1;
+    }
+    document.getElementById("bars").innerHTML = `<svg viewBox="0 0 ${x - 1} 10" preserveAspectRatio="none">${r}</svg>`;
+  }
+
+  let lines = [], W = 0, L = 0, vw = 0, vh = 0, printerH = 0, em = 16;
+  let feedY = 0, att = 0, drag = null, feedTimer = 0, last = 0;
+  const ptr = { x: 0, y: 0, t: -1e9 };
+  const sp = { x: innerWidth / 2, y: innerHeight / 2 };
+
+  sheets.forEach((s, i) => { if (i) s.classList.add(i === 1 ? "wait" : "later"); });
+
+  function setPad() {
+    vw = innerWidth; vh = innerHeight;
+    printerH = printer.offsetHeight;
+    em = parseFloat(getComputedStyle(roll).fontSize);
+    const head = roll.querySelector(".head");
+    const headH = head.offsetTop + head.offsetHeight + em * 0.7;
+    roll.style.paddingTop = Math.max(16, vh - printerH - headH) + "px";
+    roll.style.paddingBottom = (att < sheets.length - 1 ? printerH - 8 : printerH + em * 3) + "px";
+  }
+
+  function measure() {
+    W = roll.offsetWidth; L = (vw - W) / 2;
+    const cap = Math.min(14, L);
+    lines = [];
+    sheets.forEach((s, si) => {
+      const bottom = s.offsetHeight;
+      for (const el of s.children) {
+        if (!el.classList.contains("ln") || el.offsetParent === null) continue;
+        el._s ||= { x: 0, v: 0, l: 0 };
+        lines.push({
+          el, si, s: el._s,
+          top: roll.offsetTop + s.offsetTop + el.offsetTop,
+          h: el.offsetHeight,
+          half: si < att && el.classList.contains("tear"),
+          toTear: bottom - el.offsetTop,
+          bias: si < att ? (s._dir || 1) * Math.min(cap, 3 + (bottom - el.offsetTop) * 0.018) : 0
+        });
+      }
+    });
+    const d = Math.min(2, devicePixelRatio || 1);
+    cv.width = vw * d; cv.height = vh * d;
+    ctx.setTransform(d, 0, 0, d, 0, 0);
+  }
+
+  const linked = (a, b) => a && b && a.vis && b.vis && (a.si === b.si || (Math.min(a.si, b.si) >= att && !drag));
+
+  function frame(now) {
+    const t = now / 1000, dt = clamp((now - last) / 1000, 0.001, 0.033); last = now;
+    const sy = scrollY, slotY = vh - printerH, cx = vw / 2, n = lines.length;
+
+    let str = 1, px = ptr.x, py = ptr.y;
+    if (now - ptr.t > 2500) { px = cx + Math.sin(t * 0.45) * W * 0.9; py = vh * 0.45 + Math.cos(t * 0.31) * vh * 0.3; str = 0.7; }
+    sp.x += (px - sp.x) * Math.min(1, dt * 7); sp.y += (py - sp.y) * Math.min(1, dt * 7);
+    const amp = Math.min(16, L + 6);
+    const pull = clamp((sp.x - cx) / (W * 0.8), -1.4, 1.4);
+
+    for (let i = 0; i < n; i++) {
+      const o = lines[i];
+      o.yv = o.top - sy + feedY + o.h / 2;
+      o.vis = o.yv > -160 && o.yv < vh + 160;
+      if (!o.vis || still) {
+        if (o.on) { o.el.style.transform = ""; o.on = false; }
+        o.s.x = o.s.v = o.s.l = 0; o.k = 0;
+        continue;
+      }
+      const pin = o.si >= att ? clamp((slotY - o.yv) / 240, 0, 1) : 1;
+      const d = (o.yv - sp.y) / 170, g = Math.exp(-d * d) * str;
+      o.tx = pull * amp * g * pin + Math.sin(t * 1.1 + o.top * 0.011) * 1.4 * pin + o.bias;
+      if (drag && drag.si === o.si) o.tx += drag.dx * Math.exp(-o.toTear / 260);
+      o.tl = g * pin;
+    }
+    if (!still) {
+      for (let i = 0; i < n; i++) {
+        const o = lines[i]; if (!o.vis) continue;
+        const a = lines[i - 1], b = lines[i + 1], s = o.s;
+        let nb = 0, c = 0;
+        if (linked(a, o)) { nb += a.s.x; c++; }
+        if (linked(o, b)) { nb += b.s.x; c++; }
+        const acc = (o.tx - s.x) * 90 + (c ? (nb / c - s.x) * 220 : 0) - s.v * 14;
+        s.v += acc * dt; s.x += s.v * dt;
+        s.l += (o.tl - s.l) * Math.min(1, dt * 7);
+      }
+      for (let i = 0; i < n; i++) {
+        const o = lines[i]; if (!o.vis) continue;
+        const a = linked(lines[i - 1], o) ? lines[i - 1] : o, b = linked(o, lines[i + 1]) ? lines[i + 1] : o;
+        o.k = a === b ? 0 : (b.s.x - a.s.x) / (b.yv - a.yv);
+        o.el.style.transform = `translate3d(${o.s.x.toFixed(2)}px,${(-o.s.l * 3).toFixed(2)}px,0) skewX(${Math.atan(o.k).toFixed(4)}rad) scaleX(${(1 + o.s.l * 0.03).toFixed(4)})`;
+        o.on = true;
+      }
+    }
+
+    /* 그림자 */
+    ctx.clearRect(0, 0, vw, vh);
+    ctx.fillStyle = "#1E9F9B";
+    let lp = [], rp = [];
+    const flush = () => {
+      if (!lp.length) return;
+      ctx.beginPath();
+      lp.forEach((p, i) => i ? ctx.lineTo(p[0], p[1]) : ctx.moveTo(p[0], p[1]));
+      for (let i = rp.length - 1; i >= 0; i--) ctx.lineTo(rp[i][0], rp[i][1]);
+      ctx.closePath(); ctx.fill();
+      lp = []; rp = [];
+    };
+    for (let i = 0; i < n; i++) {
+      const o = lines[i];
+      if (!o.vis) { flush(); continue; }
+      if (!linked(lines[i - 1], o)) flush();
+      const s = o.s, hh = o.half ? o.h * 0.45 : o.h;
+      const y0 = o.yv - o.h / 2 - s.l * 3, y1 = y0 + hh;
+      const x0 = s.x - o.k * o.h / 2, x1 = s.x + o.k * (hh - o.h / 2);
+      const ex = W * s.l * 0.015;
+      const ox = still ? 4 : 3 + clamp((cx + s.x - sp.x) / 260, -1, 1) * (3 + s.l * 14);
+      const oy = still ? 6 : 5 + s.l * 12;
+      lp.push([L + x0 - ex + ox, y0 + oy], [L + x1 - ex + ox, y1 + oy]);
+      rp.push([L + W + x0 + ex + ox, y0 + oy], [L + W + x1 + ex + ox, y1 + oy]);
+    }
+    flush();
+    if (!still) requestAnimationFrame(frame);
+  }
+
+  function stopFeed() { clearInterval(feedTimer); feedTimer = 0; printer.classList.remove("on"); }
+  function feed(px) {
+    stopFeed(); printer.classList.add("on");
+    const step = em * 1.5; let left = px;
+    feedTimer = setInterval(() => {
+      const st = Math.min(step, left), before = scrollY;
+      scrollBy(0, st); left -= st;
+      if (left <= 0 || scrollY === before) stopFeed();
+    }, 55);
+  }
+
+  function tear(si, dir, quiet) {
+    const s = sheets[si], nx = sheets[si + 1];
+    if (!nx || s.classList.contains("torn")) return;
+    const peekH = nx.offsetHeight;
+    s.classList.add("torn"); s._dir = dir || (si % 2 ? 1 : -1);
+    const btn = s.querySelector(".tear"); btn.disabled = true; btn.setAttribute("aria-hidden", "true");
+    nx.classList.remove("wait");
+    if (sheets[si + 2]) sheets[si + 2].classList.replace("later", "wait");
+    att = si + 1; drag = null;
+    if (quiet) return;
+    setPad(); measure();
+    for (const o of lines) if (o.si === si) o.s.v += s._dir * 160 * Math.exp(-o.toTear / 300);
+    feed(Math.min(nx.offsetHeight - peekH + em, vh * 0.62));
+    const next = nx.querySelector(".tear:not(:disabled), a");
+    if (next && document.activeElement === btn) next.focus({ preventScroll: true });
+  }
+
+  sheets.forEach((s, si) => {
+    const btn = s.querySelector(".tear"); if (!btn) return;
+    let sx = 0, sy0 = 0, moved = false;
+    btn.addEventListener("pointerdown", e => {
+      sx = e.clientX; sy0 = e.clientY; moved = false;
+      drag = { si, dx: 0 }; btn.setPointerCapture(e.pointerId); stopFeed();
+    });
+    btn.addEventListener("pointermove", e => {
+      if (!drag || drag.si !== si) return;
+      const dx = e.clientX - sx, dy = e.pointerType === "mouse" ? e.clientY - sy0 : 0;
+      const far = Math.hypot(dx, dy);
+      if (far > 6) moved = true;
+      drag.dx = clamp(dx || -dy, -80, 80);
+      if (far > 72) tear(si, dx < 0 ? -1 : 1);
+    });
+    const end = () => { if (drag && drag.si === si) drag = null; };
+    btn.addEventListener("pointerup", end);
+    btn.addEventListener("pointercancel", end);
+    btn.addEventListener("click", () => { if (moved) { moved = false; return; } tear(si); });
+  });
+
+  addEventListener("pointermove", e => { ptr.x = e.clientX; ptr.y = e.clientY; ptr.t = performance.now(); }, { passive: true });
+  addEventListener("touchmove", e => { const p = e.touches[0]; ptr.x = p.clientX; ptr.y = p.clientY; ptr.t = performance.now(); }, { passive: true });
+  document.addEventListener("pointerleave", () => { ptr.t = -1e9; });
+  ["wheel", "touchstart", "keydown"].forEach(ev => addEventListener(ev, () => { if (feedTimer) stopFeed(); }, { passive: true }));
+
+  let lastW = innerWidth;
+  addEventListener("resize", () => {
+    if (innerWidth !== lastW || !("ontouchstart" in window)) setPad();
+    lastW = innerWidth; vw = innerWidth; vh = innerHeight;
+    measure(); if (still) frame(performance.now());
+  });
+  if (still) addEventListener("scroll", () => frame(performance.now()), { passive: true });
+
+  function start() {
+    if (still) for (let i = 0; i < sheets.length - 1; i++) tear(i, 0, true);
+    setPad(); measure();
+    root.classList.add("ready");
+    last = performance.now();
+    if (still) { frame(last); return; }
+    /* 첫 인쇄: 한 줄씩 밀려 나온다 */
+    const step = em * 1.5;
+    feedY = Math.ceil((vh - printerH - parseFloat(roll.style.paddingTop) + em) / step) * step;
+    roll.style.transform = `translateY(${feedY}px)`;
+    printer.classList.add("on");
+    const iv = setInterval(() => {
+      feedY = Math.max(0, feedY - step);
+      roll.style.transform = feedY ? `translateY(${feedY}px)` : "";
+      if (!feedY) { clearInterval(iv); printer.classList.remove("on"); }
+    }, 70);
+    requestAnimationFrame(frame);
+  }
+  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
+  Promise.race([fonts, new Promise(r => setTimeout(r, 1500))]).then(start);
+})();
+</script>
+</body>
+</html>
