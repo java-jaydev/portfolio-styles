@@ -21,9 +21,11 @@
   .top h1 { font-size:15px; font-weight:700; letter-spacing:-.01em; }
   .top a { text-decoration:none; color:var(--mute); }
   .top a:hover { color:var(--ink); }
-  .set { padding:0 clamp(16px,3vw,40px); font-size:13px; color:var(--mute); margin:26px 0 10px; }
-  .set:first-of-type { margin-top:0; }
-  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,420px),1fr)); gap:clamp(18px,2.4vw,36px) clamp(12px,1.6vw,24px); padding:0 clamp(16px,3vw,40px); }
+  .grid { display:grid; grid-template-columns:repeat(var(--cols),minmax(0,1fr)); gap:clamp(18px,2.4vw,36px) clamp(12px,1.6vw,24px); padding:0 clamp(16px,3vw,40px); --cols:1; }
+  @media (min-width:640px){ .grid { --cols:2; } }
+  @media (min-width:1000px){ .grid { --cols:3; } }
+  @media (min-width:1400px){ .grid { --cols:4; } }
+  @media (min-width:2200px){ .grid { --cols:5; } }
   .item { min-width:0; }
   .shot { position:relative; display:block; aspect-ratio:16/10; overflow:hidden; background:#fff; }
   .shot img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:top left; display:block; }
@@ -344,10 +346,7 @@ const ITEMS = [
 
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]));
 const main = document.getElementById("main");
-main.innerHTML = SETS.map(set => {
-  const list = ITEMS.map((it, i) => [it, i]).filter(([it]) => it.set === set.id);
-  if (!list.length) return "";
-  return (new Set(ITEMS.map(x => x.set)).size > 1 ? `<p class="set">${esc(set.label)}</p>` : "") + `<div class="grid">` + list.map(([it, i]) => `
+main.innerHTML = `<div class="grid" id="grid">` + ITEMS.map((it, i) => `
     <div class="item">
       <a class="shot" href="${it.file}" aria-label="${esc(it.name)}">
         <img src="${it.thumb}" alt="" loading="lazy" width="900" height="562">
@@ -355,7 +354,17 @@ main.innerHTML = SETS.map(set => {
       <div class="cap"><span><b>${esc(it.name)}</b><span class="role">${esc(it.role)}</span></span><button type="button" data-p="${i}">프롬프트</button></div>
       <div class="by"><a href="https://github.com/${it.maker}">${esc(it.maker)}</a>, ${esc(it.model)}</div>
     </div>`).join("") + `</div>`;
-}).join("");
+
+/* 마지막 줄이 비지 않게, 남는 칸만큼 맨 앞(가장 새) 시안을 넓힌다. */
+const gridEl = document.getElementById("grid"), firstItem = gridEl.firstElementChild;
+function fill() {
+  const cols = +getComputedStyle(gridEl).getPropertyValue("--cols") || 1;
+  const rest = ITEMS.length % cols, span = rest ? cols - rest + 1 : 1;
+  firstItem.style.gridColumn = span > 1 ? "span " + span : "";
+  firstItem.querySelector(".shot").style.aspectRatio = span > 1 ? (16 * span) + " / 10" : "";
+}
+fill();
+addEventListener("resize", fill);
 
 if (matchMedia("(hover:hover) and (pointer:fine)").matches && !matchMedia("(prefers-reduced-motion:reduce)").matches) {
   document.querySelectorAll(".shot").forEach(shot => {
