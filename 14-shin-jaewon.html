@@ -1,0 +1,444 @@
+<!doctype html>
+<!--
+  portfolio-styles: https://github.com/java-jaydev/portfolio-styles
+  MIT License, Copyright (c) 2026 java-jaydev
+  가져가서 쓸 때는 이 표시를 지우지 말고, 화면에도 출처를 남겨 주세요.
+-->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>신재원, 서버 개발자 지원</title>
+<meta name="description" content="신재원의 서버 개발자 신입 지원용 포트폴리오. 묻고 답하는 대화 한 줄기.">
+<meta name="theme-color" content="#FEE500">
+<style>
+@font-face{font-family:"GmarketSans";font-weight:300;src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansLight.woff") format("woff");font-display:swap}
+@font-face{font-family:"GmarketSans";font-weight:500;src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff") format("woff");font-display:swap}
+@font-face{font-family:"GmarketSans";font-weight:700;src:url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansBold.woff") format("woff");font-display:swap}
+
+:root{
+  --yellow:#FEE500;
+  --ink:#191919;
+  --white:#FFFFFF;
+  --say:clamp(1.25rem, 0.9rem + 1.5vw, 2.125rem);
+  --num:clamp(4.75rem, 2rem + 13vw, 12rem);
+}
+*{box-sizing:border-box}
+html{
+  background:var(--yellow);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  scrollbar-color:var(--ink) var(--yellow);
+}
+body{
+  margin:0;
+  font-family:"GmarketSans","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  font-weight:500;
+  font-size:1rem;
+  line-height:1.5;
+  overflow-x:hidden;
+  word-break:keep-all;
+}
+::selection{background:var(--ink);color:var(--yellow)}
+
+main{
+  min-height:100svh;
+  padding:clamp(2.5rem,9vh,6rem) clamp(1rem,5vw,4.5rem) 6rem;
+}
+#log{
+  position:relative;
+  max-width:68rem;
+  margin:0 auto;
+  display:flex;
+  flex-direction:column;
+  gap:clamp(.9rem,1.6vw,1.4rem);
+}
+
+/* 풍선 */
+.b{
+  --bg:var(--ink);
+  position:relative;
+  max-width:min(86%,34rem);
+  margin:0;
+  padding:.72em 1.05em .6em;
+  background:var(--bg);
+  font-size:var(--say);
+  font-weight:500;
+  line-height:1.4;
+  scroll-margin:5rem 0 30vh;
+  will-change:transform;
+}
+.b .tail{position:absolute;bottom:-.32em;width:1.25em;height:1.05em;fill:var(--bg);pointer-events:none}
+
+.me{
+  align-self:flex-end;
+  color:var(--white);
+  transform-origin:100% 100%;
+  border-radius:1.5em 1.75em .5em 1.6em / 1.7em 1.45em .5em 1.55em;
+  margin-right:var(--in,0);
+}
+.me:nth-child(3n){border-radius:1.8em 1.5em .5em 1.4em / 1.4em 1.7em .5em 1.75em}
+.me .tail{right:-.5em}
+
+.q{
+  --bg:var(--white);
+  align-self:flex-start;
+  color:var(--ink);
+  transform-origin:0 100%;
+  border-radius:1.7em 1.5em 1.6em .5em / 1.45em 1.75em 1.5em .5em;
+  margin-top:clamp(1.25rem,4vw,3rem);
+}
+.q:first-child{margin-top:0}
+.q .tail{left:-.5em;transform:scaleX(-1)}
+
+.b strong{font-weight:700;color:var(--yellow)}
+.b .ask{font-weight:500}
+
+/* 숫자 풍선 */
+.num{
+  padding:.9rem clamp(1.4rem,3.5vw,3rem) 1.1rem;
+  max-width:96%;
+  border-radius:3.4rem 4rem 1rem 3.6rem / 3.8rem 3.3rem 1rem 3.5rem;
+}
+.num:nth-child(3n){border-radius:4rem 3.4rem 1rem 3.2rem / 3.2rem 3.9rem 1rem 3.8rem}
+.num .tail{bottom:-.55rem;right:-.9rem;width:2.4rem;height:2rem}
+.num b{
+  display:block;
+  font-size:var(--num);
+  font-weight:700;
+  line-height:1.02;
+  letter-spacing:-.035em;
+  color:var(--yellow);
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+  padding-top:.08em;
+}
+.num b i{font-style:normal;font-size:.42em;letter-spacing:-.01em;margin-left:.08em}
+.num span{display:block;font-size:var(--say);margin-top:.1em}
+
+/* 좌석 */
+.seats{width:min(96%,46rem);max-width:none}
+.seats canvas{display:block;width:100%;aspect-ratio:60/20;margin:.5rem 0 1rem}
+.seats b{font-size:calc(var(--num)*.62)}
+
+/* 입력 중 */
+.dots{display:flex;gap:.34em;padding:.85em 1.05em .8em}
+.dots i{width:.42em;height:.42em;border-radius:50%;background:var(--yellow)}
+
+/* 고를 질문 */
+.picks{
+  display:flex;flex-wrap:wrap;gap:.7rem .8rem;
+  margin-top:clamp(1.25rem,4vw,3rem);
+  padding:0;
+}
+.pick{
+  font:inherit;
+  font-size:var(--say);
+  line-height:1.4;
+  color:var(--ink);
+  background:transparent;
+  border:.14em solid var(--ink);
+  padding:.58em .95em .46em;
+  border-radius:1.7em 1.5em 1.6em .5em / 1.45em 1.75em 1.5em .5em;
+  transform-origin:0 100%;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  transition:background-color .15s ease-out,color .15s ease-out;
+  will-change:transform;
+  touch-action:manipulation;
+}
+.pick:nth-child(2n){border-radius:1.5em 1.75em 1.45em .5em / 1.7em 1.5em 1.7em .5em}
+@media (hover:hover){
+  .pick:hover{background:var(--white)}
+}
+.pick:active{background:var(--white)}
+
+:focus-visible{outline:.2rem solid var(--ink);outline-offset:.25rem}
+.me a{color:var(--yellow);text-decoration-thickness:.08em;text-underline-offset:.18em;overflow-wrap:anywhere}
+.me a:focus-visible{outline-color:var(--white)}
+
+#all{
+  position:fixed;z-index:5;
+  top:clamp(.75rem,2.5vh,1.5rem);right:clamp(.75rem,2.5vw,2rem);
+  font:inherit;font-size:.9375rem;line-height:1;
+  color:var(--ink);background:var(--yellow);
+  border:.125rem solid var(--ink);border-radius:2em;
+  padding:.8em 1.1em .62em;
+  min-height:2.75rem;
+  cursor:pointer;
+  touch-action:manipulation;
+  transition:background-color .15s ease-out,color .15s ease-out,scale .15s ease-out;
+}
+@media (hover:hover){#all:hover{background:var(--ink);color:var(--yellow)}}
+#all:active{scale:.96}
+#all[hidden]{display:none}
+
+footer{
+  max-width:68rem;margin:0 auto;
+  padding:0 clamp(1rem,5vw,4.5rem) 2.5rem;
+  font-size:.8125rem;line-height:1.6;
+}
+footer p{margin:0;max-width:40rem}
+footer a{color:inherit;text-underline-offset:.2em}
+
+/* 움직임 */
+@media (prefers-reduced-motion:no-preference){
+  .dots i{animation:hop .9s cubic-bezier(.3,0,.3,1) infinite}
+  .dots i:nth-child(2){animation-delay:.14s}
+  .dots i:nth-child(3){animation-delay:.28s}
+  @keyframes hop{0%,55%,100%{translate:0 0}28%{translate:0 -.36em}}
+}
+@media (max-width:30rem){
+  .b{max-width:90%}
+  .num{max-width:100%}
+  .seats{width:100%}
+  .me{margin-right:0}
+}
+</style>
+</head>
+<body>
+<button id="all" type="button" aria-label="대화 전체 펼치기">펼치기</button>
+<main>
+  <div id="log" role="log" aria-live="polite" aria-label="면접 대화"></div>
+  <noscript>
+    <p>신재원. 카카오 서버 신입 지원. 축제 예매 서버 동시 500명, 중복 예매 0건. 채팅 서버 유실 0건, 지연 중앙값 42ms. 새벽 2시 커넥션 풀 고갈, 17분 만에 복구. jaewon@example.com</p>
+  </noscript>
+</main>
+<footer>
+  <p>데모용으로 만든 가상의 인물입니다. 카카오와 아무 관계가 없고, 공고 요건도 가상으로 만든 것입니다.</p>
+  <p>출처 <a href="https://github.com/java-jaydev/portfolio-styles">java-jaydev/portfolio-styles</a></p>
+</footer>
+
+<script>
+(() => {
+  "use strict";
+  const log = document.getElementById("log");
+  const allBtn = document.getElementById("all");
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let instant = still || location.hash === "#all";
+
+  /* 대화 내용 */
+  const T = (html) => ({ k: "text", html });
+  const N = (n, u, c) => ({ k: "num", n, u, c });
+  const intro = { q: "누구세요?", a: [T("신재원."), T("카카오 서버 신입 지원.")] };
+  const threads = [
+    { q: "뭘 만들었어요?", a: [
+      T("전주대 축제 선착순 예매 서버요."),
+      N("500", "명", "동시 접속"),
+      N("0", "건", "중복 예매"),
+      { k: "seats" },
+      T("채팅 서버 과제도요. 재전송이랑 순번 확인 넣었어요."),
+      N("0", "건", "메시지 유실"),
+      N("42", "ms", "지연 중앙값"),
+      T("Kotlin, Spring, MySQL, Redis. Kafka는 기초요.")
+    ]},
+    { q: "터진 적 있어요?", a: [
+      T("네. 새벽 2시요."),
+      T("커넥션 풀이 바닥났어요."),
+      N("17", "분", "만에 복구"),
+      T("회고 문서 썼어요.")
+    ]},
+    { q: "공고랑 맞춰 보면요?", a: [
+      T("<span class='ask'>서버 개발 경험?</span> <strong>예매 서버, 채팅 서버.</strong>"),
+      T("<span class='ask'>자료구조, 네트워크?</span> <strong>순번 확인이랑 재전송.</strong>"),
+      T("<span class='ask'>많은 요청?</span> <strong>동시 500명.</strong>"),
+      T("<span class='ask'>장애 대응?</span> <strong>17분 복구, 회고까지.</strong>"),
+      T("<span class='ask'>코드 리뷰, 협업?</span> <strong>PR마다 리뷰 받고 머지.</strong>")
+    ]}
+  ];
+  const outro = { q: "연락은요?", a: [T("<a href='mailto:jaewon@example.com'>jaewon@example.com</a>")] };
+
+  const TAIL = "<svg class='tail' viewBox='0 0 30 25' aria-hidden='true'><path d='M3 0C4 11 13 20 30 23C19 26 6 24 0 12Z'/></svg>";
+
+  /* 말랑한 몸: 풍선마다 스프링 하나 */
+  const bodies = [];
+  function soft(el, pop) {
+    const s = {
+      el, x: 0, y: 0, sx: 1, sy: 1, vx: 0, vy: 0, vsx: 0, vsy: 0,
+      rot: (Math.random() - .5) * (el.classList.contains("num") ? 3.6 : 1.8),
+      ph: Math.random() * 6.28
+    };
+    if (still) { el.style.transform = `rotate(${s.rot.toFixed(2)}deg)`; return; }
+    if (pop) { s.sx = .25; s.sy = .25; s.vsx = 5; s.vsy = 7; }
+    el.addEventListener("pointerdown", () => { s.vsx += 2.4; s.vsy -= 2.4; });
+    bodies.push(s);
+    paint(s);
+  }
+  function paint(s) {
+    s.el.style.transform =
+      `translate(${s.x.toFixed(2)}px,${s.y.toFixed(2)}px) rotate(${s.rot.toFixed(2)}deg) scale(${s.sx.toFixed(4)},${s.sy.toFixed(4)})`;
+  }
+  let px = -1e5, py = -1e5, last = 0;
+  addEventListener("pointermove", (e) => { px = e.clientX; py = e.clientY; }, { passive: true });
+  addEventListener("pointerdown", (e) => { px = e.clientX; py = e.clientY; }, { passive: true });
+  const away = (e) => { if (e.pointerType !== "mouse" || e.type === "pointerleave") { px = py = -1e5; } };
+  addEventListener("pointerup", away, { passive: true });
+  addEventListener("pointercancel", away, { passive: true });
+  document.documentElement.addEventListener("pointerleave", away);
+
+  const K = 210, C = 10.5, REACH = 150;
+  function frame(now) {
+    const span = Math.min(.25, (now - last) / 1000 || .016);
+    const steps = Math.max(1, Math.ceil(span / .012)), dt = span / steps;
+    last = now;
+    const r = log.getBoundingClientRect();
+    const mx = px - r.left, my = py - r.top;
+    const top = -r.top - 200, bottom = -r.top + innerHeight + 200;
+    const t = now / 1000;
+    for (let i = bodies.length - 1; i >= 0; i--) {
+      const s = bodies[i], el = s.el;
+      if (!el.isConnected) { bodies.splice(i, 1); continue; }
+      const oy = el.offsetTop, h = el.offsetHeight;
+      if (oy + h < top || oy > bottom) continue;
+      const w = el.offsetWidth, hw = w / 2, hh = h / 2;
+      const dx = mx - (el.offsetLeft + hw), dy = my - (oy + hh);
+      const gap = Math.hypot(Math.max(Math.abs(dx) - hw, 0), Math.max(Math.abs(dy) - hh, 0));
+      const pull = Math.max(0, 1 - gap / REACH);
+      const ux = Math.max(-1, Math.min(1, dx / hw)), uy = Math.max(-1, Math.min(1, dy / hh));
+      const breath = Math.sin(t * 1.5 + s.ph) * .011;
+      const ax = Math.min(.09, 22 / w), ay = Math.min(.12, 14 / h);
+      const tx = ux * pull * 9, ty = uy * pull * 7;
+      const tsx = 1 + breath + pull * (Math.abs(ux) * ax - Math.abs(uy) * ax * .45);
+      const tsy = 1 - breath + pull * (Math.abs(uy) * ay - Math.abs(ux) * ay * .45);
+      for (let n = 0; n < steps; n++) {
+        s.vx += (-K * (s.x - tx) - C * s.vx) * dt; s.x += s.vx * dt;
+        s.vy += (-K * (s.y - ty) - C * s.vy) * dt; s.y += s.vy * dt;
+        s.vsx += (-K * (s.sx - tsx) - C * s.vsx) * dt; s.sx += s.vsx * dt;
+        s.vsy += (-K * (s.sy - tsy) - C * s.vsy) * dt; s.sy += s.vsy * dt;
+      }
+      paint(s);
+    }
+    requestAnimationFrame(frame);
+  }
+
+  /* 기다림: 펼치면 남은 기다림이 모두 풀린다 */
+  const waiting = new Set();
+  const wait = (ms) => instant ? Promise.resolve() : new Promise((res) => {
+    const w = { res, id: setTimeout(() => { waiting.delete(w); res(); }, ms) };
+    waiting.add(w);
+  });
+  function flush() { waiting.forEach((w) => { clearTimeout(w.id); w.res(); }); waiting.clear(); }
+
+  function show(el) {
+    if (!instant) el.scrollIntoView({ block: "nearest", behavior: "smooth" });
+  }
+
+  function bubble(who, inner, extra) {
+    const el = document.createElement("p");
+    el.className = `b ${who}${extra ? " " + extra : ""}`;
+    el.innerHTML = inner + TAIL;
+    if (who === "me") el.style.setProperty("--in", (Math.random() * 7).toFixed(1) + "%");
+    log.appendChild(el);
+    soft(el, !instant);
+    return el;
+  }
+
+  function seats(el) {
+    const cv = el.querySelector("canvas");
+    const cols = 60, rows = 20, total = cols * rows;
+    const dpr = Math.min(2, devicePixelRatio || 1);
+    const cw = Math.round(cv.clientWidth * dpr) || 720, cell = cw / cols;
+    cv.width = cw; cv.height = Math.round(cell * rows);
+    const g = cv.getContext("2d");
+    const order = Array.from({ length: total }, (_, i) => i);
+    for (let i = total - 1; i > 0; i--) { const j = (Math.random() * (i + 1)) | 0; [order[i], order[j]] = [order[j], order[i]]; }
+    const dot = (i, c) => {
+      g.fillStyle = c; g.beginPath();
+      g.arc((i % cols + .5) * cell, ((i / cols | 0) + .5) * cell, cell * .33, 0, 6.3); g.fill();
+    };
+    for (let i = 0; i < total; i++) dot(i, "#4B4A44");
+    if (instant) { for (let i = 0; i < total; i++) dot(i, "#FEE500"); return; }
+    let sold = 0; const t0 = performance.now();
+    (function sell(now) {
+      const p = Math.min(1, (now - t0) / 2400);
+      const upto = Math.round(total * (1 - Math.pow(1 - p, 2.2)));
+      while (sold < upto) dot(order[sold++], "#FEE500");
+      if (sold < total && cv.isConnected) requestAnimationFrame(sell);
+    })(t0);
+  }
+
+  function answer(a) {
+    if (a.k === "num") return bubble("me", `<b>${a.n}<i>${a.u}</i></b><span>${a.c}</span>`, "num");
+    if (a.k === "seats") {
+      const el = bubble("me", "<b>1,200<i>석</i></b><canvas role='img' aria-label='좌석 1,200개가 모두 팔린 그림'></canvas><span>4분 만에 매진</span>", "num seats");
+      seats(el);
+      return el;
+    }
+    return bubble("me", a.html);
+  }
+
+  async function say(th, first) {
+    show(bubble("q", th.q));
+    for (let i = 0; i < th.a.length; i++) {
+      if (!instant) {
+        await wait(first && i === 0 ? 350 : 180);
+        if (!instant) {
+          const d = bubble("me", "<i></i><i></i><i></i>", "dots");
+          d.setAttribute("aria-hidden", "true");
+          show(d);
+          await wait(i === 0 ? 720 : 480);
+          d.remove();
+        }
+      }
+      show(answer(th.a[i]));
+    }
+    await wait(420);
+  }
+
+  function ask(list, refocus) {
+    if (instant) return Promise.resolve(list[0]);
+    return new Promise((res) => {
+      const box = document.createElement("div");
+      box.className = "picks";
+      box.setAttribute("role", "group");
+      box.setAttribute("aria-label", "다음 질문");
+      let done = false;
+      const pick = (th) => { if (done) return; done = true; box.remove(); res(th); };
+      list.forEach((th) => {
+        const b = document.createElement("button");
+        b.type = "button"; b.className = "pick"; b.textContent = th.q;
+        b.addEventListener("click", () => { keyboard = b.matches(":focus-visible"); pick(th); });
+        box.appendChild(b);
+      });
+      log.appendChild(box);
+      box.querySelectorAll(".pick").forEach((b) => soft(b, true));
+      onExpand = () => pick(list[0]);
+      show(box);
+      if (refocus) box.querySelector(".pick").focus({ preventScroll: true });
+    });
+  }
+  let onExpand = null, keyboard = false;
+
+  allBtn.addEventListener("click", () => {
+    instant = true;
+    allBtn.hidden = true;
+    flush();
+    log.querySelectorAll(".dots").forEach((d) => d.remove());
+    if (onExpand) onExpand();
+  });
+
+  async function run() {
+    if (instant) allBtn.hidden = true;
+    await wait(250);
+    await say(intro, true);
+    const left = threads.slice();
+    while (left.length) {
+      const th = await ask(left, keyboard);
+      left.splice(left.indexOf(th), 1);
+      await say(th);
+    }
+    await ask([outro], keyboard);
+    await say(outro);
+    allBtn.hidden = true;
+  }
+
+  const fonts = document.fonts ? document.fonts.ready : Promise.resolve();
+  Promise.race([fonts, new Promise((r) => setTimeout(r, 1200))]).then(() => {
+    if (!still) requestAnimationFrame((n) => { last = n; frame(n); });
+    run();
+  });
+})();
+</script>
+</body>
+</html>

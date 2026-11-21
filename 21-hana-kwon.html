@@ -1,0 +1,568 @@
+<!doctype html>
+<!--
+  portfolio-styles: https://github.com/java-jaydev/portfolio-styles
+  MIT License, Copyright (c) 2026 java-jaydev
+  가져가서 쓸 때는 이 표시를 지우지 말고, 화면에도 출처를 남겨 주세요.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hana Kwon, Decisions</title>
+<meta name="description" content="A memo of product decisions by Hana Kwon, Product Manager. Half of them are things she chose not to build.">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=gambetta@400,600&f[]=satoshi@400,700,900&display=swap" rel="stylesheet">
+<!-- Fontshare answers the combined address with Gambetta only, so Satoshi is asked for again on its own. -->
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,700,900&display=swap" rel="stylesheet">
+<script>
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('typing');
+</script>
+<style>
+  :root {
+    --paper: #eceee8;
+    --ink: #000;
+    --pen: #c9211b;
+    --quiet: #55574f;
+    --serif: "Gambetta", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+    --sans: "Satoshi", "Avenir Next", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --col: 33rem;
+    --date: 5.75rem;
+    --ease: cubic-bezier(0.2, 0, 0, 1);
+  }
+
+  * { box-sizing: border-box; }
+
+  html {
+    background: var(--paper);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    font-family: var(--serif);
+    font-size: 1.1875rem;
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+
+  ::selection { background: var(--pen); color: var(--paper); }
+
+  :focus-visible {
+    outline: 2px solid var(--pen);
+    outline-offset: 4px;
+    border-radius: 1px;
+  }
+
+  main {
+    width: min(var(--col), 100% - 2.5rem);
+    margin-inline: auto;
+  }
+
+  /* first sheet: the memo head, then the title at the foot of the screen */
+
+  .head {
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding-block: 30vh 9vh;
+  }
+
+  .to-from { margin: 0; }
+
+  .row {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--date) 1fr;
+    column-gap: 1rem;
+  }
+
+  .row dt { color: var(--quiet); }
+  .row dd { margin: 0; }
+
+  h1 {
+    margin: 0;
+    padding-bottom: 0.18em;
+    border-bottom: 1px solid var(--ink);
+    font-size: clamp(3.5rem, 15vw, 5.75rem);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+  }
+
+  /* the list */
+
+  .log {
+    list-style: none;
+    margin: 0;
+    padding: 3.25rem 0 0;
+  }
+
+  .d {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--date) 1fr;
+    column-gap: 1rem;
+    padding-bottom: 2.1rem;
+  }
+
+  .d time {
+    color: var(--quiet);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+
+  .d p { margin: 0; text-wrap: pretty; }
+  .what { font-weight: 600; }
+
+  /* crossed out */
+
+  .cut button {
+    all: unset;
+    position: relative;
+    display: inline-block;
+    font-weight: 600;
+    white-space: nowrap;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .cut button::after {            /* a taller place to tap */
+    content: "";
+    position: absolute;
+    inset: -0.5rem -0.75rem;
+  }
+
+  .cut button:focus-visible {
+    outline: 2px solid var(--pen);
+    outline-offset: 5px;
+  }
+
+  .cut s { text-decoration: none; }
+
+  .strike {
+    position: absolute;
+    left: -0.4em;
+    top: 50%;
+    width: calc(100% + 0.8em);
+    height: 0.7em;
+    margin-top: -0.3em;
+    overflow: visible;
+    pointer-events: none;
+  }
+
+  .strike path {
+    fill: none;
+    stroke: var(--pen);
+    stroke-width: 2.25;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 0.3s var(--ease);
+  }
+
+  .why {
+    width: fit-content;
+    font-family: var(--sans);
+    font-size: 1rem;
+    line-height: 1.84;          /* keeps the row on the serif's baseline grid */
+    color: var(--pen);
+    transform: rotate(-0.7deg);
+    transform-origin: 0 50%;
+    visibility: hidden;
+    clip-path: inset(-30% 100% -30% 0);
+    transition: clip-path 0.22s var(--ease), visibility 0s 0.22s;
+  }
+
+  .cut.open .strike path,
+  .cut.peek .strike path,
+  .cut:has(button:focus-visible) .strike path { stroke-dashoffset: -1; }
+
+  .cut.open .why,
+  .cut.peek .why,
+  .cut:has(button:focus-visible) .why {
+    visibility: visible;
+    clip-path: inset(-30% -3% -30% 0);
+    transition: clip-path 0.42s var(--ease) 0.1s, visibility 0s;
+  }
+
+  @media (hover: hover) {
+    .cut:hover .strike path { stroke-dashoffset: -1; }
+    .cut:hover .why {
+      visibility: visible;
+      clip-path: inset(-30% -3% -30% 0);
+      transition: clip-path 0.42s var(--ease) 0.1s, visibility 0s;
+    }
+  }
+
+  /* pen notes in the margin */
+
+  .note {
+    --lift: 0;
+    --r: -3deg;
+    position: absolute;
+    top: -0.35rem;
+    left: calc(100% + 2.75rem);
+    width: 11rem;
+    font-family: var(--sans);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--pen);
+    transform-origin: 0 60%;
+    transform:
+      translate(calc(var(--lift) * -2px), calc(var(--lift) * -8px))
+      rotate(var(--r))
+      scale(calc(1 + var(--lift) * 0.05));
+    text-shadow:
+      calc(var(--lift) * 3px) calc(var(--lift) * 12px) calc(var(--lift) * 9px)
+      rgb(0 0 0 / calc(var(--lift) * 0.3));
+    transition: transform 0.18s ease-out, text-shadow 0.18s ease-out, opacity 0.3s ease-out;
+  }
+
+  .note b {
+    display: block;
+    font-size: 2.75rem;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .note.l {
+    left: auto;
+    right: calc(100% + 2.75rem);
+    text-align: right;
+    transform-origin: 100% 60%;
+  }
+
+  .n1 { --r: -4deg; top: -0.5rem; font-size: 1.375rem; font-weight: 700; }
+  .n2 { --r: -2.5deg; top: 0.1rem; }
+  .n3 { --r: 3deg; top: -0.9rem; }
+  .n4 { --r: -5deg; top: 0.5rem; }
+  .n5 { --r: 2deg; top: -1.1rem; }
+
+  /* sign-off */
+
+  .reply {
+    margin: 1.4rem 0 0;
+    padding-top: 1.6rem;
+    border-top: 1px solid var(--ink);
+    display: grid;
+    grid-template-columns: var(--date) 1fr;
+    column-gap: 1rem;
+  }
+
+  .reply span:first-child { color: var(--quiet); }
+
+  .reply a {
+    color: inherit;
+    text-decoration-line: underline;
+    text-decoration-color: var(--pen);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.22em;
+    overflow-wrap: anywhere;
+  }
+
+  @media (hover: hover) {
+    .reply a:hover { color: var(--pen); }
+  }
+
+  footer {
+    width: min(var(--col), 100% - 2.5rem);
+    margin: 7rem auto 0;
+    padding-bottom: 2.5rem;
+    font-family: var(--sans);
+    font-size: 0.8125rem;
+    color: var(--quiet);
+  }
+
+  /* typing, once */
+
+  .off { visibility: hidden; }
+
+  .caret {
+    display: inline-block;
+    width: 0.5em;
+    height: 0.09em;
+    margin-left: 0.06em;
+    background: var(--ink);
+    vertical-align: baseline;
+  }
+
+  .caret.rest { animation: blink 1.1s steps(1) infinite; }
+
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .typing [data-g]:not(.in) .strike path { stroke-dashoffset: 1; }
+  .typing [data-g]:not(.in) .note { opacity: 0; }
+  .typing h1 { border-bottom-color: transparent; }
+  .typing h1.in { border-bottom-color: var(--ink); transition: border-color 0.4s; }
+
+  /* narrow screens: notes come in under their line */
+
+  @media (max-width: 62rem) {
+    .note,
+    .note.l {
+      position: static;
+      grid-column: 2;
+      width: fit-content;
+      margin-top: 0.55rem;
+      text-align: left;
+      transform-origin: 0 60%;
+    }
+    .note b { font-size: 2.25rem; }
+    .row .note { position: absolute; top: 1.9rem; right: 0; left: auto; margin: 0; transform-origin: 100% 60%; }
+  }
+
+  @media (max-width: 30rem) {
+    :root { --date: 4.6rem; }
+    body { font-size: 1.0625rem; }
+    .row, .d, .reply { column-gap: 0.75rem; }
+    .why { font-size: 0.9375rem; line-height: 1.76; }
+    .head { padding-block: 24vh 8vh; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .strike path, .why, .note { transition: none !important; }
+    .caret { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<main>
+  <header class="head">
+    <dl class="to-from">
+      <div class="row" data-g>
+        <dt>From</dt>
+        <dd>Hana Kwon, Product Manager</dd>
+        <span class="note n1">8 yrs</span>
+      </div>
+      <div class="row"><dt>To</dt><dd>You</dd></div>
+      <div class="row"><dt>Date</dt><dd>Nov 21, 2026</dd></div>
+    </dl>
+    <h1 data-g>Decisions</h1>
+  </header>
+
+  <ol class="log">
+    <li class="d" data-g>
+      <time datetime="2023-02">Feb 2023</time>
+      <div>
+        <p class="what">Call customers every quarter.</p>
+        <p>30 calls. Notes go to the whole team.</p>
+      </div>
+      <span class="note n2">120 a year</span>
+    </li>
+
+    <li class="d cut" data-g>
+      <time datetime="2023-04">Apr 2023</time>
+      <div>
+        <button type="button" aria-expanded="false" aria-controls="why-1"><s>Dark mode first</s><svg class="strike" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M0 6.2 C 18 3.8, 34 7.4, 52 5 S 84 3.4, 100 5.6"/></svg></button>
+        <p class="why" id="why-1">Checkout was losing 39 of every 100 buyers.</p>
+      </div>
+    </li>
+
+    <li class="d" data-g>
+      <time datetime="2023-06">Jun 2023</time>
+      <div>
+        <p class="what">Cut checkout from 5 steps to 2.</p>
+        <p>Completion went from 61% to 78%.</p>
+      </div>
+      <span class="note l n3"><b>+17</b>points</span>
+    </li>
+
+    <li class="d cut" data-g>
+      <time datetime="2023-10">Oct 2023</time>
+      <div>
+        <button type="button" aria-expanded="false" aria-controls="why-2"><s>A points program</s><svg class="strike" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M0 4.6 C 22 6.8, 40 3.2, 60 5.4 S 88 6.6, 100 4.2"/></svg></button>
+        <p class="why" id="why-2">Nobody on the calls asked for one.</p>
+      </div>
+    </li>
+
+    <li class="d cut" data-g>
+      <time datetime="2024-02">Feb 2024</time>
+      <div>
+        <button type="button" aria-expanded="false" aria-controls="why-3"><s>A third pricing plan</s><svg class="strike" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M0 5.8 C 14 4, 30 6.6, 48 4.6 S 80 6.8, 100 4.8"/></svg></button>
+        <p class="why" id="why-3">A third plan is a third thing to explain.</p>
+      </div>
+    </li>
+
+    <li class="d" data-g>
+      <time datetime="2024-06">Jun 2024</time>
+      <div>
+        <p class="what">Staff payments as one team.</p>
+        <p>9 engineers, 2 designers.</p>
+      </div>
+      <span class="note n4">11 people</span>
+    </li>
+
+    <li class="d cut" data-g>
+      <time datetime="2024-09">Sep 2024</time>
+      <div>
+        <button type="button" aria-expanded="false" aria-controls="why-4"><s>Our own chat</s><svg class="strike" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M0 5 C 20 7, 42 3.6, 62 5.8 S 86 4, 100 6"/></svg></button>
+        <p class="why" id="why-4">9 engineers. None to spare.</p>
+      </div>
+    </li>
+
+    <li class="d" data-g>
+      <time datetime="2025-01">Jan 2025</time>
+      <div>
+        <p class="what">Hold the launch 6 weeks.</p>
+        <p>A refund error still reproduced 3% of the time.</p>
+      </div>
+      <span class="note n5"><b>3%</b>is not 0</span>
+    </li>
+  </ol>
+
+  <p class="reply" id="reply"><span>Reply</span><span><a href="mailto:hana@example.com">hana@example.com</a></span></p>
+</main>
+
+<footer>A fictional person, made as a demo.</footer>
+
+<script>
+(() => {
+  const root = document.documentElement;
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const cuts = [...document.querySelectorAll('.cut')];
+  const notes = [...document.querySelectorAll('.note')];
+  let lastTouch = -1e6;
+
+  /* crossed-out lines: tap or Enter pins one open */
+  const setOpen = (li, on) => {
+    li.classList.toggle('open', on);
+    li.querySelector('button').setAttribute('aria-expanded', on);
+  };
+  cuts.forEach(li => {
+    li.querySelector('button').addEventListener('click', () => {
+      const on = !li.classList.contains('open');
+      cuts.forEach(o => setOpen(o, false));
+      setOpen(li, on);
+    });
+  });
+  addEventListener('keydown', e => {
+    if (e.key === 'Escape') cuts.forEach(o => setOpen(o, false));
+  });
+
+  if (still) return;
+
+  /* margin notes rise as the pointer comes near */
+  let px = -1e4, py = -1e4, queued = false;
+  const lift = () => {
+    queued = false;
+    for (const n of notes) {
+      const r = n.getBoundingClientRect();
+      const dx = Math.max(r.left - px, 0, px - r.right);
+      const dy = Math.max(r.top - py, 0, py - r.bottom);
+      const t = Math.max(0, 1 - Math.hypot(dx, dy) / 130);
+      n.style.setProperty('--lift', (t * t * (3 - 2 * t)).toFixed(3));
+    }
+  };
+  const track = e => {
+    px = e.clientX; py = e.clientY; lastTouch = performance.now();
+    if (!queued) { queued = true; requestAnimationFrame(lift); }
+  };
+  const away = () => {
+    px = py = -1e4;
+    if (!queued) { queued = true; requestAnimationFrame(lift); }
+  };
+  addEventListener('pointermove', track, { passive: true });
+  addEventListener('pointerdown', track, { passive: true });
+  addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(lift); } }, { passive: true });
+  document.addEventListener('pointerleave', away);
+  addEventListener('pointerup', e => { if (e.pointerType !== 'mouse') setTimeout(away, 900); });
+  addEventListener('pointercancel', away);
+
+  /* left alone, one crossed-out line lifts for a moment */
+  let turn = 0;
+  const idle = () => {
+    const quiet = performance.now() - lastTouch > 5000;
+    const busy = cuts.some(li => li.matches('.open, :hover') || li.contains(document.activeElement));
+    if (quiet && !busy && !document.hidden) {
+      const seen = cuts.filter(li => {
+        const r = li.getBoundingClientRect();
+        return r.top > 40 && r.bottom < innerHeight - 20;
+      });
+      if (seen.length) {
+        const li = seen[turn++ % seen.length];
+        li.classList.add('peek');
+        setTimeout(() => li.classList.remove('peek'), 2600);
+      }
+    }
+    setTimeout(idle, 5200);
+  };
+
+  /* the document is typed once */
+  const caret = document.createElement('i');
+  caret.className = 'caret';
+  caret.setAttribute('aria-hidden', 'true');
+
+  const walker = document.createTreeWalker(document.querySelector('main'), NodeFilter.SHOW_TEXT, {
+    acceptNode: n => !n.nodeValue.trim() || n.parentElement.closest('.why, .note, svg')
+      ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT
+  });
+  const found = [];
+  while (walker.nextNode()) found.push(walker.currentNode);
+
+  const runs = found.map(node => {
+    const text = node.nodeValue;
+    const on = document.createElement('span');
+    const off = document.createElement('span');
+    off.className = 'off';
+    off.textContent = text;
+    const wrap = document.createElement('span');
+    wrap.append(on, off);
+    node.replaceWith(wrap);
+    return { text, on, off, group: wrap.closest('[data-g]'), slow: !!wrap.closest('.head') };
+  });
+  const lastOf = new Map();
+  runs.forEach((r, i) => { if (r.group) lastOf.set(r.group, i); });
+
+  const slowChars = runs.filter(r => r.slow).reduce((s, r) => s + r.text.length, 0);
+  const total = runs.reduce((s, r) => s + r.text.length, 0);
+  const SLOW = 34, FAST = 230, PAUSE = 450;       /* characters per second, then a breath */
+  const slowMs = slowChars / SLOW * 1000;
+
+  let ri = 0, done = 0, t0 = 0;
+  const finish = () => {
+    root.classList.remove('typing');
+    document.querySelectorAll('[data-g]').forEach(g => g.classList.add('in'));
+    document.querySelector('#reply > span:last-child').append(caret);
+    caret.classList.add('rest');
+    lastTouch = performance.now() - 2500;
+    setTimeout(idle, 2600);
+  };
+  const type = now => {
+    if (!t0) t0 = now;
+    const el = now - t0;
+    let want = el < slowMs ? el / 1000 * SLOW
+      : slowChars + Math.max(0, el - slowMs - PAUSE) / 1000 * FAST;
+    want = Math.min(total, Math.floor(want));
+    while (ri < runs.length) {
+      const r = runs[ri];
+      const have = r.on.textContent.length;
+      const take = Math.min(r.text.length - have, want - done);
+      if (take > 0) {
+        r.on.textContent = r.text.slice(0, have + take);
+        r.off.textContent = r.text.slice(have + take);
+        done += take;
+        r.on.after(caret);
+      }
+      if (r.on.textContent.length < r.text.length) break;
+      if (r.group && lastOf.get(r.group) === ri) r.group.classList.add('in');
+      ri++;
+    }
+    if (ri < runs.length) setTimeout(tick, 16); else finish();
+  };
+  const tick = () => type(performance.now());   /* a timer, so it also finishes in a background tab */
+  tick();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,524 @@
+<!doctype html>
+<!--
+  portfolio-styles: https://github.com/java-jaydev/portfolio-styles
+  MIT License, Copyright (c) 2026 java-jaydev
+  가져가서 쓸 때는 이 표시를 지우지 말고, 화면에도 출처를 남겨 주세요.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daniel Yoon, growth marketer</title>
+<meta name="description" content="Five years of signup conversion, month by month.">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,600,700&f[]=general-sans@400,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #000;
+    --paper: #fff;
+    --line: #ff5200;
+    --fail: #9a9a9a;
+    --grid: #e7e7e7;
+    --quiet: #666;
+    --num: "Clash Display", "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+    --txt: "General Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--txt);
+    font-size: 1rem;
+    line-height: 1.4;
+    overflow-x: hidden;
+  }
+  ::selection { background: var(--line); color: var(--ink); }
+
+  main {
+    height: 100vh;
+    height: 100svh;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 2px 24px;
+    padding: 22px 40px 0 60px;
+  }
+  h1 {
+    margin: 0;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .axis-name {
+    margin: 0;
+    flex-basis: 100%;
+    order: 3;
+    font-size: 0.8125rem;
+    color: var(--quiet);
+  }
+  header a {
+    font-size: 0.9375rem;
+    color: var(--ink);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  @media (hover: hover) {
+    header a:hover { text-decoration-color: var(--line); text-decoration-thickness: 2px; }
+  }
+  a:focus-visible, .pt:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+  .stage {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    cursor: crosshair;
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .stage.dragging { cursor: col-resize; }
+  .stage svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .stage text {
+    font-family: var(--num);
+    font-size: 13px;
+    font-variant-numeric: tabular-nums;
+    fill: var(--ink);
+  }
+
+  .scrub {
+    position: absolute;
+    left: 0; bottom: 0;
+    width: 1px; height: 1px;
+    margin: 0; padding: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .stage:has(.scrub:focus-visible) #guide { stroke-width: 3; }
+  .stage:has(.scrub:focus-visible) { outline: 2px solid var(--ink); outline-offset: -4px; }
+
+  .pt {
+    position: absolute;
+    left: 0; top: 0;
+    width: 44px; height: 44px;
+    margin: -22px 0 0 -22px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    cursor: inherit;
+    opacity: 0;
+    color: var(--line);
+  }
+  .pt.fail { color: var(--fail); }
+  .pt.on { opacity: 1; }
+  .pt i {
+    position: absolute;
+    left: 50%; top: 50%;
+    width: 13px; height: 13px;
+    margin: -6.5px 0 0 -6.5px;
+    border-radius: 50%;
+    border: 2.5px solid currentColor;
+    background: var(--paper);
+  }
+  .pt.live i { background: currentColor; }
+  @media (prefers-reduced-motion: no-preference) {
+    .pt.last.on::after {
+      content: "";
+      position: absolute;
+      left: 50%; top: 50%;
+      width: 13px; height: 13px;
+      margin: -6.5px 0 0 -6.5px;
+      border-radius: 50%;
+      box-sizing: border-box;
+      border: 2px solid var(--line);
+      animation: ping 2.6s cubic-bezier(0.2, 0, 0, 1) infinite;
+    }
+    @keyframes ping {
+      from { transform: scale(1); opacity: 0.9; }
+      to { transform: scale(3.4); opacity: 0; }
+    }
+  }
+
+  .read {
+    position: absolute;
+    left: 0;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .read.flip { text-align: right; }
+  .read .when {
+    font-size: 0.875rem;
+    color: var(--quiet);
+    font-variant-numeric: tabular-nums;
+  }
+  .read .val {
+    font-family: var(--num);
+    font-weight: 600;
+    font-size: clamp(40px, min(11vw, 15vh), 104px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    margin: 2px 0 8px;
+  }
+  .read.fail .val { color: #858585; }
+  .read .note {
+    white-space: normal;
+    font-size: 0.9375rem;
+    line-height: 1.4;
+    max-width: min(270px, calc(50vw - 36px));
+    min-height: 2.8em;
+    text-wrap: pretty;
+  }
+  .read.flip .note { margin-left: auto; }
+
+  .delta {
+    position: absolute;
+    left: 0; top: 0;
+    pointer-events: none;
+    text-align: center;
+    white-space: nowrap;
+    visibility: hidden;
+  }
+  .delta.on { visibility: visible; }
+  .delta b {
+    display: block;
+    font-family: var(--num);
+    font-weight: 600;
+    font-size: clamp(22px, 3.2vw, 34px);
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+  }
+  .delta span {
+    font-size: 0.8125rem;
+    color: var(--quiet);
+    font-variant-numeric: tabular-nums;
+  }
+
+  footer {
+    padding: 14px 40px 18px 60px;
+    font-size: 0.8125rem;
+    color: var(--quiet);
+  }
+  footer p { margin: 0; }
+
+  @media (max-width: 599px) {
+    header { padding: 16px 16px 0 16px; }
+    footer { padding: 12px 16px 16px; }
+    .stage text { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Daniel Yoon, growth marketer</h1>
+    <a href="mailto:daniel@example.com">daniel@example.com</a>
+    <p class="axis-name">Signup conversion, monthly</p>
+  </header>
+
+  <div class="stage" id="stage">
+    <svg id="plot" aria-hidden="true"></svg>
+    <input class="scrub" id="scrub" type="range" min="0" max="59" step="1" value="59" aria-label="Month">
+    <div class="read" id="read">
+      <div class="when" id="when"></div>
+      <div class="val" id="val"></div>
+      <div class="note" id="note"></div>
+    </div>
+    <div class="delta" id="delta"><b></b><span></span></div>
+  </div>
+</main>
+
+<footer><p>A fictional person, made as a demo.</p></footer>
+
+<script>
+(function () {
+  // Monthly visitor-to-signup conversion, %. Index 0 is Dec 2021, index 59 is Nov 2026.
+  var DATA = [
+    2.10, 2.08, 2.11, 2.09, 2.11, 2.10,
+    2.19, 2.20, 2.28, 2.27, 2.36, 2.37, 2.36, 2.45, 2.53, 2.52, 2.54, 2.62,
+    2.61, 2.70, 2.71, 2.79, 2.80, 2.88,
+    2.88, 2.87, 2.88,
+    2.93, 3.00, 3.07, 3.13, 3.19, 3.24, 3.28, 3.30, 3.31,
+    3.30, 3.32, 3.31, 3.31,
+    3.05, 2.93, 2.95, 3.30,
+    3.31, 3.30, 3.32, 3.33, 3.32, 3.34, 3.35, 3.34, 3.36, 3.37, 3.36, 3.38,
+    3.39, 3.38, 3.39, 3.40
+  ];
+  var N = DATA.length - 1;
+  var YMAX = 4.4;
+  var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  // at: where the line bends. from/to: months the note belongs to.
+  var EVENTS = [
+    { at: 0, from: 0, to: 4, note: "Joined a subscription app. Baseline 2.1%." },
+    { at: 5, from: 5, to: 23, note: "41 experiments. 9 won." },
+    { at: 24, from: 24, to: 25, fail: true, note: "Rebrand campaign. Six weeks. No change." },
+    { at: 26, from: 26, to: 38, note: "Referral program. 18% of new signups. Acquisition cost down 31%." },
+    { at: 39, from: 39, to: 42, fail: true, note: "New onboarding. Down 0.38 points. Rolled back." },
+    { at: 43, from: 43, to: 58, note: "Newsletter, 0 to 22,000 subscribers. 44% open rate." },
+    { at: 59, from: 59, to: 59, note: "SQL, experiment design, copy." }
+  ];
+  // Failed stretches drawn in gray. The rebrand ran six weeks: 1.5 months.
+  var FAILS = [[24, 25.5], [39, 43]];
+
+  var stage = document.getElementById("stage");
+  var svg = document.getElementById("plot");
+  var scrub = document.getElementById("scrub");
+  var read = document.getElementById("read");
+  var whenEl = document.getElementById("when");
+  var valEl = document.getElementById("val");
+  var noteEl = document.getElementById("note");
+  var delta = document.getElementById("delta");
+  var still = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  var g = {};            // geometry
+  var cursor = N;        // month under the guide line
+  var sel = null;        // {a, b} months
+  var drawn = still ? 1 : 0;
+  var userMoved = false;
+  var glide = 0;
+
+  function label(i) {
+    var m = (11 + i) % 12;
+    var y = 2021 + Math.floor((11 + i) / 12);
+    return MONTHS[m] + " " + y;
+  }
+  function valueAt(i) {
+    var a = Math.floor(i), b = Math.min(N, a + 1), t = i - a;
+    return DATA[a] + (DATA[b] - DATA[a]) * t;
+  }
+  function X(i) { return g.l + (i / N) * g.pw; }
+  function Y(v) { return g.t + (1 - v / YMAX) * g.ph; }
+  function eventAt(i) {
+    for (var k = 0; k < EVENTS.length; k++) if (i >= EVENTS[k].from && i <= EVENTS[k].to) return EVENTS[k];
+    return null;
+  }
+  function failedAt(i) {
+    for (var k = 0; k < FAILS.length; k++) if (i > FAILS[k][0] && i < FAILS[k][1]) return true;
+    return false;
+  }
+  function pathBetween(a, b) {
+    var d = "M" + X(a).toFixed(1) + " " + Y(valueAt(a)).toFixed(1);
+    for (var i = Math.floor(a) + 1; i < b; i++) d += "L" + X(i).toFixed(1) + " " + Y(DATA[i]).toFixed(1);
+    return d + "L" + X(b).toFixed(1) + " " + Y(valueAt(b)).toFixed(1);
+  }
+
+  var buttons = EVENTS.map(function (e, k) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "pt" + (e.fail ? " fail" : "") + (k === EVENTS.length - 1 ? " last" : "");
+    b.setAttribute("aria-label", label(e.at) + ", " + DATA[e.at].toFixed(2) + "%. " + e.note);
+    b.appendChild(document.createElement("i"));
+    b.addEventListener("focus", function () { take(); cursor = e.at; render(); });
+    stage.insertBefore(b, read);
+    return b;
+  });
+
+  function layout() {
+    var W = stage.clientWidth, H = stage.clientHeight;
+    var narrow = W < 600;
+    g.W = W; g.H = H;
+    g.l = narrow ? 44 : 60;
+    g.r = narrow ? 18 : 40;
+    g.t = 26;
+    g.b = 36;
+    g.pw = W - g.l - g.r;
+    g.ph = H - g.t - g.b;
+    var x0 = g.l, x1 = g.l + g.pw, y0 = g.t + g.ph;
+    var s = "";
+
+    s += '<defs><clipPath id="reveal"><rect id="clip" x="' + (x0 - 8) + '" y="0" width="0" height="' + H + '"/></clipPath></defs>';
+
+    for (var v = 1; v <= 4; v++) {
+      s += '<line x1="' + x0 + '" x2="' + x1 + '" y1="' + Y(v) + '" y2="' + Y(v) + '" stroke="#e7e7e7" stroke-width="1"/>';
+    }
+    for (v = 0; v <= 4; v++) {
+      s += '<line x1="' + (x0 - 5) + '" x2="' + x0 + '" y1="' + Y(v) + '" y2="' + Y(v) + '" stroke="#000" stroke-width="1.5"/>';
+      s += '<text x="' + (x0 - 10) + '" y="' + (Y(v) + 4.5) + '" text-anchor="end">' + v + "%</text>";
+    }
+    for (var i = 1; i <= N; i += 3) {
+      var major = (i - 1) % 12 === 0;
+      s += '<line x1="' + X(i) + '" x2="' + X(i) + '" y1="' + y0 + '" y2="' + (y0 + (major ? 7 : 4)) + '" stroke="#000" stroke-width="1.5"/>';
+      if (major) s += '<text x="' + X(i) + '" y="' + (y0 + 24) + '" text-anchor="middle">' + (2022 + (i - 1) / 12) + "</text>";
+    }
+
+    s += '<rect id="band" y="' + g.t + '" height="' + g.ph + '" fill="#ff5200" fill-opacity="0.12" visibility="hidden"/>';
+    s += '<line id="bandA" y1="' + g.t + '" y2="' + y0 + '" stroke="#ff5200" stroke-width="1.5" visibility="hidden"/>';
+    s += '<line id="bandB" y1="' + g.t + '" y2="' + y0 + '" stroke="#ff5200" stroke-width="1.5" visibility="hidden"/>';
+
+    s += '<line x1="' + x0 + '" x2="' + x0 + '" y1="' + g.t + '" y2="' + y0 + '" stroke="#000" stroke-width="1.5"/>';
+    s += '<line x1="' + x0 + '" x2="' + x1 + '" y1="' + y0 + '" y2="' + y0 + '" stroke="#000" stroke-width="1.5"/>';
+
+    s += '<g clip-path="url(#reveal)" fill="none" stroke-width="3.5" stroke-linejoin="round" stroke-linecap="round">';
+    s += '<path d="' + pathBetween(0, N) + '" stroke="#ff5200"/>';
+    FAILS.forEach(function (f) { s += '<path d="' + pathBetween(f[0], f[1]) + '" stroke="#9a9a9a"/>'; });
+    s += "</g>";
+
+    s += '<line id="guide" y1="' + g.t + '" y2="' + y0 + '" stroke="#000" stroke-width="1"/>';
+    s += '<circle id="dot" r="5.5" stroke="#fff" stroke-width="2"/>';
+
+    svg.setAttribute("viewBox", "0 0 " + W + " " + H);
+    svg.innerHTML = s;
+
+    EVENTS.forEach(function (e, k) {
+      buttons[k].style.transform = "translate(" + X(e.at).toFixed(1) + "px," + Y(DATA[e.at]).toFixed(1) + "px)";
+    });
+    read.style.bottom = (g.b + 18) + "px";
+    render();
+  }
+
+  function render() {
+    var el = function (id) { return svg.querySelector("#" + id); };
+    var cx = X(cursor), v = DATA[cursor], e = eventAt(cursor), bad = failedAt(cursor) || (e && e.fail);
+
+    el("clip").setAttribute("width", Math.max(0, drawn * g.pw + (drawn > 0 ? 16 : 0)));
+    var reach = drawn * N;
+    buttons.forEach(function (b, k) {
+      b.classList.toggle("on", EVENTS[k].at <= reach + 0.01);
+      b.classList.toggle("live", e === EVENTS[k]);
+    });
+
+    var guide = el("guide"), dot = el("dot");
+    guide.setAttribute("x1", cx); guide.setAttribute("x2", cx);
+    dot.setAttribute("cx", cx); dot.setAttribute("cy", Y(v));
+    dot.setAttribute("fill", bad ? "#9a9a9a" : "#ff5200");
+
+    whenEl.textContent = label(cursor);
+    valEl.textContent = v.toFixed(2) + "%";
+    noteEl.textContent = e ? e.note : "";
+    read.classList.toggle("fail", !!bad);
+
+    var w = read.offsetWidth, gap = 16;
+    var flip = cx + gap + w > g.W - 8;
+    read.classList.toggle("flip", flip);
+    read.style.transform = "translateX(" + Math.round(flip ? cx - gap - w : cx + gap) + "px)";
+
+    scrub.value = cursor;
+    scrub.setAttribute("aria-valuetext", label(cursor) + ", " + v.toFixed(2) + "%" + (e ? ". " + e.note : ""));
+
+    var band = el("band"), ea = el("bandA"), eb = el("bandB");
+    var has = sel && sel.a !== sel.b;
+    [band, ea, eb].forEach(function (n) { n.setAttribute("visibility", has ? "visible" : "hidden"); });
+    delta.classList.toggle("on", !!has);
+    if (has) {
+      var a = Math.min(sel.a, sel.b), b = Math.max(sel.a, sel.b);
+      var xa = X(a), xb = X(b);
+      band.setAttribute("x", xa); band.setAttribute("width", xb - xa);
+      ea.setAttribute("x1", xa); ea.setAttribute("x2", xa);
+      eb.setAttribute("x1", xb); eb.setAttribute("x2", xb);
+      var pct = (DATA[b] - DATA[a]) / DATA[a] * 100;
+      var sign = pct > 0.05 ? "+" : pct < -0.05 ? "−" : "";
+      delta.firstChild.textContent = sign + Math.abs(pct).toFixed(1) + "%";
+      delta.lastChild.textContent = label(a) + " to " + label(b);
+      var dw = delta.offsetWidth;
+      var dx = Math.max(g.l + 6, Math.min(g.W - 6 - dw, (xa + xb) / 2 - dw / 2));
+      delta.style.transform = "translate(" + Math.round(dx) + "px," + (g.t + 6) + "px)";
+    }
+  }
+
+  function take() { userMoved = true; clearInterval(glide); }
+  function monthAt(clientX) {
+    var r = stage.getBoundingClientRect();
+    return Math.max(0, Math.min(N, Math.round((clientX - r.left - g.l) / g.pw * N)));
+  }
+
+  // Pointer: move scans, drag selects a range.
+  var down = null;
+  stage.addEventListener("pointerdown", function (ev) {
+    if (ev.button > 0) return;
+    take();
+    cursor = monthAt(ev.clientX);
+    down = { x: ev.clientX, at: cursor, drag: false, id: ev.pointerId };
+    render();
+  });
+  stage.addEventListener("pointermove", function (ev) {
+    take();
+    cursor = monthAt(ev.clientX);
+    if (down && down.id === ev.pointerId) {
+      if (!down.drag && Math.abs(ev.clientX - down.x) > 5) {
+        down.drag = true;
+        stage.classList.add("dragging");
+        try { stage.setPointerCapture(ev.pointerId); } catch (err) {}
+      }
+      if (down.drag) sel = { a: down.at, b: cursor };
+    }
+    render();
+  });
+  function release(ev) {
+    if (!down || down.id !== ev.pointerId) return;
+    if (!down.drag || (sel && sel.a === sel.b)) sel = null;
+    down = null;
+    stage.classList.remove("dragging");
+    render();
+  }
+  stage.addEventListener("pointerup", release);
+  stage.addEventListener("pointercancel", release);
+  stage.addEventListener("pointerleave", function (ev) {
+    if (down || ev.pointerType !== "mouse") return;
+    if (document.activeElement && stage.contains(document.activeElement) && document.activeElement.matches(":focus-visible")) return;
+    home();
+  });
+
+  // The guide line returns to the latest month when the pointer leaves.
+  function home() {
+    clearInterval(glide);
+    if (still) { cursor = N; render(); return; }
+    var from = cursor, t0 = Date.now(), dur = 500;
+    glide = setInterval(function () {
+      var t = Math.min(1, (Date.now() - t0) / dur), k = 1 - Math.pow(1 - t, 4);
+      cursor = Math.round(from + (N - from) * k);
+      render();
+      if (t >= 1) clearInterval(glide);
+    }, 16);
+  }
+
+  // Keyboard: arrows move a month, Shift extends a range, Escape clears it.
+  scrub.addEventListener("keydown", function (ev) {
+    if (ev.key === "Escape") { sel = null; render(); return; }
+    var step = { ArrowLeft: -1, ArrowDown: -1, ArrowRight: 1, ArrowUp: 1 }[ev.key];
+    if (!step || !ev.shiftKey) { if (step) sel = null; return; }
+    ev.preventDefault();
+    take();
+    var anchor = sel ? sel.a : cursor;
+    cursor = Math.max(0, Math.min(N, cursor + step));
+    sel = { a: anchor, b: cursor };
+    render();
+  });
+  scrub.addEventListener("input", function () { take(); cursor = +scrub.value; render(); });
+
+  // The line draws once, left to right. The number follows the tip.
+  function draw() {
+    var t0 = Date.now(), dur = 2600;
+    var tick = setInterval(function () {
+      var t = Math.min(1, (Date.now() - t0) / dur);
+      drawn = t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+      if (!userMoved) cursor = Math.round(drawn * N);
+      render();
+      if (t >= 1) clearInterval(tick);
+    }, 16);
+  }
+
+  var raf = 0;
+  window.addEventListener("resize", function () {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(layout);
+  });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { render(); });
+
+  cursor = still ? N : 0;
+  layout();
+  if (!still) draw();
+})();
+</script>
+</body>
+</html>

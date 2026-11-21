@@ -1,0 +1,471 @@
+<!doctype html>
+<!--
+  portfolio-styles: https://github.com/java-jaydev/portfolio-styles
+  MIT License, Copyright (c) 2026 java-jaydev
+  가져가서 쓸 때는 이 표시를 지우지 말고, 화면에도 출처를 남겨 주세요.
+-->
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>결제 장애 회고, 곽민석</title>
+<meta name="description" content="금요일 19:12 인증서 만료로 결제가 41분 멈춘 날의 회고. 작성자 곽민석.">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sun-typeface/SUIT@2/fonts/variable/woff2/SUIT-Variable.css">
+<style>
+  :root {
+    --paper: #ffffff;
+    --ink: #141414;
+    --soft: #666666;
+    --after: #9a9a9a;
+    --rule: #e4e4e4;
+    --ghost: #ededed;
+    --red: #e0281e;
+    --label: 9.5rem;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "SUIT Variable", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif;
+    font-size: 1rem;
+    line-height: 1.55;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+  }
+  ::selection { background: var(--red); color: #fff; }
+  :focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+  a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.22em; }
+  @media (hover: hover) { a:hover { color: var(--red); } }
+
+  main {
+    max-width: 68rem;
+    margin: 0 auto;
+    padding: clamp(1.25rem, 3.2vh, 2.25rem) clamp(1.25rem, 5vw, 4rem) 3rem;
+  }
+
+  /* 문서 머리 */
+  .by {
+    display: flex;
+    gap: 0.75rem;
+    margin: 0;
+    font-size: 0.9375rem;
+  }
+  .by dt { color: var(--soft); }
+  .by dd { margin: 0; font-weight: 700; }
+  h1 {
+    margin: clamp(0.9rem, 2.4vh, 1.5rem) 0 0;
+    max-width: 21em;
+    font-size: clamp(1.5rem, 1rem + 1.9vw, 2.5rem);
+    font-weight: 750;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  h1 span { display: block; }
+
+  /* 그날 저녁 */
+  .night {
+    margin: clamp(1.5rem, 4.5vh, 3rem) 0 0;
+    padding-top: clamp(0.9rem, 2vh, 1.25rem);
+    border-top: 1px solid var(--ink);
+  }
+  .read {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: clamp(1.25rem, 3vw, 2.5rem);
+    align-items: end;
+    font-variant-numeric: tabular-nums;
+  }
+  .clock {
+    grid-row: span 2;
+    font-size: clamp(3.5rem, 2rem + 6.4vw, 6rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+  }
+  .nums {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 1.5rem;
+    color: var(--soft);
+    font-size: 0.9375rem;
+  }
+  .nums b { margin-left: 0.4em; color: var(--ink); font-weight: 700; font-size: 1.125rem; }
+  .nums .rate b { color: var(--red); }
+  .night.is-after .nums .rate b { color: var(--after); }
+  .what {
+    margin: 0;
+    min-height: 1.4em;
+    font-size: clamp(1.0625rem, 0.9rem + 0.7vw, 1.375rem);
+    font-weight: 650;
+    line-height: 1.4;
+  }
+  .scrub {
+    display: block;
+    margin-top: clamp(0.75rem, 2vh, 1.25rem);
+    cursor: ew-resize;
+    touch-action: pan-y;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .scrub svg { display: block; width: 100%; overflow: visible; }
+  .scrub text { font-size: 12px; font-variant-numeric: tabular-nums; fill: var(--soft); }
+  .scrub text.key { fill: var(--ink); font-weight: 700; font-size: 13px; }
+  .ev { fill: var(--paper); stroke: #b5b5b5; stroke-width: 1.5; }
+  .ev.past { fill: var(--ink); stroke: var(--ink); }
+
+  /* 문서 본문 */
+  .part {
+    display: grid;
+    grid-template-columns: var(--label) 1fr;
+    column-gap: 1.5rem;
+    padding: 1.5rem 0 2.25rem;
+    border-top: 1px solid var(--rule);
+  }
+  .night + .part { margin-top: clamp(2.5rem, 7vh, 4.5rem); border-top-color: var(--ink); }
+  h2 { margin: 0; font-size: 1rem; font-weight: 700; line-height: 1.55; }
+  .part p { margin: 0; max-width: 34em; font-size: 1.125rem; text-wrap: pretty; }
+  ul { margin: 0; padding: 0; list-style: none; }
+  .fixes li {
+    padding: 0.55rem 0;
+    border-bottom: 1px solid var(--rule);
+    font-size: clamp(1.125rem, 1rem + 0.7vw, 1.5rem);
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    line-height: 1.35;
+  }
+  .fixes li:first-child { padding-top: 0; }
+  .since { margin-top: 1.5rem; }
+  .since svg { display: block; width: 100%; max-width: 34rem; height: 22px; overflow: visible; }
+  .since p { margin-top: 0.5rem; font-size: 1rem; }
+  .rest { margin-top: 2.75rem; font-size: 1rem; }
+  .rest li {
+    display: grid;
+    grid-template-columns: minmax(0, 15rem) 1fr;
+    column-gap: 1.5rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .rest li:first-child { border-top: 1px solid var(--rule); }
+  .rest span + span { color: var(--soft); font-variant-numeric: tabular-nums; }
+  .mail { font-size: 1.125rem; font-weight: 650; }
+
+  footer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.25rem 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+    color: var(--soft);
+    font-size: 0.8125rem;
+  }
+  footer p { margin: 0; }
+
+  @media (max-width: 40rem) {
+    .read { grid-template-columns: 1fr; row-gap: 0.4rem; }
+    .clock { grid-row: auto; }
+    .part { grid-template-columns: 1fr; row-gap: 0.6rem; }
+    .rest li { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <dl class="by"><dt>작성자</dt><dd>곽민석</dd></dl>
+  <h1><span>금요일 19:12 인증서 만료.</span> <span>결제 41분 중단, 실패 8,300건.</span></h1>
+
+  <section class="night" id="night" aria-label="타임라인">
+    <div class="read">
+      <span class="clock" id="clock">19:53</span>
+      <div class="nums">
+        <span class="rate">오류율<b id="rate">0.3%</b></span>
+        <span>실패<b id="fail">8,300건</b></span>
+      </div>
+      <p class="what" id="what">복구</p>
+    </div>
+    <div class="scrub" id="scrub" role="slider" tabindex="0" aria-label="그날 저녁 시각"
+         aria-valuemin="0" aria-valuemax="55" aria-valuenow="48" aria-valuetext="19:53 복구">
+      <svg id="chart" aria-hidden="true"></svg>
+    </div>
+  </section>
+
+  <section class="part">
+    <h2>원인</h2>
+    <p>결제 게이트웨이 인증서가 19:12에 만료됐다. 만료일은 달력 한 곳에만 있었고, 그날 당번은 작성자였다.</p>
+  </section>
+
+  <section class="part">
+    <h2>그 뒤 바꾼 것</h2>
+    <div>
+      <ul class="fixes">
+        <li>인증서 만료 30일 전 알림</li>
+        <li>배포 전 점검 14항목</li>
+        <li>분기마다 장애 훈련</li>
+      </ul>
+      <div class="since">
+        <svg id="since" aria-hidden="true"></svg>
+        <p>이후 18개월, 같은 유형 0건.</p>
+      </div>
+      <ul class="rest">
+        <li><span>정산 API, 하루 2,400만 건</span><span>p99 820ms에서 190ms</span></li>
+        <li><span>모놀리스 분리</span><span>서비스 6개, 14개월</span></li>
+        <li><span>당번 교대 설계</span><span>후배 4명 멘토링</span></li>
+        <li><span>핀테크 스타트업 백엔드</span><span>7년</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="part">
+    <h2>연락</h2>
+    <a class="mail" href="mailto:minseok@example.com">minseok@example.com</a>
+  </section>
+
+  <footer>
+    <p>데모용으로 만든 가상의 인물입니다.</p>
+    <p><a href="https://github.com/java-jaydev/portfolio-styles">portfolio-styles</a></p>
+  </footer>
+</main>
+
+<script>
+(function () {
+  var NS = 'http://www.w3.org/2000/svg';
+  var D0 = 5, D1 = 60, START = 12, END = 53;       // 19:00 기준 분
+  var EVENTS = [
+    [5,  '평소 금요일 저녁'],
+    [12, '인증서 만료. 결제 실패 시작'],
+    [14, '당번 곽민석 호출 수신'],
+    [19, '직전 배포 롤백. 변화 없음'],
+    [31, '원인 확인. 인증서 만료'],
+    [38, '새 인증서 발급'],
+    [46, '교체 배포 시작'],
+    [53, '복구']
+  ];
+
+  // 오류율 표본 (15초 간격, 고정 난수)
+  var seed = 24;
+  function rnd() { seed = (seed * 16807) % 2147483647; return seed / 2147483647; }
+  function lerp(a, b, k) { return a + (b - a) * Math.max(0, Math.min(1, k)); }
+  var STEP = 0.25, S = [];
+  for (var m = D0; m <= D1 + 1e-9; m += STEP) {
+    var r;
+    if (m < 12) r = 0.2 + rnd() * 0.3;
+    else if (m < 12.5) r = lerp(0.4, 96, (m - 12) / 0.5);
+    else if (m < 46) {
+      r = 93.5 + rnd() * 4.5;
+      if (m >= 19.25 && m <= 20.5) r -= 20 * Math.sin((m - 19.25) / 1.25 * Math.PI);
+    }
+    else if (m < 47) r = lerp(95, 70, m - 46) + rnd() * 2;
+    else if (m < 49) r = lerp(70, 44, (m - 47) / 2) + rnd() * 3;
+    else if (m < 51) r = lerp(44, 19, (m - 49) / 2) + rnd() * 3;
+    else if (m < 53) r = lerp(19, 0.4, (m - 51) / 2) + rnd() * 1.2;
+    else r = 0.2 + rnd() * 0.25;
+    S.push(r);
+  }
+  var CUM = [], acc = 0;
+  for (var i = 0; i < S.length; i++) {
+    var mm = D0 + i * STEP;
+    if (mm >= START && mm < END) acc += S[i];
+    CUM.push(acc);
+  }
+  function at(arr, m) {
+    var f = (m - D0) / STEP, i0 = Math.max(0, Math.min(arr.length - 1, Math.floor(f)));
+    var i1 = Math.min(arr.length - 1, i0 + 1);
+    return arr[i0] + (arr[i1] - arr[i0]) * (f - i0);
+  }
+
+  var night = document.getElementById('night');
+  var scrub = document.getElementById('scrub');
+  var svg = document.getElementById('chart');
+  var elClock = document.getElementById('clock');
+  var elRate = document.getElementById('rate');
+  var elFail = document.getElementById('fail');
+  var elWhat = document.getElementById('what');
+  var W = 0, H = 0, clip, head, dot, evDots = [];
+  var t = END, resting = true, tail = D1;
+
+  function el(name, attrs, parent) {
+    var n = document.createElementNS(NS, name);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    (parent || svg).appendChild(n);
+    return n;
+  }
+  function x(m) { return (m - D0) / (D1 - D0) * W; }
+  function y(r) { return 8 + (1 - r / 100) * (H - 8); }
+  function path(from, to) {
+    var d = '';
+    for (var i = 0; i < S.length; i++) {
+      var m = D0 + i * STEP;
+      if (m < from - 1e-9 || m > to + 1e-9) continue;
+      d += (d ? 'L' : 'M') + x(m).toFixed(1) + ' ' + y(S[i]).toFixed(1);
+    }
+    return d;
+  }
+  function hhmm(m) {
+    var total = 19 * 60 + Math.floor(m + 1e-6);
+    return Math.floor(total / 60) + ':' + ('0' + total % 60).slice(-2);
+  }
+
+  function build() {
+    W = scrub.clientWidth;
+    H = W < 560 ? 190 : Math.max(220, Math.min(420, window.innerHeight * 0.45));
+    var full = H + 58;
+    svg.setAttribute('viewBox', '0 0 ' + W + ' ' + full);
+    svg.setAttribute('height', full);
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+
+    [50, 100].forEach(function (v) {
+      el('line', { x1: 0, x2: W, y1: y(v), y2: y(v), stroke: '#e4e4e4' });
+      el('text', { x: 0, y: y(v) + 15 }).textContent = v + '%';
+    });
+    el('path', { d: path(D0, D1), fill: 'none', stroke: '#ededed', 'stroke-width': 2, 'stroke-linejoin': 'round' });
+
+    var defs = el('defs', {});
+    var cp = el('clipPath', { id: 'drawn' }, defs);
+    clip = el('rect', { x: 0, y: -4, width: 0, height: H + 8 }, cp);
+    var g = el('g', { 'clip-path': 'url(#drawn)' });
+    el('path', { d: path(D0, END) + 'L' + x(END).toFixed(1) + ' ' + y(0) + 'L0 ' + y(0) + 'Z', fill: '#e0281e', 'fill-opacity': 0.07 }, g);
+    el('path', { d: path(D0, END), fill: 'none', stroke: '#e0281e', 'stroke-width': 2, 'stroke-linejoin': 'round' }, g);
+    el('path', { d: path(END, D1), fill: 'none', stroke: '#9a9a9a', 'stroke-width': 2, 'stroke-linejoin': 'round' }, g);
+
+    // 분 단위 눈금
+    el('line', { x1: 0, x2: W, y1: H, y2: H, stroke: '#141414' });
+    for (var m = D0; m <= D1; m++) {
+      var inside = m >= START && m <= END;
+      el('line', { x1: x(m), x2: x(m), y1: H, y2: H + (m % 5 === 0 ? 10 : 6), stroke: inside ? '#141414' : '#b5b5b5' });
+    }
+    evDots = EVENTS.slice(1).map(function (e) {
+      return [e[0], el('circle', { cx: x(e[0]), cy: H + 24, r: 4.5, 'class': 'ev' })];
+    });
+    if (W >= 560) el('text', { x: 0, y: H + 50 }).textContent = '19:05';
+    el('text', { x: x(START), y: H + 50, 'text-anchor': 'middle', 'class': 'key' }).textContent = '19:12';
+    el('text', { x: x(END), y: H + 50, 'text-anchor': 'middle', 'class': 'key' }).textContent = '19:53';
+    if (W >= 560) el('text', { x: W, y: H + 50, 'text-anchor': 'end' }).textContent = '20:00';
+
+    head = el('line', { y1: 0, y2: H + 24, stroke: '#141414' });
+    dot = el('circle', { r: 5, stroke: '#fff', 'stroke-width': 2 });
+    paint();
+  }
+
+  function paint() {
+    var drawn = resting ? Math.max(t, tail) : t;
+    clip.setAttribute('width', Math.max(0, x(drawn)));
+    var px = x(t), r = at(S, t);
+    head.setAttribute('x1', px); head.setAttribute('x2', px);
+    dot.setAttribute('cx', px); dot.setAttribute('cy', y(r));
+    var after = t >= END;
+    dot.setAttribute('fill', after ? '#9a9a9a' : '#e0281e');
+    night.classList.toggle('is-after', after);
+
+    var now = EVENTS[0];
+    for (var i = 0; i < EVENTS.length; i++) if (EVENTS[i][0] <= t + 1e-6) now = EVENTS[i];
+    evDots.forEach(function (e) { e[1].setAttribute('class', e[0] <= t + 1e-6 ? 'ev past' : 'ev'); });
+
+    var clock = hhmm(t);
+    var rate = (r < 1 ? r.toFixed(1) : Math.round(r)) + '%';
+    var fail = Math.round(at(CUM, t) / acc * 83) * 100;
+    if (t >= END) fail = 8300;
+    if (elClock.textContent !== clock) elClock.textContent = clock;
+    if (elRate.textContent !== rate) elRate.textContent = rate;
+    fail = fail.toLocaleString('ko-KR') + '건';
+    if (elFail.textContent !== fail) elFail.textContent = fail;
+    if (elWhat.textContent !== now[1]) elWhat.textContent = now[1];
+    scrub.setAttribute('aria-valuenow', Math.round(t - D0));
+    scrub.setAttribute('aria-valuetext', clock + ' 오류율 ' + rate + ' ' + now[1]);
+  }
+
+  // 재생: 41분을 12초로
+  var still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var raf = 0, idle = 0;
+  function stop() { cancelAnimationFrame(raf); raf = 0; clearTimeout(idle); }
+  function play(from) {
+    stop();
+    resting = false;
+    var a = Math.max(START, Math.min(END, from));
+    var t0 = performance.now(), dur = (END - a) / (END - START) * 12000;
+    (function frame() {
+      var k = dur ? Math.min(1, (performance.now() - t0) / dur) : 1;
+      t = a + (END - a) * k;
+      if (k < 1) { paint(); raf = requestAnimationFrame(frame); return; }
+      // 복구 뒤 회색 꼬리
+      t = END; resting = true; tail = END;
+      var t1 = performance.now();
+      (function trail() {
+        var k2 = Math.min(1, (performance.now() - t1) / 900);
+        tail = END + (D1 - END) * (1 - Math.pow(1 - k2, 3));
+        paint();
+        if (k2 < 1) raf = requestAnimationFrame(trail);
+        else { raf = 0; wait(20000, START); }
+      })();
+    })();
+  }
+  function wait(ms, from) {
+    clearTimeout(idle);
+    if (still) return;
+    idle = setTimeout(function () { play(from == null ? t : from); }, ms);
+  }
+
+  function seek(m) {
+    stop();
+    resting = false;
+    t = Math.max(D0, Math.min(D1, m));
+    paint();
+  }
+  function fromPointer(e) {
+    var box = scrub.getBoundingClientRect();
+    seek(D0 + (e.clientX - box.left) / box.width * (D1 - D0));
+  }
+  scrub.addEventListener('pointermove', fromPointer);
+  scrub.addEventListener('pointerdown', function (e) { fromPointer(e); });
+  scrub.addEventListener('pointerleave', function () { wait(6000); });
+  scrub.addEventListener('pointerup', function (e) { if (e.pointerType !== 'mouse') wait(6000); });
+  scrub.addEventListener('keydown', function (e) {
+    var cur = Math.round(t), next = null, i;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowUp') next = cur + 1;
+    else if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') next = cur - 1;
+    else if (e.key === 'Home') next = D0;
+    else if (e.key === 'End') next = D1;
+    else if (e.key === 'PageUp') { next = D1; for (i = 0; i < EVENTS.length; i++) if (EVENTS[i][0] > cur) { next = EVENTS[i][0]; break; } }
+    else if (e.key === 'PageDown') { next = D0; for (i = EVENTS.length - 1; i >= 0; i--) if (EVENTS[i][0] < cur) { next = EVENTS[i][0]; break; } }
+    if (next === null) return;
+    e.preventDefault();
+    seek(next);
+  });
+  scrub.addEventListener('blur', function () { wait(6000); });
+
+  // 이후 18개월: 평평한 선
+  (function () {
+    var s = document.getElementById('since');
+    var w = 544;
+    s.setAttribute('viewBox', '0 0 ' + w + ' 22');
+    s.setAttribute('preserveAspectRatio', 'none');
+    for (var i = 0; i <= 18; i++) {
+      var n = document.createElementNS(NS, 'line');
+      n.setAttribute('x1', i / 18 * w); n.setAttribute('x2', i / 18 * w);
+      n.setAttribute('y1', 14); n.setAttribute('y2', 21);
+      n.setAttribute('stroke', '#b5b5b5'); n.setAttribute('vector-effect', 'non-scaling-stroke');
+      s.appendChild(n);
+    }
+    var l = document.createElementNS(NS, 'line');
+    l.setAttribute('x1', 0); l.setAttribute('x2', w); l.setAttribute('y1', 14); l.setAttribute('y2', 14);
+    l.setAttribute('stroke', '#9a9a9a'); l.setAttribute('stroke-width', 2); l.setAttribute('vector-effect', 'non-scaling-stroke');
+    s.appendChild(l);
+  })();
+
+  var lastW = 0;
+  function onResize() {
+    if (scrub.clientWidth === lastW) return;
+    lastW = scrub.clientWidth;
+    build();
+  }
+  window.addEventListener('resize', onResize);
+  lastW = scrub.clientWidth;
+  build();
+  if (!still) { t = START; resting = false; paint(); play(START); }
+})();
+</script>
+</body>
+</html>
